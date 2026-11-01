@@ -52,7 +52,7 @@ jobs:
         working-directory: android
         env:
           TIPTOI_VERSION_CODE: ${{ github.run_number }}
-        run: ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --console=plain
+        run: ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug :app:assembleDebugAndroidTest --console=plain
       - name: Prepare source receipt and checksum
         env:
           SOURCE_SHA: ${{ github.sha }}

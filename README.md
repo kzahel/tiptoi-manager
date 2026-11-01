@@ -61,6 +61,8 @@ some official content groups intentionally contain multiple files with one ID.
 - [Protocol research and unresolved questions](docs/research.md)
 - [Reference repositories and licenses](docs/references.md)
 - [Android CI and publication direction](docs/distribution.md)
+- [Physical acceptance and remaining checks](docs/acceptance.md)
+- [Opt-in device smoke runner](docs/device-smoke.md)
 
 ## Reference checkouts
 

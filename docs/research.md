@@ -90,10 +90,23 @@ not establish enumeration; using a hub port known to carry data exposed the
 pen's volume. This narrowed the fault to the connection path but did not isolate
 an exact bad component. Do not label every detection failure as a cable fault.
 
-## First-spike questions
+## Android spike evidence
 
-1. Does the target Android phone mount the pen through its storage framework,
-   or should the app use direct USB host access and libaums?
+The native Kotlin spike subsequently received persistent document-tree access
+through Android's picker and read the pen's actual GME inventory and free space.
+The same application code refreshed the public CSV, downloaded a selected
+standalone title and installed it with final-file read-back verification.
+Direct libaums access was unnecessary for this observed phone/pen combination.
+It remains a fallback, not an adopted dependency or a compatibility claim.
+
+See the [acceptance record](acceptance.md) and [opt-in physical runner](device-smoke.md)
+for evidence and limits. Playback, a complete tap-driven UI test, another pen,
+and interruption/reconnect recovery still need separate checks.
+
+## Remaining questions
+
+1. Which other Android phones/providers expose a usable document tree, and
+   which need direct USB host access through libaums?
 2. Can both physical pens be identified reliably without a writable marker?
 3. Which filenames, versions and companion dependencies distinguish content
    sharing one ID?

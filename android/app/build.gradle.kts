@@ -17,6 +17,7 @@ android {
         targetSdk = 36
         versionCode = providers.environmentVariable("TIPTOI_VERSION_CODE").orElse("1").get().toInt()
         versionName = "0.1.0-spike"
+        testInstrumentationRunner = "io.github.kzahel.tiptoimanager.UsbSmokeInstrumentation"
     }
     if (previewDirectory != null) signingConfigs.create("preview") {
         storeFile = file("$previewDirectory/preview.jks")

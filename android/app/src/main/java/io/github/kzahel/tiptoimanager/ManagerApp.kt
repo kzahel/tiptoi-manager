@@ -1,6 +1,11 @@
 package io.github.kzahel.tiptoimanager
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.hardware.usb.UsbManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -31,6 +36,18 @@ class ManagerApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val detached = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (pen != null) {
+                    pen = null
+                    status = "USB disconnected. Reconnect the pen and scan again."
+                    changed?.invoke()
+                }
+            }
+        }
+        val filter = IntentFilter(UsbManager.ACTION_USB_DEVICE_DETACHED)
+        if (android.os.Build.VERSION.SDK_INT >= 33) registerReceiver(detached, filter, Context.RECEIVER_NOT_EXPORTED)
+        else registerReceiver(detached, filter)
         tree = preferences.getString("tree", null)?.let(Uri::parse)
         // A process interrupted during download never leaves a completed cache file.
         downloads.listFiles()?.filter { it.name.endsWith(".part") }?.forEach { it.delete() }

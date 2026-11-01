@@ -7,12 +7,16 @@ screenshots, inventories, phone endpoints and pen identity data stay private.
 | --- | --- |
 | Local build | Debug APK assembled with JDK 17, AGP 9.4.1 and Gradle 9.8.1 |
 | Content checks | JVM tests exercise GME checksum/size/ID failures, short reads, CSV quoting, shared IDs and download URL restrictions |
-| Android lint | Passed; platform/version and backup-policy warnings are not compatibility acceptance |
+| Android lint | Passed; platform/version warnings are not compatibility acceptance |
 | Physical deployment | App installed and launched on a Pixel 7a |
 | Folder permission | Android's document-tree picker exposed the pen and granted persistent access |
 | Inventory | Real GME headers, content totals, distinct product IDs and free space matched a prior host inventory |
-| Catalog/download | Implemented; end-to-end phone acceptance pending |
-| Write/read-back | Implemented; selected title ID 248 awaits end-to-end transfer acceptance |
+| Catalog/download | Physical instrumentation invoked the app's catalog refresh and downloaded ID 248; GME size, ID and checksum passed |
+| Write/read-back | The app installed selected ID 248; the runner independently reopened the final GME and matched SHA-256 against the cached download |
+| Prior content | Before/after filenames, sizes and header IDs matched for every pre-existing GME; no overwrite was attempted |
+| Inventory after restart | A second, read-only instrumentation run rediscovered the installed title and local catalog |
+| CI publication | Unit tests, lint, signed APK and automatic GitHub prerelease succeeded |
+| Complete UI flow | Picker and inventory observed; catalog/transfer exercised through typed on-device operations rather than a complete tap-driven UI test |
 | Playback | Requires a person to disconnect the pen and tap the physical book |
 | Second pen | Not tested |
 
