@@ -14,6 +14,12 @@ receive those secrets and use a disposable debug identity. Signing files are
 decoded into a private runner temporary directory and removed after the build.
 The publication job gets repository write permission separately from the build.
 
+Trusted previews also receive the publisher application-catalog configuration
+through `CATALOG_CLIENT_ID` and `CATALOG_CLIENT_SECRET`; values stay out of Git.
+They are a distributed app registration, not personal credentials or a
+confidential secret in the APK. No end-user sign-in is required. PR builds
+retain CSV/cached-data fallback. See [metadata configuration](book-metadata.md).
+
 The preview application ID is `io.github.kzahel.tiptoimanager.debug`. Main CI
 builds use the workflow run number as their version code, allowing later
 previews to update earlier previews with the same key. Check `source.json` and

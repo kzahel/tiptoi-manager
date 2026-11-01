@@ -48,6 +48,27 @@ jobs:
           with open(os.environ['GITHUB_ENV'], 'a') as env:
               env.write(f'TIPTOI_PREVIEW_SIGNING_DIR={folder}\n')
           PY
+      - name: Prepare publisher catalog client (trusted main only)
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          CATALOG_CLIENT_ID: ${{ secrets.CATALOG_CLIENT_ID }}
+          CATALOG_CLIENT_SECRET: ${{ secrets.CATALOG_CLIENT_SECRET }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          client_id = os.environ['CATALOG_CLIENT_ID']
+          client_secret = os.environ['CATALOG_CLIENT_SECRET']
+          assert client_id and client_secret, 'Publisher catalog configuration is missing'
+          assert not any(c in client_id + client_secret for c in '\r\n'), 'Invalid client configuration'
+          folder = Path(os.environ['RUNNER_TEMP']) / 'tiptoi-catalog'
+          folder.mkdir(mode=0o700)
+          config = folder / 'client.properties'
+          config.write_text('client.id=' + client_id + '\nclient.secret=' + client_secret + '\n')
+          config.chmod(0o600)
+          with open(os.environ['GITHUB_ENV'], 'a') as env:
+              env.write(f'TIPTOI_CATALOG_CLIENT_FILE={config}\n')
+          PY
       - name: Unit tests, Android lint and APK
         working-directory: android
         env:
@@ -74,7 +95,7 @@ jobs:
           retention-days: 30
       - name: Remove temporary signing files
         if: always()
-        run: rm -rf "${RUNNER_TEMP}/tiptoi-signing"
+        run: rm -rf "${RUNNER_TEMP}/tiptoi-signing" "${RUNNER_TEMP}/tiptoi-catalog"
 
   publish:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

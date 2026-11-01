@@ -33,6 +33,10 @@ than treating a build as proof of physical-device behavior.
   clear headers. Drill into installed books, storage and book details rather
   than showing everything on one page. Keep copy short; technical metadata
   belongs behind File details, explanations in Help, and progress in Transfers.
+- Use publisher covers and metadata matched by audio ID plus filename. Keep
+  publisher article numbers, ISBNs and printed editions distinct from audio
+  IDs. Cache artwork locally; retain generic fallbacks when a match is absent
+  or ambiguous. Never guess an ISBN or bundle publisher artwork in source.
 
 ## Reference workflow
 

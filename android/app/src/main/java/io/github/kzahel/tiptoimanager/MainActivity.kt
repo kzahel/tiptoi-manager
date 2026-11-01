@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
     private var progressLabel: TextView? = null
     private var progressBar: ProgressBar? = null
     private var busyLabel: TextView? = null
+    private var infoDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,11 +96,21 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         app.changed = { if (!isFinishing && !isDestroyed) render() }
         app.progressed = { updateProgress() }
+        app.metadataChanged = { article ->
+            if (screen == Screen.BOOK && selectedBooks().any { it.article == article }) {
+                if (infoDialog?.isShowing == true) infoDialog?.setMessage(fileInfoMessage())
+                else {
+                    val position = (body.parent as? ScrollView)?.scrollY ?: 0
+                    render()
+                    (body.parent as? ScrollView)?.post { (body.parent as? ScrollView)?.scrollTo(0, position) }
+                }
+            }
+        }
         render()
     }
 
     override fun onPause() {
-        app.changed = null; app.progressed = null
+        app.changed = null; app.progressed = null; app.metadataChanged = null
         super.onPause()
     }
 
@@ -290,15 +301,26 @@ class MainActivity : ComponentActivity() {
             if (screen == Screen.INSTALLED) {
                 val pen = app.pen
                 if (pen == null) { emptyState(UiIcon.PEN, "No pen connected"); return }
-                val files = pen.files.filter { matches(titleFor(it.name), it.id) }
+                val files = pen.files.filter { matches(titleFor(it.name), it.id) }.sortedBy { titleFor(it.name).lowercase(Locale.ROOT) }
                 body.addView(text("${files.size} audio files", 13, muted)); gap(body, 12)
                 if (files.isEmpty()) emptyState(UiIcon.BOOKS, "No matches")
-                files.forEach { file -> body.addView(bookRow(titleFor(file.name), size(file.size), true) {
+                files.forEach { file -> body.addView(bookRow(titleFor(file.name), size(file.size), true, app.book(file.name, file.id)) {
                     openBook(app.catalog.find { it.filename.equals(file.name, true) }, file.name)
                 }) }
             } else {
-                val entries = app.catalog.filter { (screen != Screen.DOWNLOADS || app.cached(it)) && matches(it.title, it.id) }
-                body.addView(text("${entries.size} ${if (screen == Screen.DOWNLOADS) "downloads" else "items"}", 13, muted)); gap(body, 12)
+                val entries = app.catalog.filter { entry ->
+                    val info = app.book(entry.filename, entry.id)
+                    val searchable = listOf(entry.title, info?.title, info?.series).filterNotNull().joinToString(" ")
+                    (screen != Screen.DOWNLOADS || app.cached(entry)) && (matches(searchable, entry.id) ||
+                        (query.isNotEmpty() && app.metadata.forEntry(entry).any { book -> book.article == query ||
+                            app.metadata.page(book.article)?.isbn?.replace("-", "") == query.replace("-", "") }))
+                }.sortedBy { app.title(it).lowercase(Locale.ROOT) }
+                val noun = if (screen == Screen.DOWNLOADS) { if (entries.size == 1) "download" else "downloads" }
+                    else if (entries.size == 1) "item" else "items"
+                body.addView(text("${entries.size} $noun", 13, muted)); gap(body, 12)
+                if (app.metadata.books.isEmpty() && app.metadataNotice != null) {
+                    body.addView(text("Book details unavailable · refresh to retry", 13, muted)); gap(body, 10)
+                }
                 if (entries.isEmpty()) {
                     when {
                         query.isNotEmpty() -> emptyState(UiIcon.BOOKS, "No matches")
@@ -311,8 +333,10 @@ class MainActivity : ComponentActivity() {
                 }
                 entries.take(80).forEach { entry ->
                     val present = onPen(entry.filename)
-                    val subtitle = listOfNotNull(if (present) "On pen" else if (app.cached(entry)) "Downloaded" else null, size(entry.size)).joinToString(" · ")
-                    body.addView(bookRow(entry.title, subtitle, present) { openBook(entry, entry.filename) })
+                    val info = app.book(entry.filename, entry.id)
+                    val subtitle = listOfNotNull(if (present) "On pen" else if (app.cached(entry)) "Downloaded" else null,
+                        info?.series ?: size(entry.size)).joinToString(" · ")
+                    body.addView(bookRow(app.title(entry), subtitle, present, info) { openBook(entry, entry.filename) })
                 }
                 if (entries.size > 80) { gap(body, 12); body.addView(text("Search to see more titles", 13, muted)) }
             }
@@ -333,20 +357,36 @@ class MainActivity : ComponentActivity() {
     private fun selectedEntry(): CatalogEntry? = app.catalog.find { it.cacheKey == selectedKey }
         ?: app.catalog.find { it.filename.equals(selectedFile, true) }
 
+    private fun selectedBooks(): List<BookInfo> {
+        val entry = selectedEntry()
+        val id = entry?.id ?: app.pen?.files?.find { it.name.equals(selectedFile, true) }?.id
+        if (id == 14999) return emptyList()
+        return selectedFile?.let { app.metadata.forFile(it, id) }.orEmpty()
+    }
+
     private fun bookScreen() {
         val entry = selectedEntry()
         val filename = entry?.filename ?: selectedFile ?: return
         val file = app.pen?.files?.find { it.name.equals(filename, true) }
         val cached = entry?.let(app::cached) == true
         val present = file != null
-        val cover = card(soft)
+        val book = app.book(filename, entry?.id ?: file?.id)
+        book?.let { app.requestPublisherDetails(it) }
+        val page = book?.let { app.metadata.page(it.article) }
+        val cover = card(Color.WHITE)
         cover.gravity = Gravity.CENTER_HORIZONTAL
-        cover.setPadding(dp(24), dp(36), dp(24), dp(36))
-        cover.addView(icon(UiIcon.BOOKS, green, 64))
+        cover.setPadding(dp(12), dp(12), dp(12), dp(12))
+        if (book != null) cover.addView(coverView(book, page?.coverUrl ?: book.coverUrl, 300), LinearLayout.LayoutParams(-1, dp(250)))
+        else {
+            cover.setPadding(dp(24), dp(36), dp(24), dp(36))
+            cover.addView(icon(UiIcon.BOOKS, green, 64))
+        }
         body.addView(cover); gap(body, 24)
-        body.addView(text(entry?.title ?: titleFor(filename), 26, ink, true))
+        body.addView(text(book?.title ?: entry?.title ?: titleFor(filename), 26, ink, true))
+        book?.series?.let { gap(body, 8); body.addView(text(it, 15, muted)) }
         gap(body, 12)
-        body.addView(text(size(entry?.size ?: file?.size ?: 0), 15, muted))
+        val age = book?.ageFrom?.let { from -> if (book.ageTo != null && book.ageTo != from) "$from–${book.ageTo} years" else "$from+ years" }
+        body.addView(text(listOfNotNull(age, size(entry?.size ?: file?.size ?: 0)).joinToString(" · "), 15, muted))
         gap(body, 20)
         if (present) { body.addView(chip("On your pen", UiIcon.CHECK)); gap(body, 10) }
         if (cached) { body.addView(chip("Saved on this phone", UiIcon.DOWNLOAD)); gap(body, 10) }
@@ -359,18 +399,46 @@ class MainActivity : ComponentActivity() {
             !present -> body.addView(action("Connect a pen") { navigate(Screen.PEN, false) })
         }
         if (cached) body.addView(action("Download again", false) {
-            AlertDialog.Builder(this).setTitle("Download again?").setMessage(entry.title)
+            AlertDialog.Builder(this).setTitle("Download again?").setMessage(app.title(entry))
                 .setNegativeButton("Cancel", null).setPositiveButton("Download") { _, _ ->
                     navigate(Screen.TRANSFERS); app.download(entry)
                 }.show()
         })
+        book?.takeIf { it.description.isNotBlank() || it.shortDescription.isNotBlank() }?.let {
+            gap(body, 24)
+            body.addView(text("About this book", 19, ink, true)); gap(body, 10)
+            val summary = it.shortDescription.ifBlank { it.description }
+            body.addView(text(summary, 15, muted).apply { maxLines = 4; ellipsize = TextUtils.TruncateAt.END })
+            body.addView(action("Read more", false) { showMessage(it.title, it.description.ifBlank { summary }) })
+        }
     }
 
     private fun fileDetails() {
+        selectedBooks().take(5).forEach { app.requestPublisherDetails(it) }
+        infoDialog?.dismiss()
+        infoDialog = AlertDialog.Builder(this).setTitle("Book & file details").setMessage(fileInfoMessage())
+            .setPositiveButton("Done", null).apply {
+                selectedBooks().firstOrNull()?.let { book -> setNeutralButton("Publisher page") { _, _ ->
+                    startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(book.publisherUrl)))
+                } }
+            }.show()
+    }
+
+    private fun fileInfoMessage(): String {
         val entry = selectedEntry()
         val file = app.pen?.files?.find { it.name.equals(selectedFile, true) }
-        showMessage("File details", listOfNotNull(selectedFile, (entry?.id ?: file?.id)?.let { "Product ID $it" },
-            entry?.version?.let { "Catalog version $it" }, file?.problem).joinToString("\n\n"))
+        val editions = selectedBooks()
+        val fields = mutableListOf<String>()
+        if (editions.size > 1) fields.add("${editions.size} publisher products share this audio. The pen does not identify your printed edition.")
+        editions.take(5).forEach { book ->
+            val page = app.metadata.page(book.article)
+            fields.add(listOfNotNull(book.title, "Article ${book.article}",
+                page?.isbn?.let { "ISBN $it" } ?: if (book.article in app.pendingPublisherPages) "Loading ISBN…" else "ISBN not available",
+                page?.pages?.let { "$it pages" }).joinToString("\n"))
+        }
+        fields.addAll(listOfNotNull(selectedFile, (entry?.id ?: file?.id)?.let { "Audio ID $it" },
+            entry?.version?.let { "Audio version $it" }, file?.problem))
+        return fields.joinToString("\n\n")
     }
 
     private fun transfersScreen() {
@@ -386,7 +454,7 @@ class MainActivity : ComponentActivity() {
         val summary = card()
         summary.addView(icon(symbol, if (transfer.failed) 0xFF9B2A22.toInt() else green, 48)); gap(summary, 20)
         summary.addView(text(heading, 25, ink, true)); gap(summary, 12)
-        if (entry != null) summary.addView(text(entry.title, 17, ink))
+        if (entry != null) summary.addView(text(app.title(entry), 17, ink))
         progressLabel = text(transfer.stage, 14, muted)
         gap(summary, 16); summary.addView(progressLabel)
         if (transfer.running) {
@@ -421,9 +489,9 @@ class MainActivity : ComponentActivity() {
         gap(about, 12)
         about.addView(action("Open-source licenses", false) {
             val notices = assets.open("NOTICE.txt").bufferedReader().use { it.readText() }
-            val projectLicense = assets.open("MIT.txt").bufferedReader().use { it.readText() }
-            val license = assets.open("Apache-2.0.txt").bufferedReader().use { it.readText() }
-            showMessage("Open-source licenses", "$notices\n\n$projectLicense\n\n$license")
+            val licenses = listOf("MIT.txt", "Apache-2.0.txt", "jsoup-MIT.txt", "desugar-GPL-2-with-classpath.txt")
+                .joinToString("\n\n") { name -> assets.open(name).bufferedReader().use { it.readText() } }
+            showMessage("Open-source licenses", "$notices\n\n$licenses")
         })
         body.addView(about)
     }
@@ -432,7 +500,7 @@ class MainActivity : ComponentActivity() {
         val pen = app.pen ?: return
         val unknown = if (pen.free == null) "\nFree space is unavailable." else ""
         AlertDialog.Builder(this).setTitle("Install on your pen?")
-            .setMessage("${entry.title}\n${size(entry.size)} · Existing files stay untouched.$unknown")
+            .setMessage("${app.title(entry)}\n${size(entry.size)} · Existing files stay untouched.$unknown")
             .setNegativeButton("Cancel", null).setPositiveButton("Install") { _, _ ->
                 navigate(Screen.TRANSFERS); app.install(entry)
             }.show()
@@ -474,11 +542,21 @@ class MainActivity : ComponentActivity() {
         return line
     }
 
-    private fun bookRow(title: String, subtitle: String, installed: Boolean, action: () -> Unit): LinearLayout {
+    private fun bookRow(title: String, subtitle: String, installed: Boolean, book: BookInfo? = null, action: () -> Unit): LinearLayout {
         val line = navRow(if (installed) UiIcon.CHECK else UiIcon.BOOKS, title, subtitle, action)
+        if (book != null) {
+            line.removeViewAt(0)
+            line.addView(coverView(book, book.thumbUrl, 180), 0, LinearLayout.LayoutParams(dp(50), dp(64)))
+        }
         val labels = line.getChildAt(1) as LinearLayout
         (labels.getChildAt(0) as TextView).apply { maxLines = 2; ellipsize = TextUtils.TruncateAt.END; textSize = 16f }
         return line
+    }
+    private fun coverView(book: BookInfo, url: String?, pixels: Int) = CoverView(this).apply {
+        setImageDrawable(IconDrawable(UiIcon.BOOKS, green))
+        scaleType = ImageView.ScaleType.FIT_CENTER
+        contentDescription = "Cover of ${book.title}"
+        app.covers.bind(this, url, pixels)
     }
     private fun emptyState(symbol: UiIcon, title: String, subtitle: String? = null) {
         gap(body, 36); body.addView(icon(symbol, green, 48)); gap(body, 20)
@@ -524,7 +602,12 @@ class MainActivity : ComponentActivity() {
     private fun row() = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
     private fun gap(parent: LinearLayout, height: Int) { parent.addView(View(this), LinearLayout.LayoutParams(1, dp(height))) }
     private fun onPen(filename: String) = app.pen?.files?.any { it.name.equals(filename, true) } == true
-    private fun titleFor(filename: String) = app.catalog.find { it.filename.equals(filename, true) }?.title ?: filename.removeSuffix(".gme").replace('_', ' ')
+    private fun titleFor(filename: String): String {
+        val entry = app.catalog.find { it.filename.equals(filename, true) }
+        if (entry != null) return app.title(entry)
+        val id = app.pen?.files?.find { it.name.equals(filename, true) }?.id
+        return app.book(filename, id)?.title ?: filename.removeSuffix(".gme").replace('_', ' ')
+    }
     private fun hideKeyboard() { (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(root.windowToken, 0); root.clearFocus() }
     private fun showMessage(title: String, message: String) { AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("Done", null).show() }
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()

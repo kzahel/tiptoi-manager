@@ -18,9 +18,16 @@ data class TransferInfo(val action: String, val bookKey: String, val stage: Stri
 class ManagerApp : Application() {
     private val executor = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
+    private val detailsWorker = Executors.newFixedThreadPool(2)
     private val preferences by lazy { getSharedPreferences("manager", MODE_PRIVATE) }
     val storage by lazy { PenStorage(contentResolver) }
     val downloads by lazy { File(filesDir, "downloads").apply { mkdirs() } }
+    val metadata by lazy { BookMetadataStore(File(filesDir, "book-metadata"), BuildConfig.CATALOG_CLIENT_ID, BuildConfig.CATALOG_CLIENT_SECRET) }
+    val covers by lazy { CoverImages(File(filesDir, "covers")) }
+    var metadataChanged: ((String) -> Unit)? = null
+    var metadataNotice: String? = null
+        private set
+    val pendingPublisherPages: MutableSet<String> = java.util.concurrent.ConcurrentHashMap.newKeySet()
     var tree: Uri? = null
         private set
     var pen: PenSnapshot? = null
@@ -57,6 +64,7 @@ class ManagerApp : Application() {
         // A process interrupted during download never leaves a completed cache file.
         downloads.listFiles()?.filter { it.name.endsWith(".part") }?.forEach { it.delete() }
         work("Loading local library") {
+            metadata.loadCached()
             val local = File(filesDir, "catalog.csv")
             if (local.exists()) catalog = Catalog.parse(local.readText())
             status = if (catalog.isEmpty()) "Refresh the catalog to browse books." else "Catalog loaded from this phone."
@@ -84,12 +92,32 @@ class ManagerApp : Application() {
             check(parsed.isNotEmpty()) { "The catalog contained no supported content." }
             check(partial.renameTo(File(filesDir, "catalog.csv"))) { "Could not save the catalog." }
             catalog = parsed
+            metadataNotice = runCatching { metadata.refresh() }.exceptionOrNull()?.message
+            main.post { covers.clearFailures() }
             status = "Catalog refreshed. ${catalog.size} content files, including companion files."
         } finally { partial.delete() }
     }
 
     fun cache(entry: CatalogEntry): File = File(downloads, entry.cacheKey)
     fun cached(entry: CatalogEntry): Boolean = cache(entry).let { it.isFile && it.length() == entry.size }
+
+    fun book(filename: String, id: Int?): BookInfo? {
+        if (id == 14999) return null // Shared support content is not an individual book.
+        val candidates = metadata.forFile(filename, id)
+        return candidates.firstOrNull()?.takeIf { candidates.map { book -> book.title }.distinct().size == 1 }
+    }
+
+    fun title(entry: CatalogEntry): String = book(entry.filename, entry.id)?.title ?: entry.title
+
+    fun requestPublisherDetails(book: BookInfo) {
+        if (metadata.pageFresh(book.article) || !metadata.attemptedPages.add(book.article)) return
+        pendingPublisherPages.add(book.article)
+        detailsWorker.execute {
+            runCatching { metadata.fetchPage(book) }
+            pendingPublisherPages.remove(book.article)
+            main.post { metadataChanged?.invoke(book.article) }
+        }
+    }
 
     fun download(entry: CatalogEntry) = work("Download", entry) {
         val partial = File(downloads, entry.cacheKey + ".part")

@@ -11,3 +11,11 @@ Apache License 2.0.
 The Apache License 2.0 follows. No Ravensburger book audio, artwork or firmware
 is bundled with this application. tiptoi is a Ravensburger trademark; this
 independent project is not affiliated with or endorsed by Ravensburger.
+
+jsoup 1.23.2: Copyright Jonathan Hedley and contributors. MIT License.
+Source: https://github.com/jhy/jsoup/tree/jsoup-1.23.2
+
+Unmodified OpenJDK desugared library support, desugar_jdk_libs_nio 2.1.5.
+Copyright Oracle, Google and contributors. GPL-2.0 with Classpath exception.
+Source: https://github.com/google/desugar_jdk_libs
+Separate license texts accompany this notice.

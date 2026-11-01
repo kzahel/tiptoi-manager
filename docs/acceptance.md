@@ -41,6 +41,14 @@ accessibility/device compatibility are not established by these checks.
 
 ## Boundaries
 
+Publisher metadata revision: JVM tests cover shared-ID/filename joins, retained
+editions, unsafe URL rejection, matching publisher-page identity, ISBN checksum
+validation and local-cache loading. Live Pixel requests matched audio ID 248
+to article 49230, obtained a valid ISBN and decoded cover files. A second
+cached-only device run passed without metadata requests. The UI exercised the
+cover list, larger artwork, ISBN info dialog, description and Back/query
+restoration. Broader title/edition coverage remains upstream-dependent.
+
 The current pen fingerprint hashes the 64-byte metadata file. It is an
 installation-session safeguard, not a proven stable identity across firmware
 updates or both pens. Inventory scans check GME headers, not every installed

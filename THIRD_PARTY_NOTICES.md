@@ -16,6 +16,13 @@ Open Source Project and contributors. Runtime notices and the Apache license
 are bundled in the APK and accessible from Help & about.
 
 Reference checkouts retain their own licenses and are not bundled in the APK.
+
+jsoup 1.23.2 is MIT licensed by Jonathan Hedley and contributors. Unmodified
+OpenJDK support from desugar_jdk_libs_nio 2.1.5 uses GPL-2.0 with the Classpath
+exception; its sources are available from Google at
+https://github.com/google/desugar_jdk_libs. Both license texts and notices are
+bundled in the APK. JSON-java 20260814 is public domain and is used only in
+development tests; Android supplies the runtime JSON APIs.
 Ravensburger's catalog and content are fetched from their servers at the user's
 request. No book audio, artwork, firmware or other Ravensburger content is
 redistributed in the repository or APK.

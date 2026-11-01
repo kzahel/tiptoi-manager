@@ -39,3 +39,10 @@ Success is `INSTRUMENTATION_CODE: -1` and a passed stream message. Failure is
 code `0`; ADB's process exit status alone is not the acceptance result. Output
 contains counts, so retain raw results privately. This runner proves real
 storage operations, not every UI interaction, playback or hot-unplug recovery.
+
+For metadata without requiring an attached pen, pass `-e metadataProductId ID`.
+It refreshes the catalog, verifies an unambiguous audio-file match, reads a
+publisher-confirmed ISBN and decodes cached thumbnail/detail artwork. A
+subsequent `-e metadataProductId ID -e metadataCachedOnly true` run uses only
+local catalog, page details and image files and makes no metadata requests.
+These modes do not download or install audio files.

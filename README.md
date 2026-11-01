@@ -64,6 +64,7 @@ some official content groups intentionally contain multiple files with one ID.
 - [Physical acceptance and remaining checks](docs/acceptance.md)
 - [Opt-in device smoke runner](docs/device-smoke.md)
 - [Navigation and screen responsibilities](docs/navigation.md)
+- [Publisher metadata, covers and offline caching](docs/book-metadata.md)
 
 ## Reference checkouts
 
@@ -105,8 +106,10 @@ shows the current or most recent transfer in this session.
 The app never replaces existing filenames in this spike. It does not install
 firmware, delete books, implement automatic companion-file selection, or claim
 playback-based cleanup. Transfers require the app to remain open; interruption
-recovery and multi-pen persistence are later work. Filenames provide the first
-version's display titles.
+recovery and multi-pen persistence are later work. Publisher covers, titles,
+descriptions and age ranges enrich the catalog. ISBNs and article numbers are
+behind the info button. Viewed artwork and details are cached locally, with
+filename/icon fallbacks when publisher metadata is absent or ambiguous.
 
 Android CI runs unit tests and lint, builds an APK and publishes experimental
 previews. Bootstrap CI also checks the reference manifest and Python helper.

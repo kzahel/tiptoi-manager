@@ -20,6 +20,30 @@ class UsbSmokeInstrumentation : Instrumentation() {
         try {
             val app = targetContext.applicationContext as ManagerApp
             waitIdle(app)
+            arguments.getString("metadataProductId")?.toInt()?.let { id ->
+                val offline = arguments.getString("metadataCachedOnly") == "true"
+                if (!offline) operation(app) { app.refreshCatalog() }
+                val entry = app.catalog.single { it.id == id }
+                val book = app.book(entry.filename, entry.id) ?: error("No unambiguous publisher metadata matched the audio.")
+                val details = if (offline) app.metadata.page(book.article) ?: error("Publisher details are not cached.")
+                    else app.metadata.fetchPage(book)
+                check(details.isbn != null && BookMetadataParser.validIsbn(details.isbn)) { "No validated publisher ISBN." }
+                for (url in listOfNotNull(book.thumbUrl, details.coverUrl ?: book.coverUrl).distinct()) {
+                    val cache = app.covers.file(url)
+                    if (!offline) atomicWrite(cache, PublisherHttp.get(url, 5_000_000, PublisherUrls::image))
+                    check(cache.exists()) { "Cover was not cached." }
+                    val bitmap = android.graphics.BitmapFactory.decodeFile(cache.path)
+                    check(bitmap != null && bitmap.width > 0 && bitmap.height > 0) { "Cover did not decode." }
+                    bitmap.recycle()
+                }
+                results.putBoolean("publisherMetadataMatched", true)
+                results.putBoolean("publisherIsbnValidated", true)
+                results.putBoolean("cachedCoversDecoded", true)
+                results.putBoolean("cachedOnly", offline)
+                results.putString("stream", "Publisher metadata and covers passed${if (offline) " from cache without network requests" else " using direct publisher requests"}.\n")
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             val tree = app.tree ?: error("Grant the pen's folder through the app before running this check.")
             val original = app.storage.scan(tree)
             results.putInt("inventoryFiles", original.files.size)
