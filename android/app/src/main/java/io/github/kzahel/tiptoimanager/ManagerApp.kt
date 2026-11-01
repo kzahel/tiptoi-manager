@@ -110,7 +110,8 @@ class ManagerApp : Application() {
     fun title(entry: CatalogEntry): String = book(entry.filename, entry.id)?.title ?: entry.title
 
     fun requestPublisherDetails(book: BookInfo) {
-        if (metadata.pageFresh(book.article) || !metadata.attemptedPages.add(book.article)) return
+        if (metadata.pageFresh(book.article) || book.article in pendingPublisherPages ||
+            !metadata.attemptedPages.add(book.article)) return
         pendingPublisherPages.add(book.article)
         detailsWorker.execute {
             runCatching { metadata.fetchPage(book) }
