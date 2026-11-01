@@ -1,8 +1,10 @@
 # Android CI and distribution
 
-The first spike is public MIT source with experimental APKs, not a production
-release or Play listing. The Android workflow runs unit tests, lint and an APK
-build for app changes. It uploads the APK, SHA-256 checksum and source receipt
+The repository publishes MIT source, experimental preview APKs and signed
+production candidates. The first Play production release is submitted and
+awaiting Google review; see [submission status](play-publication.md#submission-status--1-november-2026).
+The Android preview workflow runs unit tests, lint and an APK build for app
+changes. It uploads the APK, SHA-256 checksum and source receipt
 as a 30-day Actions artifact. Trusted `main` builds additionally publish an
 immutable `preview-N` GitHub prerelease at that build's exact source revision.
 
@@ -38,11 +40,16 @@ Private recovery copies of that key and password are kept outside the Git
 checkout. Back them up together; never commit them or reuse another app's key.
 GitHub secrets provide CI delivery, not a downloadable key backup.
 
-## Later release decisions
+## Production release candidates
 
-Tagged stable releases, a production signing identity, an AAB and Play
-publication are later decisions. Physical USB/playback acceptance remains
-separate from CI. An emulator cannot establish cable, pen or provider support.
+The separately dispatched Android release-candidate workflow builds a signed
+APK and AAB with a dedicated upload key and an explicit increasing version code.
+It publishes an immutable GitHub prerelease with checksums and a source receipt.
+Play App Signing uses a separate Google-managed signing key. The first candidate
+was uploaded manually through Play Console; CI does not yet automatically
+publish to Play. See [the release flow](play-publication.md#candidate-flow).
+Physical USB/playback acceptance remains separate from CI. An emulator cannot
+establish cable, pen or provider support.
 
 Owned workflow references remain pinned in `repos.yaml`:
 

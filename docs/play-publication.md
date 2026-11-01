@@ -5,6 +5,36 @@ Brand: Pen Library; store title: Pen Library for tiptoi. Package:
 The release is a free, independent USB utility for parents/adults, with no ads,
 accounts, purchases or backend. Do not claim Ravensburger endorsement.
 
+## Submission status — 1 November 2026
+
+Production **0.1.0 (102)** was submitted through Play Console. The Console
+confirmed **“13 changes sent for review”** and **“Changes in review”**. This is
+not yet an approved or publicly downloadable Play listing. Managed publishing
+is off: approval is configured to publish the full production rollout in all
+178 available countries/regions automatically. Google’s automatic checks and
+human review can still identify issues.
+
+- [CI candidate and source receipt](https://github.com/kzahel/tiptoi-manager/releases/tag/v0.1.0-rc102)
+- [Successful release workflow](https://github.com/kzahel/tiptoi-manager/actions/runs/41324251905)
+- App source: `a274c9367f78e68039fa3a8ac7179ba34b809070`
+- Uploaded AAB SHA-256: `5a28c66a9bd117087618e9a08b1ea5b0b5866bd7bc07dcfacf1c43116a5ecee4`
+- English, German and French listings, release notes, original icon/feature
+  art, and four actual demo screenshots per language submitted together.
+- [Privacy policy](https://kzahel.github.io/tiptoi-manager/privacy/) and support
+  website are live. No ads, advertising ID, purchases or account requirement.
+- Play App Signing is enabled; the optional installer check is disabled.
+  Automatic app-text translation is disabled because the app bundles its three
+  supported languages.
+
+Play reported a missing deobfuscation-file warning; this build explicitly has
+`isMinifyEnabled = false`, so it has no obfuscation mapping. A pre-review check
+also reported the privacy URL as missing. A fresh HTTPS GET returned the complete
+policy with HTTP 200; the Console’s **Proceed anyway** path was used for that
+incorrect finding. The advertising-ID declaration was then completed as **No**.
+Reviewer access instructions describe the read-only demo and the USB hardware
+needed for actual transfers. Google’s review remains the publication gate; do
+not promote the candidate’s GitHub prerelease as evidence of Play approval.
+
 ## Candidate flow
 
 1. Run `python3 scripts/i18n.py check`, localization-tool regression tests,
@@ -19,6 +49,12 @@ accounts, purchases or backend. Do not claim Ravensburger endorsement.
 4. For the first release, upload that exact CI AAB through Play Console. Use
    Play App Signing with a dedicated Google-generated app-signing key, distinct
    from the backed-up upload key. Never use another project's signing identity.
+   Play distributes APKs signed with Google's separate app-signing key. The
+   direct-download CI APK uses the upload identity; it is a separate install
+   channel for the production package. Switching signing identities can require
+   uninstalling, which erases local backups. Existing `.debug` previews have a
+   separate package and remain untouched. Prefer Play for normal production
+   updates once available.
 5. Complete store listings for en-US/de-DE/fr-FR, support/privacy links, content
    declarations, rating, countries and release notes. Inspect the final overview
    and submit the authorized production release for review. Record actual

@@ -3,8 +3,8 @@
 An independent, open-source Android manager for tiptoi pens: see what is on a
 pen, install books over USB, manage space, and keep a family's pens in sync.
 
-**Status: first public-release preparation.** USB inventory has been exercised
-on a real fourth-generation pen. Catalog search, offline downloads and verified,
+**Status: first production release submitted to Google Play; review pending.**
+USB inventory has been exercised on a real fourth-generation pen. Catalog search, offline downloads and verified,
 non-overwriting installs, manual removal with verified phone backups and offline
 restoration are implemented; see the [acceptance record](docs/acceptance.md)
 for what has actually been tested. Compatibility beyond the tested hardware still needs verification.
@@ -13,7 +13,7 @@ for what has actually been tested. Compatibility beyond the tested hardware stil
 published automatically from `main`. Previews use a dedicated signing key and
 the application ID `io.github.kzahel.tiptoimanager.debug`.
 
-Release preparation includes an English, German and French interface, a public
+The release includes an English, German and French interface, a public
 read-only sample library, original store art and signed production candidates.
 See [Play publication](docs/play-publication.md) for the source-bound release
 flow and actual publication status.

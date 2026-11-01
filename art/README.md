@@ -19,3 +19,8 @@ Regenerate exports with `python3 scripts/store_art.py` and `rsvg-convert`.
 Store screenshots come from a dedicated disposable Android emulator, never a
 synthetic recreation of app screens. Screenshot capture tooling is documented
 in `store/README.md`. Keep private device captures under ignored `.local/`.
+
+Play asset declarations label the original icon and generated feature
+illustration as AI-assisted/AI-created art. Phone screenshots are actual app
+captures, not generated interfaces. The book-detail capture includes normal
+scrolling to show its file-management actions.

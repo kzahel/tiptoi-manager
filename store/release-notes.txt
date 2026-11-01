@@ -1,0 +1,9 @@
+<en-US>
+First release of Pen Library: manage tiptoi audio over USB, keep or remove phone downloads, create verified removal backups, and manage several pen profiles and shared book selections. Interface in English, German and French. The book catalog and audio are currently German.
+</en-US>
+<de-DE>
+Erste Version von Pen Library: tiptoi-Audio per USB verwalten, Smartphone-Downloads behalten oder löschen, geprüfte Sicherungen vor dem Entfernen erstellen und mehrere Stiftprofile mit gemeinsamer Buchauswahl verwalten. Oberfläche auf Englisch, Deutsch und Französisch. Katalog und Audio sind derzeit auf Deutsch.
+</de-DE>
+<fr-FR>
+Première version de Pen Library : gérez l’audio tiptoi par USB, conservez ou supprimez les téléchargements du téléphone, créez des sauvegardes vérifiées avant suppression et gérez plusieurs stylets avec des sélections partagées. Interface en anglais, allemand et français. Le catalogue et l’audio sont actuellement en allemand.
+</fr-FR>
