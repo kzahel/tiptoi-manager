@@ -20,6 +20,6 @@ def check():
         png(folder/'feature.png',(1024,500))
         shots=sorted((folder/'phone').glob('*.png'))
         if not 2<=len(shots)<=8:raise ValueError(f'{locale}: expected 2–8 phone screenshots')
-        for path in shots:png(path,(1080,2400))
+        for path in shots:png(path,(1080,1920))
         print(f'{locale}: metadata, feature graphic and {len(shots)} RGB screenshots checked')
 if __name__=='__main__':check()

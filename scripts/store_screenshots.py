@@ -40,6 +40,12 @@ def capture(serial,locale):
     try:
         for label,name in zip(LABELS[locale],['01-pens','02-pen','03-library','04-book']):
             tap(label)
+            if name=='04-book':
+                scroll=next(n for n in nodes() if n.get('scrollable')=='true' and n.get('class')=='android.widget.ScrollView')
+                x1,y1,x2,y2=map(int,re.findall(r'\d+',scroll.get('bounds')))
+                x=str((x1+x2)//2)
+                adb('shell','input','swipe',x,str(y1+(y2-y1)*3//4),x,str(y1+(y2-y1)*2//5),'350')
+                time.sleep(.5)
             visible=nodes()
             if not any('Demo' in n.get('text','') or 'Démo' in n.get('text','') for n in visible):raise RuntimeError('Demo banner missing')
             (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))

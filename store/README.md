@@ -7,7 +7,7 @@ family reading pens; this app is a file-management utility, not a children's
 reading game. Free, no advertisements or purchases.
 
 `{en-US,de-DE,fr-FR}/listing.json` owns localized descriptions. Each locale has
-a 1024 × 500 feature graphic and four unedited 1080 × 2400 actual app captures.
+a 1024 × 500 feature graphic and four unedited 1080 × 1920 actual app captures.
 Shared `icon.png` is 512 × 512. Screenshots are losslessly exported as RGB
 PNG (the unused opaque alpha channel is removed); captured pixels are unchanged.
 The capture/export scripts require ImageMagick (`magick`), and art export also
