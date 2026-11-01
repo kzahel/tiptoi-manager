@@ -33,5 +33,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    sourceSets["main"].assets.directories.add(rootProject.file("licenses").path)
 }
-dependencies { testImplementation("junit:junit:4.13.2") }
+dependencies {
+    implementation("androidx.drawerlayout:drawerlayout:1.2.0")
+    implementation("androidx.activity:activity:1.10.1")
+    testImplementation("junit:junit:4.13.2")
+}

@@ -63,6 +63,7 @@ some official content groups intentionally contain multiple files with one ID.
 - [Android CI and publication direction](docs/distribution.md)
 - [Physical acceptance and remaining checks](docs/acceptance.md)
 - [Opt-in device smoke runner](docs/device-smoke.md)
+- [Navigation and screen responsibilities](docs/navigation.md)
 
 ## Reference checkouts
 
@@ -91,11 +92,15 @@ adb -s YOUR_PHONE install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
 1. Connect a pen to the phone with a data-capable cable or OTG adapter.
-2. Open Tiptoi Manager, choose the pen's top-level USB folder, and allow access.
-3. Inspect the inventory; open Library and refresh the German catalog.
-4. Search for a title or product ID and download it to the phone.
-5. Select Install on pen, review the destination, and keep the app open until
-   read-back verification finishes. Unplug and check playback with the book.
+2. Open My pen, choose the pen's top-level USB folder, and allow access.
+3. Use the hamburger menu to open Browse books and load the German catalog.
+4. Search for a title or product ID, open the book, and choose Download.
+5. Open the saved book from Downloads and choose Install on pen. Keep the app
+   open until Transfers reports completion. Unplug and check playback with the book.
+
+My pen opens separate Installed books and Storage screens. Book details show
+the available action; File details holds filenames and versions. Transfers
+shows the current or most recent transfer in this session.
 
 The app never replaces existing filenames in this spike. It does not install
 firmware, delete books, implement automatic companion-file selection, or claim

@@ -29,6 +29,10 @@ than treating a build as proof of physical-device behavior.
   inventory and synchronization decisions too.
 - Prefer a native Kotlin Android spike unless the owner chooses another stack
   at kickoff. Prove USB access on hardware before building out the full UI.
+- Use the hamburger drawer for top-level sections and focused screens with
+  clear headers. Drill into installed books, storage and book details rather
+  than showing everything on one page. Keep copy short; technical metadata
+  belongs behind File details, explanations in Help, and progress in Transfers.
 
 ## Reference workflow
 

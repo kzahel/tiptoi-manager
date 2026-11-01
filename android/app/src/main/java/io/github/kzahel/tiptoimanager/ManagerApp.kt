@@ -12,6 +12,9 @@ import android.os.Looper
 import java.io.File
 import java.util.concurrent.Executors
 
+data class TransferInfo(val action: String, val bookKey: String, val stage: String = "Preparing",
+    val percent: Int? = null, val running: Boolean = true, val failed: Boolean = false)
+
 class ManagerApp : Application() {
     private val executor = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
@@ -32,6 +35,8 @@ class ManagerApp : Application() {
         private set
     var changed: (() -> Unit)? = null
     var progressed: (() -> Unit)? = null
+    var transfer: TransferInfo? = null
+        private set
     private var lastProgress = 0L
 
     override fun onCreate() {
@@ -86,7 +91,7 @@ class ManagerApp : Application() {
     fun cache(entry: CatalogEntry): File = File(downloads, entry.cacheKey)
     fun cached(entry: CatalogEntry): Boolean = cache(entry).let { it.isFile && it.length() == entry.size }
 
-    fun download(entry: CatalogEntry) = work("Downloading ${entry.title}") {
+    fun download(entry: CatalogEntry) = work("Download", entry) {
         val partial = File(downloads, entry.cacheKey + ".part")
         try {
             Downloads.fetch(entry.url, partial, entry.size) { progress("Downloading", it, entry.size) }
@@ -97,7 +102,7 @@ class ManagerApp : Application() {
         } finally { partial.delete() }
     }
 
-    fun install(entry: CatalogEntry) = work("Preparing install") {
+    fun install(entry: CatalogEntry) = work("Install", entry) {
         val selected = pen ?: error("Scan the connected pen first.")
         storage.install(selected, entry, cache(entry)) { stage, bytes -> progress(stage, bytes, entry.size) }
         pen = storage.scan(selected.tree)
@@ -108,17 +113,26 @@ class ManagerApp : Application() {
         val now = System.currentTimeMillis()
         if (now - lastProgress < 250 && bytes != 0L && bytes != total) return
         lastProgress = now
-        main.post { status = "$stage · ${(bytes * 100 / total).coerceIn(0, 100)}%"; progressed?.invoke() }
+        main.post {
+            val percent = (bytes * 100 / total).coerceIn(0, 100).toInt()
+            status = "$stage · $percent%"
+            transfer?.takeIf { it.running }?.let { transfer = it.copy(stage = stage, percent = percent) }
+            progressed?.invoke()
+        }
     }
 
-    private fun work(label: String, action: () -> Unit) {
+    private fun work(label: String, book: CatalogEntry? = null, action: () -> Unit) {
         if (busy) return
-        busy = true; status = label; failure = false; changed?.invoke()
+        busy = true; status = label; failure = false
+        if (book != null) transfer = TransferInfo(label, book.cacheKey)
+        changed?.invoke()
         executor.execute {
             var error: String? = null
             try { action() } catch (e: Exception) { error = e.message ?: "Operation failed. Reconnect and try again." }
             main.post {
                 if (error != null) { status = error; failure = true }
+                if (book != null) transfer = transfer?.copy(running = false, failed = error != null,
+                    stage = error ?: if (label == "Download") "Saved offline" else "Read-back verified", percent = null)
                 busy = false; changed?.invoke()
             }
         }

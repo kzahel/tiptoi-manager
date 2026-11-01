@@ -1,0 +1,13 @@
+Tiptoi Manager
+Project-authored code: MIT License (Kyle Graehl).
+
+Kotlin standard library
+Copyright JetBrains and Kotlin contributors. Apache License 2.0.
+
+AndroidX DrawerLayout, Activity and supporting AndroidX components
+Copyright The Android Open Source Project and contributors.
+Apache License 2.0.
+
+The Apache License 2.0 follows. No Ravensburger book audio, artwork or firmware
+is bundled with this application. tiptoi is a Ravensburger trademark; this
+independent project is not affiliated with or endorsed by Ravensburger.

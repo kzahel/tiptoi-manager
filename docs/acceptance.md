@@ -16,9 +16,28 @@ screenshots, inventories, phone endpoints and pen identity data stay private.
 | Prior content | Before/after filenames, sizes and header IDs matched for every pre-existing GME; no overwrite was attempted |
 | Inventory after restart | A second, read-only instrumentation run rediscovered the installed title and local catalog |
 | CI publication | Unit tests, lint, signed APK and automatic GitHub prerelease succeeded |
-| Complete UI flow | Picker and inventory observed; catalog/transfer exercised through typed on-device operations rather than a complete tap-driven UI test |
+| Complete UI flow | Original picker/inventory observed; the navigation revision below additionally exercises browsing and a download through the real UI. UI installation of an absent title remains separate. |
 | Playback | Requires a person to disconnect the pen and tap the physical book |
 | Second pen | Not tested |
+
+## Navigation revision
+
+The owner requested a hamburger menu, distinct sections, shorter copy and one
+task per screen. The revision adds My pen, Browse books, Downloads, Transfers
+and Help & about, with child screens for installed books, storage and book details.
+
+Physical Pixel checks exercised the drawer, system Back to close it, toolbar
+Back through child screens, the installed-file list, storage, catalog search,
+book details and its separate file-information dialog. Returning from a book
+retained the catalog query. Downloads showed the cached title. A deliberate
+re-download of the previously selected title went through the real confirmation
+dialog, Transfers and the completed state; View book returned to its offline
+status. Existing pen content was not rewritten during these UI checks.
+
+Unit tests, Android lint and app/test APK builds passed. Runtime license assets
+were checked in the APK. Transfer presentation remains session-only state;
+rotation, process-death restoration, an absent-title UI install and broad
+accessibility/device compatibility are not established by these checks.
 
 ## Boundaries
 
