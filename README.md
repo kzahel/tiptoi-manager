@@ -3,8 +3,14 @@
 An independent, open-source Android manager for tiptoi pens: see what is on a
 pen, install books over USB, manage space, and keep a family's pens in sync.
 
-**Status: repository bootstrap and research only. There is no Android app or
-APK yet. The first implementation spike awaits the owner's check-in.**
+**Status: experimental native Android spike.** USB inventory has been exercised
+on a real fourth-generation pen. Catalog search, offline downloads and verified,
+non-overwriting installs are implemented; see the [acceptance record](docs/acceptance.md)
+for what has actually been tested. This is not a stable release.
+
+[Preview APKs](https://github.com/kzahel/tiptoi-manager/releases) are built and
+published automatically from `main`. Previews use a dedicated signing key and
+the application ID `io.github.kzahel.tiptoimanager.debug`.
 
 ## Motivation
 
@@ -38,7 +44,7 @@ work offline.
 
 ## First goal
 
-After the kickoff checkpoint, prove that an Android phone can inspect a real
+Prove that an Android phone can inspect a real
 pen, identify installed content and free space, and install one selected book
 with a verified result. Then add local caching, multiple-pen inventory and
 shared selections. Prefer a small, working vertical slice before a full UI.
@@ -73,9 +79,31 @@ On Windows, use the corresponding Python executable inside the virtual
 environment. The helper also accepts `--only NAME` to select one reference.
 Existing dirty checkouts are preserved and cause synchronization to stop.
 
-Bootstrap CI validates the manifest and compiles the helper. Android build,
-signing and automatic APK publication are planned, not configured as working
-features. See [distribution](docs/distribution.md).
+## Build and try the spike
+
+Use JDK 17 and an Android SDK with platform 36. From `android/`:
+
+```sh
+./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug
+adb -s YOUR_PHONE install -r app/build/outputs/apk/debug/app-debug.apk
+```
+
+1. Connect a pen to the phone with a data-capable cable or OTG adapter.
+2. Open Tiptoi Manager, choose the pen's top-level USB folder, and allow access.
+3. Inspect the inventory; open Library and refresh the German catalog.
+4. Search for a title or product ID and download it to the phone.
+5. Select Install on pen, review the destination, and keep the app open until
+   read-back verification finishes. Unplug and check playback with the book.
+
+The app never replaces existing filenames in this spike. It does not install
+firmware, delete books, implement automatic companion-file selection, or claim
+playback-based cleanup. Transfers require the app to remain open; interruption
+recovery and multi-pen persistence are later work. Filenames provide the first
+version's display titles.
+
+Android CI runs unit tests and lint, builds an APK and publishes experimental
+previews. Bootstrap CI also checks the reference manifest and Python helper.
+See [distribution](docs/distribution.md) for signing and update details.
 
 ## Independence and licensing
 

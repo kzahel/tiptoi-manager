@@ -1,44 +1,46 @@
-# Android CI and distribution direction
+# Android CI and distribution
 
-## Current state
+The first spike is public MIT source with experimental APKs, not a production
+release or Play listing. The Android workflow runs unit tests, lint and an APK
+build for app changes. It uploads the APK, SHA-256 checksum and source receipt
+as a 30-day Actions artifact. Trusted `main` builds additionally publish an
+immutable `preview-N` GitHub prerelease at that build's exact source revision.
 
-The repository is public source under MIT. Bootstrap GitHub Actions checks the
-reference manifest and Python helper. **There is no Android implementation,
-buildable APK, project signing identity or artifact publishing workflow yet.**
-The owner requested a check-in before the first app spike; this document records
-the intended release direction without starting that spike.
+## Signing and installation
 
-## Desired workflow
+Public previews use a dedicated project key supplied through GitHub secrets
+`PREVIEW_KEYSTORE_BASE64` and `PREVIEW_STORE_PASSWORD`. Untrusted PR builds never
+receive those secrets and use a disposable debug identity. Signing files are
+decoded into a private runner temporary directory and removed after the build.
+The publication job gets repository write permission separately from the build.
 
-1. Ordinary pushes and pull requests run the app's relevant unit checks, Android
-   lint and a debug build once the app exists. Physical USB behavior has separate
-   acceptance evidence; an emulator cannot prove real pen connectivity.
-2. CI produces downloadable preview APKs so the owner can install a candidate
-   without maintaining a local Android build environment.
-3. Version tags such as `android-v0.1.0` build and publish a signed APK on GitHub
-   Releases with checksums, source revision and release notes. Stable signing
-   must allow updates over previously installed previews.
-4. Add an AAB and a separate Play publication path only when store distribution
-   is requested. AAB artifacts alone are not directly installable previews.
+The preview application ID is `io.github.kzahel.tiptoimanager.debug`. Main CI
+builds use the workflow run number as their version code, allowing later
+previews to update earlier previews with the same key. Check `source.json` and
+`SHA256SUMS` alongside the APK. Preview artifacts are debuggable and should be
+treated as experimental software.
 
-Choose the application ID and signing strategy at the kickoff checkpoint. Use a
-dedicated project key, record its private recovery location outside this public
-repository, and store CI credentials through the selected GitHub environment.
-Ordinary untrusted PR checks do not receive signing credentials. Do not reuse
-another product's private key or copy its Play configuration.
+Local builds normally use the developer's Android debug key. They cannot
+update a CI preview signed by the dedicated key, or vice versa, without an
+uninstall (which clears the app's downloads and folder grant). An authorized
+maintainer can use the preview key by setting `TIPTOI_PREVIEW_SIGNING_DIR`, or
+the ignored `android/local.properties` entry `previewSigningDir`, to a private
+directory containing `preview.jks` and `password.secret`. The alias is `preview`.
+Use `TIPTOI_VERSION_CODE` for a compatible local preview version code.
 
-## Owned release references
+Private recovery copies of that key and password are kept outside the Git
+checkout. Back them up together; never commit them or reuse another app's key.
+GitHub secrets provide CI delivery, not a downloadable key backup.
 
-The manifest pins public versions of these repositories. These are examples to
-adapt, not runtime dependencies or authorization to publish other products.
+## Later release decisions
 
-| Reference | Useful entry points |
-| --- | --- |
-| [Babytrack](https://github.com/kzahel/babytrack) | `.github/workflows/android-internal.yml`, `.github/workflows/android-publish.yml`, `docs/topics/mobile-release-signing.md` |
-| [JSTorrent](https://github.com/kzahel/jstorrent) | `.github/workflows/android-release.yml`, `docs/android-release.md` |
-| [YepControl](https://github.com/kzahel/yepcontrol) | `.github/workflows/android-release.yml`, `.github/workflows/android-publish.yml`, `docs/distribution/android-beta.md` |
+Tagged stable releases, a production signing identity, an AAB and Play
+publication are later decisions. Physical USB/playback acceptance remains
+separate from CI. An emulator cannot establish cable, pen or provider support.
 
-Reuse the useful shape: meaningful checks, declared versioning, stable signing,
-checksums, source provenance, and a clear difference between a downloadable APK
-and Play publication. Tiptoi Manager does not inherit their relays, accounts,
-background-service requirements or product-specific release machinery.
+Owned workflow references remain pinned in `repos.yaml`:
+
+- [Babytrack](https://github.com/kzahel/babytrack): Android checks and signing.
+- [JSTorrent](https://github.com/kzahel/jstorrent): APK release artifacts.
+- [YepControl](https://github.com/kzahel/yepcontrol): source provenance and
+  separation of GitHub releases from Play publication.

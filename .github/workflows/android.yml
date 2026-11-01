@@ -1,0 +1,103 @@
+name: Android preview
+
+on:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/android.yml']
+  pull_request:
+    paths: ['android/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+      - name: Prepare dedicated preview signing (trusted main only)
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.PREVIEW_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.PREVIEW_STORE_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          assert os.environ['KEYSTORE_BASE64'] and os.environ['STORE_PASSWORD'], 'Preview signing secrets are missing'
+          folder = Path(os.environ['RUNNER_TEMP']) / 'tiptoi-signing'
+          folder.mkdir(mode=0o700)
+          for name, data in [('preview.jks', base64.b64decode(os.environ['KEYSTORE_BASE64'])), ('password.secret', os.environ['STORE_PASSWORD'].encode())]:
+              path = folder / name
+              path.write_bytes(data)
+              path.chmod(0o600)
+          with open(os.environ['GITHUB_ENV'], 'a') as env:
+              env.write(f'TIPTOI_PREVIEW_SIGNING_DIR={folder}\n')
+          PY
+      - name: Unit tests, Android lint and APK
+        working-directory: android
+        env:
+          TIPTOI_VERSION_CODE: ${{ github.run_number }}
+        run: ./gradlew :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --console=plain
+      - name: Prepare source receipt and checksum
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          mkdir -p android/app/build/preview
+          cp android/app/build/outputs/apk/debug/app-debug.apk android/app/build/preview/tiptoi-manager-preview.apk
+          cd android/app/build/preview
+          sha256sum tiptoi-manager-preview.apk > SHA256SUMS
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          Path('source.json').write_text(json.dumps({'commit': os.environ['SOURCE_SHA'], 'run': os.environ['RUN_URL'], 'experimental': True}, indent=2) + '\n')
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: tiptoi-manager-preview
+          path: android/app/build/preview/*
+          retention-days: 30
+      - name: Remove temporary signing files
+        if: always()
+        run: rm -rf "${RUNNER_TEMP}/tiptoi-signing"
+
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: tiptoi-manager-preview
+          path: preview
+      - name: Publish experimental APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_NUMBER: ${{ github.run_number }}
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          Path('notes.md').write_text('Experimental Android USB spike. Not a stable release.\n\nSource: ' + os.environ['SOURCE_SHA'] + '\n\nIncludes pen inventory, cached German catalog, downloads and non-overwriting installs with read-back verification. Keep the app open during transfers. Physical playback and additional pen compatibility require separate acceptance.\n')
+          PY
+          gh release create "preview-${RUN_NUMBER}" preview/* --repo "$GH_REPO" --target "$SOURCE_SHA" --prerelease --title "Android preview ${RUN_NUMBER}" --notes-file notes.md

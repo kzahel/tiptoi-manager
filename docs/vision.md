@@ -52,11 +52,10 @@ simultaneous USB connections and a network service are unnecessary. Show the
 planned additions, updates and removals before applying a sync. Content sync
 does not copy serial numbers, firmware, configuration or game state by default.
 
-## Kickoff checkpoint
+## Authorized first spike
 
-Repository setup is authorized; implementation is not started. Check in with
-the owner before the first spike and confirm its bounded scope. Proposed first
-spike:
+The owner authorized implementation on 2026-11-01 after repository setup and
+phone-to-pen USB discovery. The bounded first spike is:
 
 1. Detect one attached fourth-generation pen on an Android phone, request the
    normal USB permission and read its volume without modifications.
@@ -64,18 +63,20 @@ spike:
 3. Resolve a selected standard title from the public catalog.
 4. Cache it locally and perform one bounded install with transfer verification.
 5. Reconnect the pen and confirm the intended book plays.
-6. Inspect the second pen's identity and prove that cached content can be used
-   with it without cloning device metadata.
 
-Assess Android's storage-framework route versus direct USB mass-storage access
-through libaums on the actual device. Prefer the smallest reliable native
-Kotlin implementation; confirm application ID, supported Android baseline and
-initial signing/distribution choices before establishing release identity.
+The initial Kotlin app uses Android's Storage Access Framework, which provided
+real inventory access on the target phone. Direct mass-storage access through
+libaums remains a fallback for unsupported providers. The spike supports API 26+
+and targets API 36; only the recorded physical combination has acceptance evidence.
+It uses a separate debug application ID and dedicated preview signing key.
+Production signing and store identity remain later decisions.
 
 ## Later milestones
 
 - Library, pen and transfer views with offline caches and resume/recovery.
 - Multi-pen selections and dependency-aware synchronization.
+- Inspect the second pen's identity and prove sequential offline installation
+  without cloning device metadata.
 - Cleanup suggestions and restoration of removed content.
 - Automatic handling of pending pen requests only after the request mechanism
   is demonstrated; the current queue-file hypothesis remains unverified.

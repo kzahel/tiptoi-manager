@@ -2,16 +2,18 @@
 
 ## Current scope and kickoff checkpoint
 
-The owner authorized creating and publishing this repository, documenting the
-motivation and vision, preparing ignored reference checkouts, and read-only
-inspection of an attached pen. **Stop and check in with the owner before the
-first Android implementation spike.** This is a one-time kickoff checkpoint;
-subsequent explicit authorization can advance the phase.
+The owner authorized the first Android implementation spike on 2026-11-01,
+after repository setup and a successful phone-to-pen USB mount. Implement a
+bounded vertical slice: inventory, public catalog, local downloads and one
+verified selected-book install. Build, deploy and inspect on the attached
+phone autonomously; physical playback confirmation still requires a person.
+Cleanup and multi-pen synchronization remain later work.
 
-There is no app skeleton, selected application ID, signing key, APK release or
-Play listing yet. Do not describe planning documents or bootstrap CI as a
-working Android app. Start with `README.md`, `docs/vision.md`,
-`docs/research.md`, and `docs/distribution.md`.
+Use `io.github.kzahel.tiptoimanager` for this independent utility, with a
+`.debug` suffix for development previews. No Play listing or production
+signing identity is established. Start with `README.md`, `docs/vision.md`,
+`docs/research.md`, and `docs/distribution.md`; report actual evidence rather
+than treating a build as proof of physical-device behavior.
 
 ## Product direction
 
