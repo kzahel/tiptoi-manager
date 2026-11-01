@@ -578,14 +578,14 @@
       "translationHash": "cb37f6751f7b0583bdc76670c1bf2585c16ce838908dcfaf4d9df5cd5b9bb2f6"
     },
     "msg_1_d_files_added_read_back_verified": {
-      "sourceHash": "99150e4999ede1eb5bb5c8802d28daa8dafb785e0bfac5f95b3d1b66a97b5bc8",
+      "sourceHash": "22054a6af6ea25c32cbb00cbef663910c4e15b50dbdeaa54f250b818dacb81b6",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "14c1332e68e87c0311222635c8c15ff94e461caca0e640fd0f667b236011dd59"
+      "translationHash": "93946f0d6da94b654a534035568496a2fc2dacfb28927de40d571c7501d9ed9f"
     },
     "msg_1_s_scanned_2_d_files": {
-      "sourceHash": "41e3fa6144c46548472987624ebaf47a020b8d967bd154f86f590c94ba7eb7c5",
+      "sourceHash": "2432ed016bf85234dd79b7a5aa8524b4a75b8707a5db8e0d6f584b6266493302",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "03f8ae3be8bb44c8d745cfd60d97c44001968afbf764d8f1c0f66c2e7a2e2c47"
+      "translationHash": "75c3ab15cb7481954fe8332349c43190d6aeff7575e1f39b9bf14055b8386e5e"
     },
     "msg_all_phone_audio_deleted": {
       "sourceHash": "c0fedcd5af6d823fe5b2e4e5757cfacf818794499300af0102e0de4e47faca18",
@@ -603,9 +603,9 @@
       "translationHash": "a72504bd3a280c7c6a015ca9849cbba0f0cb4624e85b4ff63a42c9d26e3d5236"
     },
     "msg_catalog_refreshed_1_d_content_files_including_companion_files": {
-      "sourceHash": "244b214eb11f1c660abc2a55328e586a1e303f4abfd48523220426cfde6f4f53",
+      "sourceHash": "17af03ee14a7e746b6c383c13785f23551e4f19715ce98e166b7c3584bff6a37",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "cdea6b2f20c5022e28a67da1d4e54360b3314769f5c1d9a071a4404d1049ee8c"
+      "translationHash": "1205ce58fe735ab1e9084fb7fe1c9677ed1b371b78cf8aac27e0b2c413da67d3"
     },
     "msg_checking_backup": {
       "sourceHash": "b421d1d29af34b77314be298d7e9924c6adb4241b992d7007f950fd1a5ef3d6b",
@@ -878,39 +878,39 @@
       "translationHash": "b3d0fe651bb805ee1917273de1dad0ae04f639f3bc9b9a617923c35368f763d6"
     },
     "ui_1_d_audio_files": {
-      "sourceHash": "bf52073d09d71ab40237bc792b082f4e7f1511890224f23ca5d5d6e41b6a1087",
+      "sourceHash": "98797c09fbba195f7e0340737b85a59cd1d2e2bc6a9d401354322d2596a4b3e5",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "0daf23da2903a95a38d453733b18cd4c492e8fc5edbc7cb13e56d4456c6878f5"
+      "translationHash": "cdcb2333287a6b819482c5155e8bd19b0d96438184d2dff2ff05a8969764f14b"
     },
     "ui_1_d_audio_files_review_changes": {
-      "sourceHash": "0ee3c86c794dddc25913ed1c243c1dbbbbc007770653bc911d7825011fb479e8",
+      "sourceHash": "d0ab8e2e68117c27f98a380c84b642157b3c7507f9f852997e14ac695cb2a3e1",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "ce0c6baa40370fcdc65499940fbbab3bbd112705de281890ee3514abd839ebc9"
+      "translationHash": "e5f2471fe81067277e3dd49ac55526ee4d8cb72a1dfe51b4054b687a0405fb15"
     },
     "ui_1_d_copies_2_s": {
-      "sourceHash": "12a77a1bc12e94cae4cf5732dbbad0b9ef70be73454a09299cf6c5b9b92c9018",
+      "sourceHash": "d2a547d22ce49e17a550fe9eee4aecfec9e57a99e0490d6ad22b6318e3d01686",
       "terminologyHash": "2c648c4f62052c5a0bc68279e67f53bea70c5f569cead2e25dc5a1bfe7f6bb78",
-      "translationHash": "24a879fee766780f76999b3f373abf361f510b620b53cb87d014d7821b19a5b5"
+      "translationHash": "ae87e61bec39c123e412cc6d1f99359f183a42700cec5d7e912666c3bbd3e744"
     },
     "ui_1_d_files_2_s": {
-      "sourceHash": "05d5e68aab0b6526cf9f635a5e2d956795afa88d37312d4a52597ee22d7651cd",
+      "sourceHash": "8068d2e90ec0fb7d91c22782de237617e603506e60c3ab7bf2960cd9d317dd45",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "39dea249e751285ff18f7f43dcaf0a5db169934d7e7e4b59704b3176e68c1d8d"
+      "translationHash": "e3035ce0c0173dda0b20dd39684ce9fe345685568f238f47fef81e61e439de9c"
     },
     "ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place": {
-      "sourceHash": "c15c2410417793de0df0676837c0b1fea64db5877fab36195b94053eaca24419",
+      "sourceHash": "b8fa907ce736546608087ab8551d3a67b6cf8b3031e538d44d397f707e48fddb",
       "terminologyHash": "a555f9dbe14440f35b1fbe6ff7e909f40942b8804270951231ef17f82fb90a43",
-      "translationHash": "cb81c0bb7f49a6e51cb496f9d92aa56598a1ea687ba603bc7362a25d297bc579"
+      "translationHash": "86646cba075a17000daac4397d5c5105b0329eee6a846ecc7e550628280ba353"
     },
     "ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo": {
-      "sourceHash": "48fca10fc226cdd6dfcb142cc15ec18bb4e575492d4d2c23f5edbb2542b39bc2",
+      "sourceHash": "79fe79243735e7e96e2768c74ae85345a9672b419def46f5c73caab1eb8bccc8",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
-      "translationHash": "23b420ee11f242bdc0711ec4162fadd4b8a534b9c39365a75868c97c36d68dcc"
+      "translationHash": "983f5c6fdac8444ff139d881a35fa17549de721273221129d87581f2640e95bc"
     },
     "ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion": {
-      "sourceHash": "a04489f3340091e25aeaaf29f1d60d98df9296b2440fa7b109d1c8bf6f2438bb",
-      "terminologyHash": "2c648c4f62052c5a0bc68279e67f53bea70c5f569cead2e25dc5a1bfe7f6bb78",
-      "translationHash": "ba44a6aadfaea817587d6a571e656b6948cc546605b897cb65cf86dfaeca479e"
+      "sourceHash": "467d42794445ba28f4ec934973c10ad774c82f75d876ae811c756b3ef109130e",
+      "terminologyHash": "54a460336c7f4561d47c7ab79e643240d93feff8399c17385817be577070aa62",
+      "translationHash": "8826298e8ed7fe78d8af2bffef06415fd05b862d73261854e5328a4c66c7cecb"
     },
     "ui_1_s_2_s": {
       "sourceHash": "668f7ba5b96987f1f8152a8435dc650d58a817e39c5731e737b5c34d1bc3fabd",
@@ -1178,9 +1178,9 @@
       "translationHash": "511cdeae64c609b6a701738c93c11d55caf52d9476bcb6ff221c5de99e0f5809"
     },
     "ui_connected_1_d_audio_files": {
-      "sourceHash": "3ed869b5b70012360423c956f62c343245574e4436390c1a1a95f6a405aa71ca",
+      "sourceHash": "ee70e3a13f0ccdad76f043bc9606fe7da3e6af0812a664216c0d46125de72a35",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
-      "translationHash": "139cc3edd4550b4853a2021b28b1d83f93ed3929e90133b5978d601abd36636a"
+      "translationHash": "ba2a347bae689fd5057fd30e35bb65282dc4e919a1ef2902c4a05c2fe5859eea"
     },
     "ui_connected_by_usb": {
       "sourceHash": "26d1fba37edc86ddd9ac4fe7c9194e4f3183167a27e9f720f9ecc1bf64983643",
@@ -1518,9 +1518,9 @@
       "translationHash": "030c8815918ca88f38c52cbaaf2a519a0c3f27057cdaaae4d1e8f6ce7ccbb037"
     },
     "ui_last_seen_1_s_2_d_files": {
-      "sourceHash": "620e16b4942b3e5e4e29b173c8c608faed8d32d9b37632ed5f1e77a3cea9f094",
+      "sourceHash": "ddf1998da1f862df99f2ec1ad8efffe3f9dfc15ccf07c445be9d89ee909ecb2f",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "ffdaa7e73410bdd2ad6ed7ce31589dca39f284c6a3a6fe2f1672119afc6361d2"
+      "translationHash": "2ffd3e5e3987fb2f6090ddc630da5aaa297f7a6e190365a83741501c55cba064"
     },
     "ui_last_seen_on_1_s": {
       "sourceHash": "1a3a63ce88a9f63b8a1ab79bb6ea1e01c94ca180a8309df6401b9587ec9b823e",
@@ -1638,9 +1638,9 @@
       "translationHash": "3408ffd69ac09132426323a5955b67faabf2b9cd790938213a1c486ad87f78b1"
     },
     "ui_pages": {
-      "sourceHash": "c41a3421c9f337bfe97d3a29f52649d34b86475bcc0cf8af5c6484fd1c742d77",
+      "sourceHash": "4d8d23807123815fd022896d05d15abea23e91df9e39116279379ce7d0a6d9f9",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
-      "translationHash": "13dd7c0bebc30ddf534245fc38419d03660217b948221ef81e42dc1de53e7e27"
+      "translationHash": "a35afa887a76102d0bfc503973b60cd3de128aba9bdd1c1486f4a63af7923499"
     },
     "ui_pen_1_s": {
       "sourceHash": "aeaf693f3627aa9d08f647a00ed3129640c4019450800fb3a4a14c482c917e8b",

@@ -27,9 +27,11 @@ object UiText {
         else base.getSharedPreferences("language", Context.MODE_PRIVATE).edit().putString("tag", tag).commit()
     }
     fun text(id: Int, vararg args: Any?): String = application?.let { context(it).getString(id, *args) } ?: "message:$id"
+    fun plural(id: Int, count: Int, vararg args: Any?): String = application?.let { context(it).resources.getQuantityString(id, count, *args) } ?: "$count"
     fun quantity(id: Int, count: Int): String = application?.let { context(it).resources.getQuantityString(id, count, count) } ?: "$count"
 }
 fun t(id: Int, vararg args: Any?) = UiText.text(id, *args)
+fun p(id: Int, count: Int, vararg args: Any?) = UiText.plural(id, count, *args)
 fun q(id: Int, count: Int) = UiText.quantity(id, count)
 
 fun taskText(code: String): String = when (code) {

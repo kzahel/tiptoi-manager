@@ -215,9 +215,15 @@
     <!-- MainActivity.kt: , BOOK("Book details"),     PHONE_STORAGE("Phone storage"), TRANSFERS( -->
     <string name="label_transfers">"Transfers"</string>
     <!-- ManagerApp.kt: leanupWarning) "Books added and verified · phone cleanup needed" else  -->
-    <string name="msg_1_d_files_added_read_back_verified">"%1$d files added · read-back verified"</string>
+    <plurals name="msg_1_d_files_added_read_back_verified">
+        <item quantity="one">"%1$d file added · read-back verified"</item>
+        <item quantity="other">"%1$d files added · read-back verified"</item>
+    </plurals>
     <!-- ManagerApp.kt:  choose its folder.")         record(snapshot, true)         status =  -->
-    <string name="msg_1_s_scanned_2_d_files">"%1$s scanned. %2$d files."</string>
+    <plurals name="msg_1_s_scanned_2_d_files">
+        <item quantity="one">"%1$s scanned. %2$d file."</item>
+        <item quantity="other">"%1$s scanned. %2$d files."</item>
+    </plurals>
     <!-- ManagerApp.kt: ); phoneAudio.clearTemporary() }         status = if (includeBackups)  -->
     <string name="msg_all_phone_audio_deleted">"All phone audio deleted."</string>
     <!-- BookMetadata.kt: bn") ?: field("ISBN"))?.takeIf(::validIsbn)         val pages = field( -->
@@ -226,7 +232,10 @@
     <!-- ManagerApp.kt:  = if (catalog.isEmpty()) "Refresh the catalog to browse books." else  -->
     <string name="msg_catalog_loaded_from_this_phone">"Catalog loaded from this phone."</string>
     <!-- ManagerApp.kt:             main.post { covers.clearFailures() }             status =  -->
-    <string name="msg_catalog_refreshed_1_d_content_files_including_companion_files">"Catalog refreshed. %1$d content files, including companion files."</string>
+    <plurals name="msg_catalog_refreshed_1_d_content_files_including_companion_files">
+        <item quantity="one">"Catalog refreshed. %1$d content file, including companion file."</item>
+        <item quantity="other">"Catalog refreshed. %1$d content files, including companion files."</item>
+    </plurals>
     <!-- PenStorage.kt: : RemovalBackup, progress: (String, Long) -&gt; Unit) {         progress( -->
     <string name="msg_checking_backup">"Checking backup"</string>
     <!-- PenStorage.kt: y, cached: File, progress: (String, Long) -&gt; Unit) {         progress( -->
@@ -334,19 +343,37 @@
     <!-- MainActivity.kt: 2, ink, true)); gap(body, 20)         body.addView(navRow(UiIcon.PEN,  -->
     <string name="ui_1_connect_your_pen">"1. Connect your pen"</string>
     <!-- MainActivity.kt:  }, { it.size }, { it.modifiedAt })                 body.addView(text( -->
-    <string name="ui_1_d_audio_files">"%1$d audio files"</string>
+    <plurals name="ui_1_d_audio_files">
+        <item quantity="one">"%1$d audio file"</item>
+        <item quantity="other">"%1$d audio files"</item>
+    </plurals>
     <!-- MainActivity.kt: ORAGE) })         body.addView(navRow(UiIcon.BOOKS, "Selected books",  -->
-    <string name="ui_1_d_audio_files_review_changes">"%1$d audio files · review changes"</string>
+    <plurals name="ui_1_d_audio_files_review_changes">
+        <item quantity="one">"%1$d audio file · review changes"</item>
+        <item quantity="other">"%1$d audio files · review changes"</item>
+    </plurals>
     <!-- MainActivity.kt:         })         body.addView(navRow(UiIcon.STORAGE, "Pen backups",  -->
-    <string name="ui_1_d_copies_2_s">"%1$d copies · %2$s"</string>
+    <plurals name="ui_1_d_copies_2_s">
+        <item quantity="one">"%1$d copy · %2$s"</item>
+        <item quantity="other">"%1$d copies · %2$s"</item>
+    </plurals>
     <!-- MainActivity.kt: Files()         body.addView(navRow(UiIcon.BOOKS, "Downloaded audio",  | MainActivity.kt: ap(body, 20)         body.addView(navRow(UiIcon.BOOKS, "Audio files",  -->
-    <string name="ui_1_d_files_2_s">"%1$d files · %2$s"</string>
+    <plurals name="ui_1_d_files_2_s">
+        <item quantity="one">"%1$d file · %2$s"</item>
+        <item quantity="other">"%1$d files · %2$s"</item>
+    </plurals>
     <!-- MainActivity.kt: is).setTitle("Add books to ${profile.name}?")             .setMessage( -->
-    <string name="ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place">"%1$d files · %2$s\n%3$d downloads needed. Existing pen files stay in place.\n"</string>
+    <string name="ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place">"Files: %1$d · %2$s\nDownloads needed: %3$d. Existing pen files stay in place.\n"</string>
     <!-- MainActivity.kt: s = mutableListOf&lt;String&gt;()         if (editions.size &gt; 1) fields.add( -->
-    <string name="ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo">"%1$d publisher products share this audio. The pen does not identify your printed edition."</string>
+    <plurals name="ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo">
+        <item quantity="one">"%1$d publisher product shares this audio. The pen does not identify your printed edition."</item>
+        <item quantity="other">"%1$d publisher products share this audio. The pen does not identify your printed edition."</item>
+    </plurals>
     <!-- MainActivity.kt: ilder(this).setTitle("Delete phone backups?")             .setMessage( -->
-    <string name="ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion">"%1$s\n%2$d backups · %3$s. These backups cannot be restored after deletion. The pen is unchanged."</string>
+    <plurals name="ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion">
+        <item quantity="one">"%1$s\n%2$d backup · %3$s. This backup cannot be restored after deletion. The pen is unchanged."</item>
+        <item quantity="other">"%1$s\n%2$d backups · %3$s. These backups cannot be restored after deletion. The pen is unchanged."</item>
+    </plurals>
     <!-- MainActivity.kt: e { it.readText() } }             showMessage("Open-source licenses",  -->
     <string name="ui_1_s_2_s">"%1$s\n\n%2$s"</string>
     <!-- MainActivity.kt: this).setTitle("Install on ${profile.name}?")             .setMessage( -->
@@ -444,7 +471,10 @@
     <!-- MainActivity.kt: p.viewedProfile         if (profile == null) { emptyState(UiIcon.PEN,  -->
     <string name="ui_connect_your_pen">"Connect your pen"</string>
     <!-- MainActivity.kt:          body.addView(navRow(UiIcon.PEN, profile.name, if (connected)  -->
-    <string name="ui_connected_1_d_audio_files">"Connected · %1$d audio files"</string>
+    <plurals name="ui_connected_1_d_audio_files">
+        <item quantity="one">"Connected · %1$d audio file"</item>
+        <item quantity="other">"Connected · %1$d audio files"</item>
+    </plurals>
     <!-- MainActivity.kt:  color, true)); gap(hero, 8)         hero.addView(text(if (connected)  | MainActivity.kt: 5, ink, true)); gap(body, 8)         body.addView(text(if (connected)  -->
     <string name="ui_connected_by_usb">"Connected by USB"</string>
     <!-- MainActivity.kt: lename) })         }         if (transfer.failed) body.addView(action( -->
@@ -556,7 +586,10 @@
     <!-- MainActivity.kt: w(text(if (app.viewedPen != null) "Free space · ${profile.name}" else  -->
     <string name="ui_last_observed_free_space_1_s">"Last observed free space · %1$s"</string>
     <!-- MainActivity.kt:  "Connected · ${profile.files.size} audio files"                 else  -->
-    <string name="ui_last_seen_1_s_2_d_files">"Last seen %1$s · %2$d files"</string>
+    <plurals name="ui_last_seen_1_s_2_d_files">
+        <item quantity="one">"Last seen %1$s · %2$d file"</item>
+        <item quantity="other">"Last seen %1$s · %2$d files"</item>
+    </plurals>
     <!-- MainActivity.kt: sent) if (app.viewedPen != null) "On ${app.viewedProfile?.name}" else  -->
     <string name="ui_last_seen_on_1_s">"Last seen on %1$s"</string>
     <!-- MainActivity.kt:      section("DEVICE"); item(Screen.PENS, UiIcon.PEN)         section( -->
@@ -760,7 +793,10 @@
     <!-- App settings, release identity and public sample library. -->
     <string name="ui_isbn">"ISBN %1$s"</string>
     <!-- App settings, release identity and public sample library. -->
-    <string name="ui_pages">"%1$d pages"</string>
+    <plurals name="ui_pages">
+        <item quantity="one">"%1$d page"</item>
+        <item quantity="other">"%1$d pages"</item>
+    </plurals>
     <!-- App settings, release identity and public sample library. -->
     <string name="ui_task_failed">"%1$s failed"</string>
     <!-- App settings, release identity and public sample library. -->

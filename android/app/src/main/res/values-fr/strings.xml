@@ -107,12 +107,24 @@
     <string name="label_title">"Titre"</string>
     <string name="label_transfer_only">"Transfert uniquement"</string>
     <string name="label_transfers">"Transferts"</string>
-    <string name="msg_1_d_files_added_read_back_verified">"%1$d fichiers ajoutés · vérifiés par relecture"</string>
-    <string name="msg_1_s_scanned_2_d_files">"%1$s analysé. %2$d fichiers."</string>
+    <plurals name="msg_1_d_files_added_read_back_verified">
+        <item quantity="one">"%1$d fichier ajouté · vérifié par relecture"</item>
+        <item quantity="many">"%1$d fichiers ajoutés · vérifiés par relecture"</item>
+        <item quantity="other">"%1$d fichiers ajoutés · vérifiés par relecture"</item>
+    </plurals>
+    <plurals name="msg_1_s_scanned_2_d_files">
+        <item quantity="one">"%1$s analysé. %2$d fichier."</item>
+        <item quantity="many">"%1$s analysé. %2$d fichiers."</item>
+        <item quantity="other">"%1$s analysé. %2$d fichiers."</item>
+    </plurals>
     <string name="msg_all_phone_audio_deleted">"Tous les fichiers audio du téléphone ont été supprimés."</string>
     <string name="msg_books_added_and_verified_phone_cleanup_needed">"Livres ajoutés et vérifiés · nettoyage du téléphone nécessaire"</string>
     <string name="msg_catalog_loaded_from_this_phone">"Catalogue chargé depuis ce téléphone."</string>
-    <string name="msg_catalog_refreshed_1_d_content_files_including_companion_files">"Catalogue actualisé. %1$d fichiers de contenu, fichiers complémentaires inclus."</string>
+    <plurals name="msg_catalog_refreshed_1_d_content_files_including_companion_files">
+        <item quantity="one">"Catalogue actualisé. %1$d fichier de contenu, fichier complémentaires inclus."</item>
+        <item quantity="many">"Catalogue actualisé. %1$d fichiers de contenu, fichiers complémentaires inclus."</item>
+        <item quantity="other">"Catalogue actualisé. %1$d fichiers de contenu, fichiers complémentaires inclus."</item>
+    </plurals>
     <string name="msg_checking_backup">"Vérification de la sauvegarde"</string>
     <string name="msg_checking_cached_file">"Vérification du fichier en cache"</string>
     <string name="msg_checking_download">"Vérification du téléchargement"</string>
@@ -166,13 +178,37 @@
     <string name="task_saving_pen_selection">"Enregistrement de la sélection du stylet"</string>
     <string name="task_sync">"Synchroniser"</string>
     <string name="ui_1_connect_your_pen">"1. Connecter votre stylet"</string>
-    <string name="ui_1_d_audio_files">"%1$d fichiers audio"</string>
-    <string name="ui_1_d_audio_files_review_changes">"%1$d fichiers audio · vérifier les modifications"</string>
-    <string name="ui_1_d_copies_2_s">"%1$d copies · %2$s"</string>
-    <string name="ui_1_d_files_2_s">"%1$d fichiers · %2$s"</string>
-    <string name="ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place">"%1$d fichiers · %2$s\n%3$d téléchargements nécessaires. Les fichiers existants du stylet sont conservés.\n"</string>
-    <string name="ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo">"%1$d produits de l’éditeur partagent ce fichier audio. Le stylet n’identifie pas votre édition imprimée."</string>
-    <string name="ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion">"%1$s\n%2$d sauvegardes · %3$s. Ces sauvegardes ne pourront plus être restaurées après suppression. Le stylet reste inchangé."</string>
+    <plurals name="ui_1_d_audio_files">
+        <item quantity="one">"%1$d fichier audio"</item>
+        <item quantity="many">"%1$d fichiers audio"</item>
+        <item quantity="other">"%1$d fichiers audio"</item>
+    </plurals>
+    <plurals name="ui_1_d_audio_files_review_changes">
+        <item quantity="one">"%1$d fichier audio · vérifier les modifications"</item>
+        <item quantity="many">"%1$d fichiers audio · vérifier les modifications"</item>
+        <item quantity="other">"%1$d fichiers audio · vérifier les modifications"</item>
+    </plurals>
+    <plurals name="ui_1_d_copies_2_s">
+        <item quantity="one">"%1$d copie · %2$s"</item>
+        <item quantity="many">"%1$d copies · %2$s"</item>
+        <item quantity="other">"%1$d copies · %2$s"</item>
+    </plurals>
+    <plurals name="ui_1_d_files_2_s">
+        <item quantity="one">"%1$d fichier · %2$s"</item>
+        <item quantity="many">"%1$d fichiers · %2$s"</item>
+        <item quantity="other">"%1$d fichiers · %2$s"</item>
+    </plurals>
+    <string name="ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place">"Fichiers : %1$d · %2$s\nTéléchargements nécessaires : %3$d. Les fichiers existants du stylet sont conservés.\n"</string>
+    <plurals name="ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo">
+        <item quantity="one">"%1$d produit de l’éditeur partage ce fichier audio. Le stylet n’identifie pas votre édition imprimée."</item>
+        <item quantity="many">"%1$d produits de l’éditeur partagent ce fichier audio. Le stylet n’identifie pas votre édition imprimée."</item>
+        <item quantity="other">"%1$d produits de l’éditeur partagent ce fichier audio. Le stylet n’identifie pas votre édition imprimée."</item>
+    </plurals>
+    <plurals name="ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion">
+        <item quantity="one">"%1$s\n%2$d sauvegarde · %3$s. Cette sauvegarde ne pourra plus être restaurée après suppression. Le stylet reste inchangé."</item>
+        <item quantity="many">"%1$s\n%2$d sauvegardes · %3$s. Ces sauvegardes ne pourront plus être restaurées après suppression. Le stylet reste inchangé."</item>
+        <item quantity="other">"%1$s\n%2$d sauvegardes · %3$s. Ces sauvegardes ne pourront plus être restaurées après suppression. Le stylet reste inchangé."</item>
+    </plurals>
     <string name="ui_1_s_2_s">"%1$s\n\n%2$s"</string>
     <string name="ui_1_s_2_s_existing_files_stay_untouched_3_s">"%1$s\n%2$s · Les fichiers existants sont conservés.%3$s"</string>
     <string name="ui_1_s_2_s_from_this_phone_s_backup_existing_filenames_are_preserved">"%1$s\n%2$s depuis la sauvegarde du téléphone. Les fichiers existants ne sont pas écrasés."</string>
@@ -221,7 +257,11 @@
     <string name="ui_connect_by_usb_and_choose_its_folder">"Connectez le stylet par USB et choisissez son dossier."</string>
     <string name="ui_connect_this_pen">"Connecter ce stylet"</string>
     <string name="ui_connect_your_pen">"Connecter votre stylet"</string>
-    <string name="ui_connected_1_d_audio_files">"Connecté · %1$d fichiers audio"</string>
+    <plurals name="ui_connected_1_d_audio_files">
+        <item quantity="one">"Connecté · %1$d fichier audio"</item>
+        <item quantity="many">"Connecté · %1$d fichiers audio"</item>
+        <item quantity="other">"Connecté · %1$d fichiers audio"</item>
+    </plurals>
     <string name="ui_connected_by_usb">"Connecté par USB"</string>
     <string name="ui_connection_help">"Aide à la connexion"</string>
     <string name="ui_couldn_t_complete_the_action">"Impossible de terminer l’action"</string>
@@ -277,7 +317,11 @@
     <string name="ui_keep_the_pen_connected_until_done">"Gardez le stylet connecté jusqu’à la fin."</string>
     <string name="ui_last_observed_audio_files_1_d">"Dernier inventaire audio : %1$d fichiers"</string>
     <string name="ui_last_observed_free_space_1_s">"Dernier espace libre observé · %1$s"</string>
-    <string name="ui_last_seen_1_s_2_d_files">"Vu pour la dernière fois le %1$s · %2$d fichiers"</string>
+    <plurals name="ui_last_seen_1_s_2_d_files">
+        <item quantity="one">"Vu pour la dernière fois le %1$s · %2$d fichier"</item>
+        <item quantity="many">"Vu pour la dernière fois le %1$s · %2$d fichiers"</item>
+        <item quantity="other">"Vu pour la dernière fois le %1$s · %2$d fichiers"</item>
+    </plurals>
     <string name="ui_last_seen_on_1_s">"Vu pour la dernière fois sur %1$s"</string>
     <string name="ui_library">"BIBLIOTHÈQUE"</string>
     <string name="ui_load_catalog">"Charger le catalogue"</string>
@@ -385,7 +429,11 @@
     <string name="ui_age_min">"À partir de %1$d ans"</string>
     <string name="ui_article">"Article %1$s"</string>
     <string name="ui_isbn">"ISBN %1$s"</string>
-    <string name="ui_pages">"%1$d pages"</string>
+    <plurals name="ui_pages">
+        <item quantity="one">"%1$d page"</item>
+        <item quantity="many">"%1$d pages"</item>
+        <item quantity="other">"%1$d pages"</item>
+    </plurals>
     <string name="ui_task_failed">"Échec : %1$s"</string>
     <string name="ui_task_complete">"Terminé : %1$s"</string>
     <string name="ui_language">"Langue de l’application"</string>

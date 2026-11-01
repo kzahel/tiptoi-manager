@@ -123,6 +123,7 @@ object Downloads {
             val connection = URI(current).toURL().openConnection() as HttpsURLConnection
             connection.connectTimeout = 20_000
             connection.readTimeout = 30_000
+            connection.setRequestProperty("User-Agent", PublisherHttp.AGENT)
             connection.instanceFollowRedirects = false
             try {
                 val code = connection.responseCode

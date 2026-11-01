@@ -92,7 +92,7 @@ object BookMetadataParser {
 
 /** Requests are direct to the publisher. Authentication never follows a redirect. */
 object PublisherHttp {
-    const val AGENT = "TiptoiManager/0.1 (+https://github.com/kzahel/tiptoi-manager)"
+    const val AGENT = "PenLibrary/0.1 (+https://github.com/kzahel/tiptoi-manager)"
     fun get(url: String, limit: Int, allowed: (String) -> Boolean, authorization: String? = null,
             form: String? = null): ByteArray {
         var current = url

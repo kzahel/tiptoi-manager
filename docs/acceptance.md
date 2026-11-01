@@ -168,3 +168,15 @@ profiles are not evidence of compatibility with a second physical pen model.
 - Publisher-page parsing deliberately retains German HTML field names as
   protocol data; they are not localized. Saved file-read problems use a stable
   code and display localized text rather than persisting translated messages.
+- Additional release checks: Android 9's app-language selection persisted after
+  process restart and rendered the French demo correctly. The actual CI-built
+  code-101 APK installed on the screenshot emulator and passed demo navigation;
+  its AAB/APK hashes and upload certificate were independently verified against
+  the exact-source release receipt. Subsequent polish adds native singular/plural
+  forms, app-locale date formatting on older Android, and a static download
+  User-Agent so ordinary downloads do not send Android's default device-build
+  User-Agent.
+- Updated Pixel development app in place with its existing signing identity;
+  cached metadata/ISBN/covers for product 248 and demo mutation guards passed.
+  The current USB folder was unavailable for a fresh hardware rescan. No pen
+  writes or deletion tests were attempted during release preparation.

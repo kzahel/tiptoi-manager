@@ -118,7 +118,7 @@ class ManagerApp : Application() {
         pen = null
         val snapshot = discover() ?: error(t(R.string.error_no_pen_found_in_the_granted_usb_folders_connect_a_pen_or_choose_its))
         record(snapshot, true)
-        status = t(R.string.msg_1_s_scanned_2_d_files, connectedName, snapshot.files.size)
+        status = p(R.plurals.msg_1_s_scanned_2_d_files, snapshot.files.size, connectedName, snapshot.files.size)
     }
 
     private fun candidates(): List<Uri> = (listOfNotNull(tree) + profiles.all.map { Uri.parse(it.tree) } +
@@ -207,7 +207,7 @@ class ManagerApp : Application() {
             catalog = parsed
             metadataNotice = runCatching { metadata.refresh() }.exceptionOrNull()?.message
             main.post { covers.clearFailures() }
-            status = t(R.string.msg_catalog_refreshed_1_d_content_files_including_companion_files, catalog.size)
+            status = p(R.plurals.msg_catalog_refreshed_1_d_content_files_including_companion_files, catalog.size, catalog.size)
         } finally { partial.delete() }
     }
 
@@ -284,7 +284,7 @@ class ManagerApp : Application() {
                 }
                 record(storage.scan(snapshot.tree), false)
             }
-            completionNote = if (cleanupWarning) t(R.string.msg_books_added_and_verified_phone_cleanup_needed) else t(R.string.msg_1_d_files_added_read_back_verified, current.additions.size)
+            completionNote = if (cleanupWarning) t(R.string.msg_books_added_and_verified_phone_cleanup_needed) else p(R.plurals.msg_1_d_files_added_read_back_verified, current.additions.size, current.additions.size)
             status = completionNote!!
         } finally { rescanAfterWrite(selected.tree) }
     }

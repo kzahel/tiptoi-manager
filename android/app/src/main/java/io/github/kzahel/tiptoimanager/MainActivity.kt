@@ -287,8 +287,8 @@ class MainActivity : ComponentActivity() {
         if (app.knownProfiles.isEmpty()) emptyState(UiIcon.PEN, t(R.string.ui_add_your_first_pen), t(R.string.ui_connect_by_usb_and_choose_its_folder))
         app.knownProfiles.sortedByDescending { it.identity.key == app.displayConnection?.identity?.key }.forEach { profile ->
             val connected = profile.identity.key == app.displayConnection?.identity?.key
-            body.addView(navRow(UiIcon.PEN, profile.name, if (connected) t(R.string.ui_connected_1_d_audio_files, profile.files.size)
-                else t(R.string.ui_last_seen_1_s_2_d_files, dateTime(profile.lastSeen), profile.files.size)) {
+            body.addView(navRow(UiIcon.PEN, profile.name, if (connected) p(R.plurals.ui_connected_1_d_audio_files, profile.files.size, profile.files.size)
+                else p(R.plurals.ui_last_seen_1_s_2_d_files, profile.files.size, dateTime(profile.lastSeen), profile.files.size)) {
                 app.selectProfile(profile.id); navigate(Screen.PEN)
             })
         }
@@ -312,7 +312,7 @@ class MainActivity : ComponentActivity() {
         if (!profile.identity.hasSerial) { body.addView(text(t(R.string.ui_serial_unavailable_identity_unverified), 14, muted)); gap(body, 12) }
         body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_installed_books), if (connected) t(R.string.ui_audio_files_1_d, profile.files.size) else t(R.string.ui_last_observed_audio_files_1_d, profile.files.size)) { navigate(Screen.INSTALLED) })
         body.addView(navRow(UiIcon.STORAGE, t(R.string.ui_storage), profile.free?.let { if (connected) t(R.string.ui_1_s_free, size(it)) else t(R.string.ui_1_s_free_last_observed, size(it)) } ?: t(R.string.ui_view_storage)) { navigate(Screen.STORAGE) })
-        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_selected_books), t(R.string.ui_1_d_audio_files_review_changes, app.targets(profile).size)) { navigate(Screen.PLAN) })
+        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_selected_books), p(R.plurals.ui_1_d_audio_files_review_changes, app.targets(profile).size, app.targets(profile).size)) { navigate(Screen.PLAN) })
         body.addView(action(t(R.string.ui_rename_pen), false) { renamePen(profile) })
         body.addView(action(t(R.string.ui_pen_information), false) { showMessage(profile.name, listOfNotNull(
             profile.identity.serialSuffix?.let { t(R.string.ui_serial_ending_1_s, it) }, profile.identity.firmware?.let { t(R.string.ui_firmware, it) },
@@ -335,7 +335,7 @@ class MainActivity : ComponentActivity() {
         summary.addView(text(profile.free?.let(::size) ?: t(R.string.ui_unknown), 36, ink, true))
         summary.addView(text(if (app.viewedPen != null) t(R.string.ui_free_space_1_s, profile.name) else t(R.string.ui_last_observed_free_space_1_s, dateTime(profile.lastSeen)), 15, muted))
         body.addView(summary); gap(body, 20)
-        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_audio_files), t(R.string.ui_1_d_files_2_s, profile.files.size, size(profile.bytes))) { navigate(Screen.INSTALLED) })
+        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_audio_files), p(R.plurals.ui_1_d_files_2_s, profile.files.size, profile.files.size, size(profile.bytes))) { navigate(Screen.INSTALLED) })
         body.addView(action(t(R.string.ui_review_oldest_files), false) { reviewOldest() })
     }
 
@@ -475,7 +475,7 @@ class MainActivity : ComponentActivity() {
                 if (app.viewedPen == null) { body.addView(text(t(R.string.ui_saved_inventory_1_s, dateTime(profile.lastSeen)), 13, muted)); gap(body, 10) }
                 val files = penSort.order(profile.files.filter { matches(titleFor(it.name), it.id) },
                     { titleFor(it.name) }, { it.size }, { it.modifiedAt })
-                body.addView(text(t(R.string.ui_1_d_audio_files, files.size), 13, muted)); gap(body, 12)
+                body.addView(text(p(R.plurals.ui_1_d_audio_files, files.size, files.size), 13, muted)); gap(body, 12)
                 if (penSort == PenSort.OLDEST || penSort == PenSort.NEWEST) {
                     body.addView(text(t(R.string.ui_file_modified_date_not_last_played), 12, muted)); gap(body, 12)
                 }
@@ -626,12 +626,12 @@ class MainActivity : ComponentActivity() {
         val backup = selectedFile?.let { app.backup(it) }
         val editions = selectedBooks()
         val fields = mutableListOf<String>()
-        if (editions.size > 1) fields.add(t(R.string.ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo, editions.size))
+        if (editions.size > 1) fields.add(p(R.plurals.ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo, editions.size, editions.size))
         editions.take(5).forEach { book ->
             val page = app.metadata.page(book.article)
             fields.add(listOfNotNull(book.title, t(R.string.ui_article, book.article),
                 page?.isbn?.let { t(R.string.ui_isbn, it) } ?: if (book.article in app.pendingPublisherPages) t(R.string.ui_loading_isbn) else t(R.string.ui_isbn_not_available),
-                page?.pages?.let { t(R.string.ui_pages, it) }).joinToString("\n"))
+                page?.pages?.let { p(R.plurals.ui_pages, it, it) }).joinToString("\n"))
         }
         fields.addAll(listOfNotNull(selectedFile, (entry?.id ?: file?.id)?.let { t(R.string.ui_audio_id_1_s, it) },
             entry?.version?.let { t(R.string.ui_audio_version_1_s, it) }, file?.let { t(R.string.ui_pen_file_modified_1_s, date(it.modifiedAt)) },
@@ -775,12 +775,12 @@ class MainActivity : ComponentActivity() {
             body.addView(text(t(R.string.ui_new_downloads_are_temporary_existing_downloads_stay_until_installed), 13, muted)); gap(body, 12)
         }
         val downloads = app.phoneAudio.downloadFiles()
-        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_downloaded_audio), t(R.string.ui_1_d_files_2_s, downloads.size, size(usage.downloads))) {
+        body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_downloaded_audio), p(R.plurals.ui_1_d_files_2_s, downloads.size, downloads.size, size(usage.downloads))) {
             AlertDialog.Builder(this).setTitle(t(R.string.ui_phone_downloads)).setItems(downloads.map { localDownloadTitle(it) }.toTypedArray()) { _, which ->
                 confirmDeleteDownload(downloads[which])
             }.setNegativeButton(t(R.string.ui_done), null).show()
         })
-        body.addView(navRow(UiIcon.STORAGE, t(R.string.ui_pen_backups), t(R.string.ui_1_d_copies_2_s, app.backups.all.size, size(usage.backups))) {
+        body.addView(navRow(UiIcon.STORAGE, t(R.string.ui_pen_backups), p(R.plurals.ui_1_d_copies_2_s, app.backups.all.size, app.backups.all.size, size(usage.backups))) {
             val copies = app.backups.latestCopies()
             AlertDialog.Builder(this).setTitle(t(R.string.ui_pen_backups_on_phone)).setItems(copies.map { titleFor(it.filename) }.toTypedArray()) { _, which ->
                 confirmDeleteBackups(copies[which].filename)
@@ -815,7 +815,7 @@ class MainActivity : ComponentActivity() {
     private fun confirmDeleteBackups(filename: String) {
         val copies = app.backups.all.filter { it.filename.equals(filename, true) }
         AlertDialog.Builder(this).setTitle(t(R.string.ui_delete_phone_backups))
-            .setMessage(t(R.string.ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion, titleFor(filename), copies.size, size(copies.sumOf { it.size })))
+            .setMessage(p(R.plurals.ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion, copies.size, titleFor(filename), copies.size, size(copies.sumOf { it.size })))
             .setNegativeButton(t(R.string.ui_cancel), null).setPositiveButton(t(R.string.ui_delete)) { _, _ -> app.deletePhoneBackups(filename) }.show()
     }
 
@@ -965,7 +965,7 @@ class MainActivity : ComponentActivity() {
     private fun hideKeyboard() { (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(root.windowToken, 0); root.clearFocus() }
     private fun showMessage(title: String, message: String) { AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton(t(R.string.ui_done), null).show() }
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
-    private fun dateTime(millis: Long) = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(millis))
-    private fun date(millis: Long?) = millis?.let { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?: t(R.string.ui_date_unavailable)
+    private fun dateTime(millis: Long) = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, resources.configuration.locales[0]).format(Date(millis))
+    private fun date(millis: Long?) = millis?.let { DateFormat.getDateInstance(DateFormat.MEDIUM, resources.configuration.locales[0]).format(Date(it)) } ?: t(R.string.ui_date_unavailable)
     private fun size(bytes: Long) = if (bytes >= 1_000_000_000) t(R.string.ui_gb, bytes / 1e9) else t(R.string.ui_mb, bytes / 1e6)
 }
