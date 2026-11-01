@@ -1,0 +1,55 @@
+# Source references only. Not submodules, app dependencies or bundled content.
+schema_version: 1
+reviewed_at: "2026-11-01"
+checkouts:
+  - name: libaums
+    repository: https://github.com/magnusja/libaums.git
+    revision: 57fa4826b792d46073a3329a303a6c9bec430fc8
+    path: references/libaums
+    purpose: Android USB host permissions, mass-storage transport and FAT32 access.
+    license_summary: Apache-2.0; inspect component and dependency notices before reuse.
+  - name: tttool
+    repository: https://github.com/entropia/tip-toi-reveng.git
+    revision: 3044719c5e704380a0fbb2bf79ea1876b59cbceb
+    path: references/tttool
+    purpose: GME format, product/OID semantics, checksums and custom content authoring.
+    license_summary: MIT; inspect documentation, samples and individual assets separately.
+  - name: desktop-manager
+    repository: https://github.com/geeks-r-us/tiptoi-manager.git
+    revision: 8c4abc1090f844934986198e821f6a6c4d7d353e
+    path: references/desktop-manager
+    purpose: Local catalog/cache design, account-free downloads, synchronization and linked files.
+    license_summary: MIT; source reference, not an Android dependency.
+  - name: web-manager
+    repository: https://github.com/nico-martin/tiptoi-manager.git
+    revision: 62d59454b8e19a52702ee0ae4a20f42ed8ee029d
+    path: references/web-manager
+    purpose: Browser-based inventory and direct-file management workflow; study only.
+    license_summary: AGPL-3.0 text plus Profit Contribution Agreement; no code reuse in this MIT project.
+  - name: ttmp32gme
+    repository: https://github.com/thawn/ttmp32gme.git
+    revision: fce48f66f94868f0283cb934c9ef0876b311321e
+    path: references/ttmp32gme
+    purpose: Custom audio authoring, printable controls and copying content to a pen.
+    license_summary: MIT; review bundled tools and assets separately.
+  - name: babytrack
+    repository: https://github.com/kzahel/babytrack.git
+    revision: 4e262991be56aac502d47fdab23e394c69700a7c
+    path: references/babytrack
+    purpose: Owned Android CI, release signing, source receipts and GitHub/Play distribution.
+    license_summary: MIT; public patterns only, no private keys or product configuration.
+    sparse_paths: [.github/workflows, scripts, docs, apps/android]
+  - name: jstorrent
+    repository: https://github.com/kzahel/jstorrent.git
+    revision: ef9d469ae434dee28598be40f529e1ca481eb96f
+    path: references/jstorrent
+    purpose: Owned Android signed APK/AAB releases, Gradle setup and automated publication.
+    license_summary: MIT; public patterns only, no private keys or product configuration.
+    sparse_paths: [.github/workflows, scripts, docs, clients/android]
+  - name: yepcontrol
+    repository: https://github.com/kzahel/yepcontrol.git
+    revision: a775764127c4503ed9d03d80ccee4cc9878d9718
+    path: references/yepcontrol
+    purpose: Owned Kotlin Android build, exact-source checks and separate release/Play jobs.
+    license_summary: MIT; public patterns only, no private keys or product configuration.
+    sparse_paths: [.github/workflows, scripts, docs, android]

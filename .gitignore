@@ -1,0 +1,25 @@
+# Local upstream research checkouts, never app dependencies.
+/references/
+
+# Device inventories, serial numbers, captures, downloaded content and credentials.
+/.local/
+/tmp/
+*.gme
+*.rav
+*.keystore
+*.jks
+*.p12
+*.secret
+.env
+.env.*
+
+# Development/build state.
+.venv/
+__pycache__/
+*.py[cod]
+.gradle/
+.kotlin/
+**/build/
+local.properties
+.idea/
+.DS_Store
