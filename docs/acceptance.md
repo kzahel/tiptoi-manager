@@ -60,8 +60,32 @@ Existing destination filenames are refused. Provider rename support is required.
 On a caught transfer error, the app attempts to remove only its own temporary
 file. Power loss, process death or disconnect can leave a `.tiptoi-manager-*.part`
 file; automatic recovery is not implemented. Keep the app open during transfers.
-No overwrite, book deletion, firmware operation or multi-pen sync is implemented.
+No overwrite, firmware operation or multi-pen sync is implemented. Manual
+removal and restoration are covered separately below.
 
 The storage route follows Android's [document access API](https://developer.android.com/training/data-storage/shared/documents-files).
 Physical browsing in another file manager alone is not app acceptance; the
 inventory result above came from this app's own granted document tree.
+
+## Manual removal, restoration and sorting
+
+JVM checks cover oldest/newest ordering with missing dates last, equal-date/size
+ordering, the installed-book action matrix, shared-support protection, strict
+streaming integrity failures and backup reload with original dates and per-pen
+preference. All 14 JVM tests and Android lint passed locally.
+
+On the physical Pixel and pen, the opt-in runner created a uniquely named copy
+of the already-cached, selected audio ID 248. It exercised the app's removal
+operation, reloaded the durable verified backup, restored without download
+requests, matched the full read-back SHA-256, and confirmed an existing filename
+was refused. Cleanup removed only the generated copy and its test backup.
+The original inventory's filenames, sizes and header IDs matched before and
+after. This does not assert a full hash of every original book.
+
+The provider reported file-modified dates, including old dates on existing
+content; these establish availability, not installation or playback recency.
+UI checks covered the sort picker, oldest/newest/largest views, the installed
+book's Remove action and cancellation, the optional phone-download menu, the
+file-date info dialog and Back/query restoration. No original book was selected
+for deletion. Physical playback, sudden disconnect/power-loss recovery, and
+other provider/pen compatibility remain separate checks.

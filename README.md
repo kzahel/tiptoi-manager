@@ -5,7 +5,8 @@ pen, install books over USB, manage space, and keep a family's pens in sync.
 
 **Status: experimental native Android spike.** USB inventory has been exercised
 on a real fourth-generation pen. Catalog search, offline downloads and verified,
-non-overwriting installs are implemented; see the [acceptance record](docs/acceptance.md)
+non-overwriting installs, manual removal with verified phone backups and offline
+restoration are implemented; see the [acceptance record](docs/acceptance.md)
 for what has actually been tested. This is not a stable release.
 
 [Preview APKs](https://github.com/kzahel/tiptoi-manager/releases) are built and
@@ -95,7 +96,7 @@ adb -s YOUR_PHONE install -r app/build/outputs/apk/debug/app-debug.apk
 1. Connect a pen to the phone with a data-capable cable or OTG adapter.
 2. Open My pen, choose the pen's top-level USB folder, and allow access.
 3. Use the hamburger menu to open Browse books and load the German catalog.
-4. Search for a title or product ID, open the book, and choose Download.
+4. Search for a title or product ID, open the book, and choose Download to phone.
 5. Open the saved book from Downloads and choose Install on pen. Keep the app
    open until Transfers reports completion. Unplug and check playback with the book.
 
@@ -103,9 +104,19 @@ My pen opens separate Installed books and Storage screens. Book details show
 the available action; File details holds filenames and versions. Transfers
 shows the current or most recent transfer in this session.
 
+Installed books can be sorted by title, file-modified date (oldest/newest) or
+size (largest first). Open a book and choose **Remove from pen** to free space;
+the app verifies a local backup before deletion. **Downloads** includes these
+backups and offers **Restore to pen**, without a network request. Backups stay
+on the phone after restoration. Uninstalling the app or clearing its storage
+erases them; there is no automatic backup eviction. See [cleanup](docs/cleanup.md).
+
+For installed books, phone downloads are optional actions in the three-dot menu.
+Download saves a phone copy; Install or Restore copies it to the pen and leaves
+the phone copy available.
+
 The app never replaces existing filenames in this spike. It does not install
-firmware, delete books, implement automatic companion-file selection, or claim
-playback-based cleanup. Transfers require the app to remain open; interruption
+firmware, automatically select companion files, or claim playback-based cleanup. Transfers require the app to remain open; interruption
 recovery and multi-pen persistence are later work. Publisher covers, titles,
 descriptions and age ranges enrich the catalog. ISBNs and article numbers are
 behind the info button. Viewed artwork and details are cached locally, with

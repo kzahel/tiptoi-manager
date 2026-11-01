@@ -7,7 +7,11 @@ after repository setup and a successful phone-to-pen USB mount. Implement a
 bounded vertical slice: inventory, public catalog, local downloads and one
 verified selected-book install. Build, deploy and inspect on the attached
 phone autonomously; physical playback confirmation still requires a person.
-Cleanup and multi-pen synchronization remain later work.
+The owner subsequently authorized individual book removal with a verified local
+backup, offline restoration, and sorting installed files by their reported
+file-modified dates or size. Do not infer permission to automatically evict
+books or choose which real family books to delete. Test deletion/restore with
+an explicitly created disposable copy. Multi-pen synchronization remains later work.
 
 Use `io.github.kzahel.tiptoimanager` for this independent utility, with a
 `.debug` suffix for development previews. No Play listing or production

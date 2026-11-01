@@ -46,3 +46,11 @@ publisher-confirmed ISBN and decodes cached thumbnail/detail artwork. A
 subsequent `-e metadataProductId ID -e metadataCachedOnly true` run uses only
 local catalog, page details and image files and makes no metadata requests.
 These modes do not download or install audio files.
+
+To test manual removal without selecting a real installed book, pass
+`-e removalFixtureProductId ID` for an unambiguous, already-cached product. This
+mode makes no download requests. It installs a uniquely named disposable copy,
+uses the app's removal action, reloads the persisted backup, restores and hashes
+the copy, checks refusal to overwrite, and cleans up only that unique fixture.
+It compares the original inventory's filenames, sizes and IDs after removal and
+cleanup. This is an opt-in pen-write test, never automatic cleanup of real books.

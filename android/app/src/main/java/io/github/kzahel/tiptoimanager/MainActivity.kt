@@ -23,6 +23,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.PopupMenu
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
@@ -30,6 +31,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import java.util.Locale
+import java.text.DateFormat
+import java.util.Date
 
 private enum class Screen(val title: String) {
     PEN("My pen"), INSTALLED("Installed books"), STORAGE("Storage"),
@@ -58,9 +61,11 @@ class MainActivity : ComponentActivity() {
     private var progressBar: ProgressBar? = null
     private var busyLabel: TextView? = null
     private var infoDialog: AlertDialog? = null
+    private var penSort = PenSort.TITLE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        penSort = runCatching { PenSort.valueOf(getPreferences(MODE_PRIVATE).getString("penSort", "TITLE")!!) }.getOrDefault(PenSort.TITLE)
         savedInstanceState?.let { state ->
             screen = runCatching { Screen.valueOf(state.getString("screen")!!) }.getOrDefault(Screen.PEN)
             selectedKey = state.getString("bookKey"); selectedFile = state.getString("bookFile")
@@ -229,7 +234,15 @@ class MainActivity : ComponentActivity() {
         when (screen) {
             Screen.PEN, Screen.INSTALLED, Screen.STORAGE -> if (app.tree != null) header.addView(iconButton(UiIcon.REFRESH, "Refresh pen") { app.refreshPen() }.apply { isEnabled = !app.busy })
             Screen.BROWSE -> header.addView(iconButton(UiIcon.REFRESH, "Refresh catalog") { app.refreshCatalog() }.apply { isEnabled = !app.busy })
-            Screen.BOOK -> header.addView(iconButton(UiIcon.INFO, "File details") { fileDetails() })
+            Screen.BOOK -> {
+                header.addView(iconButton(UiIcon.INFO, "File details") { fileDetails() })
+                if (selectedEntry() != null) {
+                    val more = iconButton(UiIcon.MORE, "More book actions") {}
+                    more.isEnabled = !app.busy
+                    more.setOnClickListener { bookMenu(more) }
+                    header.addView(more)
+                }
+            }
             else -> Unit
         }
         root.addView(header)
@@ -280,6 +293,7 @@ class MainActivity : ComponentActivity() {
         summary.addView(text("Free space", 15, muted))
         body.addView(summary); gap(body, 20)
         body.addView(navRow(UiIcon.BOOKS, "Audio files", "${pen.files.size} files · ${size(pen.bytes)}") { navigate(Screen.INSTALLED) })
+        body.addView(action("Review oldest files", false) { reviewOldest() })
     }
 
     private fun listScreen() {
@@ -293,6 +307,14 @@ class MainActivity : ComponentActivity() {
             setOnEditorActionListener { _, _, _ -> hideKeyboard(); clearFocus(); true }
         }
         root.addView(search, LinearLayout.LayoutParams(-1, dp(54)).apply { setMargins(dp(20), dp(16), dp(20), 0) })
+        if (screen == Screen.INSTALLED) {
+            root.addView(action("Sort: ${penSort.label}", false) {
+                AlertDialog.Builder(this).setTitle("Sort installed files")
+                    .setSingleChoiceItems(PenSort.entries.map { it.label }.toTypedArray(), penSort.ordinal) { dialog, which ->
+                        setSort(PenSort.entries[which]); dialog.dismiss(); render()
+                    }.setNegativeButton("Cancel", null).show()
+            }.apply { setPadding(dp(20), 0, dp(20), 0); gravity = Gravity.START or Gravity.CENTER_VERTICAL })
+        }
         scrollBody()
         fun populate() {
             body.removeAllViews()
@@ -301,27 +323,38 @@ class MainActivity : ComponentActivity() {
             if (screen == Screen.INSTALLED) {
                 val pen = app.pen
                 if (pen == null) { emptyState(UiIcon.PEN, "No pen connected"); return }
-                val files = pen.files.filter { matches(titleFor(it.name), it.id) }.sortedBy { titleFor(it.name).lowercase(Locale.ROOT) }
+                val files = penSort.order(pen.files.filter { matches(titleFor(it.name), it.id) },
+                    { titleFor(it.name) }, { it.size }, { it.modifiedAt })
                 body.addView(text("${files.size} audio files", 13, muted)); gap(body, 12)
+                if (penSort == PenSort.OLDEST || penSort == PenSort.NEWEST) {
+                    body.addView(text("File modified date · not last played", 12, muted)); gap(body, 12)
+                }
                 if (files.isEmpty()) emptyState(UiIcon.BOOKS, "No matches")
-                files.forEach { file -> body.addView(bookRow(titleFor(file.name), size(file.size), true, app.book(file.name, file.id)) {
+                files.forEach { file ->
+                    val subtitle = if (penSort == PenSort.OLDEST || penSort == PenSort.NEWEST)
+                        "${date(file.modifiedAt)} · ${size(file.size)}" else size(file.size)
+                    body.addView(bookRow(titleFor(file.name), subtitle, true, app.book(file.name, file.id)) {
                     openBook(app.catalog.find { it.filename.equals(file.name, true) }, file.name)
                 }) }
             } else {
                 val entries = app.catalog.filter { entry ->
                     val info = app.book(entry.filename, entry.id)
                     val searchable = listOf(entry.title, info?.title, info?.series).filterNotNull().joinToString(" ")
-                    (screen != Screen.DOWNLOADS || app.cached(entry)) && (matches(searchable, entry.id) ||
+                    (screen != Screen.DOWNLOADS || app.cached(entry) || app.backup(entry.filename) != null) && (matches(searchable, entry.id) ||
                         (query.isNotEmpty() && app.metadata.forEntry(entry).any { book -> book.article == query ||
                             app.metadata.page(book.article)?.isbn?.replace("-", "") == query.replace("-", "") }))
                 }.sortedBy { app.title(it).lowercase(Locale.ROOT) }
-                val noun = if (screen == Screen.DOWNLOADS) { if (entries.size == 1) "download" else "downloads" }
+                val orphanBackups = if (screen == Screen.DOWNLOADS) app.backups.latestCopies().filter { backup ->
+                    app.catalog.none { it.filename.equals(backup.filename, true) } && matches(titleFor(backup.filename), backup.audioId)
+                } else emptyList()
+                val count = entries.size + orphanBackups.size
+                val noun = if (screen == Screen.DOWNLOADS) { if (count == 1) "saved file" else "saved files" }
                     else if (entries.size == 1) "item" else "items"
-                body.addView(text("${entries.size} $noun", 13, muted)); gap(body, 12)
+                body.addView(text("$count $noun", 13, muted)); gap(body, 12)
                 if (app.metadata.books.isEmpty() && app.metadataNotice != null) {
                     body.addView(text("Book details unavailable · refresh to retry", 13, muted)); gap(body, 10)
                 }
-                if (entries.isEmpty()) {
+                if (entries.isEmpty() && orphanBackups.isEmpty()) {
                     when {
                         query.isNotEmpty() -> emptyState(UiIcon.BOOKS, "No matches")
                         screen == Screen.DOWNLOADS -> {
@@ -334,10 +367,12 @@ class MainActivity : ComponentActivity() {
                 entries.take(80).forEach { entry ->
                     val present = onPen(entry.filename)
                     val info = app.book(entry.filename, entry.id)
-                    val subtitle = listOfNotNull(if (present) "On pen" else if (app.cached(entry)) "Downloaded" else null,
+                    val subtitle = listOfNotNull(if (present) "On pen" else if (app.backup(entry.filename) != null) "Pen backup" else if (app.cached(entry)) "Downloaded" else null,
                         info?.series ?: size(entry.size)).joinToString(" · ")
                     body.addView(bookRow(app.title(entry), subtitle, present, info) { openBook(entry, entry.filename) })
                 }
+                orphanBackups.forEach { backup -> body.addView(bookRow(titleFor(backup.filename), "Pen backup · ${size(backup.size)}",
+                    onPen(backup.filename), app.book(backup.filename, backup.audioId)) { openBook(null, backup.filename) }) }
                 if (entries.size > 80) { gap(body, 12); body.addView(text("Search to see more titles", 13, muted)) }
             }
         }
@@ -359,7 +394,7 @@ class MainActivity : ComponentActivity() {
 
     private fun selectedBooks(): List<BookInfo> {
         val entry = selectedEntry()
-        val id = entry?.id ?: app.pen?.files?.find { it.name.equals(selectedFile, true) }?.id
+        val id = entry?.id ?: app.pen?.files?.find { it.name.equals(selectedFile, true) }?.id ?: selectedFile?.let { app.backup(it)?.audioId }
         if (id == 14999) return emptyList()
         return selectedFile?.let { app.metadata.forFile(it, id) }.orEmpty()
     }
@@ -368,9 +403,10 @@ class MainActivity : ComponentActivity() {
         val entry = selectedEntry()
         val filename = entry?.filename ?: selectedFile ?: return
         val file = app.pen?.files?.find { it.name.equals(filename, true) }
+        val backup = app.backup(filename)
         val cached = entry?.let(app::cached) == true
         val present = file != null
-        val book = app.book(filename, entry?.id ?: file?.id)
+        val book = app.book(filename, entry?.id ?: file?.id ?: backup?.audioId)
         book?.let { app.requestPublisherDetails(it) }
         val page = book?.let { app.metadata.page(it.article) }
         val cover = card(Color.WHITE)
@@ -386,24 +422,26 @@ class MainActivity : ComponentActivity() {
         book?.series?.let { gap(body, 8); body.addView(text(it, 15, muted)) }
         gap(body, 12)
         val age = book?.ageFrom?.let { from -> if (book.ageTo != null && book.ageTo != from) "$from–${book.ageTo} years" else "$from+ years" }
-        body.addView(text(listOfNotNull(age, size(entry?.size ?: file?.size ?: 0)).joinToString(" · "), 15, muted))
+        val bytes = file?.size ?: backup?.size ?: entry?.size ?: 0
+        body.addView(text(listOfNotNull(age, size(bytes)).joinToString(" · "), 15, muted))
         gap(body, 20)
         if (present) { body.addView(chip("On your pen", UiIcon.CHECK)); gap(body, 10) }
         if (cached) { body.addView(chip("Saved on this phone", UiIcon.DOWNLOAD)); gap(body, 10) }
+        if (backup != null) { body.addView(chip("Pen backup on this phone", UiIcon.STORAGE)); gap(body, 10) }
         if (file?.problem != null) body.addView(text(file.problem, 14, 0xFF9B2A22.toInt()))
         gap(body, 20)
-        when {
-            entry == null -> Unit
-            !cached -> body.addView(action("Download") { navigate(Screen.TRANSFERS); app.download(entry) })
-            !present && app.pen != null -> body.addView(action("Install on pen") { confirmInstall(entry) })
-            !present -> body.addView(action("Connect a pen") { navigate(Screen.PEN, false) })
+        when (BookActions.primary(present, BookActions.removable(filename, file?.id), backup != null,
+            cached, app.pen != null, entry != null, app.pen?.free, bytes)) {
+            BookPrimaryAction.REMOVE -> body.addView(action("Remove from pen", false) { file?.let(::confirmRemove) }.apply {
+                setTextColor(0xFF9B2A22.toInt())
+            })
+            BookPrimaryAction.RESTORE -> body.addView(action("Restore to pen") { backup?.let(::confirmRestore) })
+            BookPrimaryAction.INSTALL -> body.addView(action("Install on pen") { entry?.let(::confirmInstall) })
+            BookPrimaryAction.DOWNLOAD -> body.addView(action("Download to phone") { entry?.let { navigate(Screen.TRANSFERS); app.download(it) } })
+            BookPrimaryAction.CONNECT -> body.addView(action("Connect a pen") { navigate(Screen.PEN, false) })
+            BookPrimaryAction.MAKE_SPACE -> body.addView(action("Make space on pen") { reviewOldest() })
+            BookPrimaryAction.NONE -> if (present) body.addView(text("Shared support file", 14, muted))
         }
-        if (cached) body.addView(action("Download again", false) {
-            AlertDialog.Builder(this).setTitle("Download again?").setMessage(app.title(entry))
-                .setNegativeButton("Cancel", null).setPositiveButton("Download") { _, _ ->
-                    navigate(Screen.TRANSFERS); app.download(entry)
-                }.show()
-        })
         book?.takeIf { it.description.isNotBlank() || it.shortDescription.isNotBlank() }?.let {
             gap(body, 24)
             body.addView(text("About this book", 19, ink, true)); gap(body, 10)
@@ -427,6 +465,7 @@ class MainActivity : ComponentActivity() {
     private fun fileInfoMessage(): String {
         val entry = selectedEntry()
         val file = app.pen?.files?.find { it.name.equals(selectedFile, true) }
+        val backup = selectedFile?.let { app.backup(it) }
         val editions = selectedBooks()
         val fields = mutableListOf<String>()
         if (editions.size > 1) fields.add("${editions.size} publisher products share this audio. The pen does not identify your printed edition.")
@@ -437,7 +476,9 @@ class MainActivity : ComponentActivity() {
                 page?.pages?.let { "$it pages" }).joinToString("\n"))
         }
         fields.addAll(listOfNotNull(selectedFile, (entry?.id ?: file?.id)?.let { "Audio ID $it" },
-            entry?.version?.let { "Audio version $it" }, file?.problem))
+            entry?.version?.let { "Audio version $it" }, file?.let { "Pen file modified: ${date(it.modifiedAt)}" },
+            backup?.let { "Phone backup saved: ${date(it.savedAt)}\nOriginal pen file modified: ${date(it.sourceDate)}" }, file?.problem))
+        if (file != null || backup != null) fields.add("File dates are reported by storage. They may reflect a copy or publisher date; creation and last-played dates are unavailable.")
         return fields.joinToString("\n\n")
     }
 
@@ -454,7 +495,7 @@ class MainActivity : ComponentActivity() {
         val summary = card()
         summary.addView(icon(symbol, if (transfer.failed) 0xFF9B2A22.toInt() else green, 48)); gap(summary, 20)
         summary.addView(text(heading, 25, ink, true)); gap(summary, 12)
-        if (entry != null) summary.addView(text(app.title(entry), 17, ink))
+        summary.addView(text(entry?.let(app::title) ?: transfer.title, 17, ink))
         progressLabel = text(transfer.stage, 14, muted)
         gap(summary, 16); summary.addView(progressLabel)
         if (transfer.running) {
@@ -463,7 +504,7 @@ class MainActivity : ComponentActivity() {
             gap(summary, 14); summary.addView(text("Keep the app open and the pen connected.", 13, muted))
         }
         body.addView(summary); gap(body, 24)
-        if (!transfer.running && entry != null) body.addView(action("View book") { openBook(entry, entry.filename) })
+        if (!transfer.running) body.addView(action("View book") { openBook(entry, transfer.filename) })
         if (transfer.failed) body.addView(action("Connection help", false) { navigate(Screen.HELP, false) })
         updateProgress()
     }
@@ -485,6 +526,10 @@ class MainActivity : ComponentActivity() {
         about.addView(text("Tiptoi Manager", 19, ink, true)); gap(about, 8)
         about.addView(text("Independent, open-source USB manager.\nNo account. Your library stays on this phone.", 14, muted))
         gap(about, 12)
+        about.addView(action("Phone copies & backups", false) {
+            showMessage("Phone copies & backups", "Downloads stay on this phone after installation. Removing a pen file first saves a verified phone backup; restore it from Downloads. Backups remain after restoration. Uninstalling the app or clearing its storage erases all phone copies and backups.")
+        })
+        gap(about, 12)
         about.addView(text("Experimental preview · 0.1.0", 12, muted))
         gap(about, 12)
         about.addView(action("Open-source licenses", false) {
@@ -504,6 +549,51 @@ class MainActivity : ComponentActivity() {
             .setNegativeButton("Cancel", null).setPositiveButton("Install") { _, _ ->
                 navigate(Screen.TRANSFERS); app.install(entry)
             }.show()
+    }
+
+    private fun bookMenu(anchor: View) {
+        val entry = selectedEntry() ?: return
+        val label = if (app.cached(entry)) "Re-download phone copy" else "Download phone copy"
+        PopupMenu(this, anchor).apply {
+            menu.add(label).setOnMenuItemClickListener {
+                AlertDialog.Builder(this@MainActivity).setTitle("$label?")
+                    .setMessage("${app.title(entry)}\n${size(entry.size)} saved on this phone for offline installation.")
+                    .setNegativeButton("Cancel", null).setPositiveButton("Download") { _, _ ->
+                        navigate(Screen.TRANSFERS); app.download(entry)
+                    }.show()
+                true
+            }
+            show()
+        }
+    }
+
+    private fun confirmRemove(file: PenFile) {
+        val shared = app.pen?.files?.any { it.id == file.id && it.name != file.name } == true
+        val warning = if (shared) "\nOther files share this audio ID and will stay on the pen. Related content may depend on this file." else ""
+        AlertDialog.Builder(this).setTitle("Remove from pen?")
+            .setMessage("${titleFor(file.name)}\nFree up ${size(file.size)} on the pen. A verified backup will be kept on this phone for offline restoration.$warning")
+            .setNegativeButton("Cancel", null).setPositiveButton("Remove") { _, _ ->
+                navigate(Screen.TRANSFERS); app.remove(file)
+            }.show()
+    }
+
+    private fun confirmRestore(backup: RemovalBackup) {
+        AlertDialog.Builder(this).setTitle("Restore to pen?")
+            .setMessage("${titleFor(backup.filename)}\n${size(backup.size)} from this phone's backup. Existing filenames are preserved.")
+            .setNegativeButton("Cancel", null).setPositiveButton("Restore") { _, _ ->
+                navigate(Screen.TRANSFERS); app.restore(backup)
+            }.show()
+    }
+
+    private fun setSort(value: PenSort) {
+        penSort = value
+        getPreferences(MODE_PRIVATE).edit().putString("penSort", value.name).apply()
+    }
+
+    private fun reviewOldest() {
+        setSort(PenSort.OLDEST)
+        queries[Screen.INSTALLED] = ""
+        navigate(Screen.INSTALLED)
     }
 
     @Suppress("DEPRECATION")
@@ -605,11 +695,12 @@ class MainActivity : ComponentActivity() {
     private fun titleFor(filename: String): String {
         val entry = app.catalog.find { it.filename.equals(filename, true) }
         if (entry != null) return app.title(entry)
-        val id = app.pen?.files?.find { it.name.equals(filename, true) }?.id
+        val id = app.pen?.files?.find { it.name.equals(filename, true) }?.id ?: app.backup(filename)?.audioId
         return app.book(filename, id)?.title ?: filename.removeSuffix(".gme").replace('_', ' ')
     }
     private fun hideKeyboard() { (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(root.windowToken, 0); root.clearFocus() }
     private fun showMessage(title: String, message: String) { AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("Done", null).show() }
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
+    private fun date(millis: Long?) = millis?.let { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?: "Date unavailable"
     private fun size(bytes: Long) = if (bytes >= 1_000_000_000) String.format(Locale.ROOT, "%.2f GB", bytes / 1e9) else String.format(Locale.ROOT, "%.1f MB", bytes / 1e6)
 }

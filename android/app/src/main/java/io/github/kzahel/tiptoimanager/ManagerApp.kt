@@ -12,7 +12,7 @@ import android.os.Looper
 import java.io.File
 import java.util.concurrent.Executors
 
-data class TransferInfo(val action: String, val bookKey: String, val stage: String = "Preparing",
+data class TransferInfo(val action: String, val bookKey: String?, val filename: String, val title: String, val stage: String = "Preparing",
     val percent: Int? = null, val running: Boolean = true, val failed: Boolean = false)
 
 class ManagerApp : Application() {
@@ -22,6 +22,7 @@ class ManagerApp : Application() {
     private val preferences by lazy { getSharedPreferences("manager", MODE_PRIVATE) }
     val storage by lazy { PenStorage(contentResolver) }
     val downloads by lazy { File(filesDir, "downloads").apply { mkdirs() } }
+    val backups by lazy { RemovalBackups(File(filesDir, "pen-backups")) }
     val metadata by lazy { BookMetadataStore(File(filesDir, "book-metadata"), BuildConfig.CATALOG_CLIENT_ID, BuildConfig.CATALOG_CLIENT_SECRET) }
     val covers by lazy { CoverImages(File(filesDir, "covers")) }
     var metadataChanged: ((String) -> Unit)? = null
@@ -64,6 +65,7 @@ class ManagerApp : Application() {
         // A process interrupted during download never leaves a completed cache file.
         downloads.listFiles()?.filter { it.name.endsWith(".part") }?.forEach { it.delete() }
         work("Loading local library") {
+            backups.load()
             metadata.loadCached()
             val local = File(filesDir, "catalog.csv")
             if (local.exists()) catalog = Catalog.parse(local.readText())
@@ -100,6 +102,7 @@ class ManagerApp : Application() {
 
     fun cache(entry: CatalogEntry): File = File(downloads, entry.cacheKey)
     fun cached(entry: CatalogEntry): Boolean = cache(entry).let { it.isFile && it.length() == entry.size }
+    fun backup(filename: String): RemovalBackup? = backups.latest(filename, pen?.fingerprint)
 
     fun book(filename: String, id: Int?): BookInfo? {
         if (id == 14999) return null // Shared support content is not an individual book.
@@ -138,30 +141,56 @@ class ManagerApp : Application() {
         status = "Installed and read-back verified: ${entry.title}. Unplug and tap the book to check playback."
     }
 
+    fun remove(file: PenFile) = work("Remove", filename = file.name,
+        localTitle = book(file.name, file.id)?.title ?: file.name) {
+        val selected = pen ?: error("Scan the connected pen first.")
+        try {
+            storage.remove(selected, file, backups.directory) { stage, bytes -> progress(stage, bytes, file.size) }
+            status = "Removed from pen. A verified backup is saved on this phone."
+        } finally {
+            backups.load()
+            pen = runCatching { storage.scan(selected.tree) }.getOrNull()
+        }
+    }
+
+    fun restore(backup: RemovalBackup) = work("Restore", filename = backup.filename,
+        localTitle = book(backup.filename, backup.audioId)?.title ?: backup.filename) {
+        val selected = pen ?: error("Scan the connected pen first.")
+        try {
+            storage.restore(selected, backup) { stage, bytes -> progress(stage, bytes, backup.size) }
+            status = "Restored and read-back verified. Phone backup retained."
+        } finally { pen = runCatching { storage.scan(selected.tree) }.getOrNull() }
+    }
+
     private fun progress(stage: String, bytes: Long, total: Long) {
         val now = System.currentTimeMillis()
         if (now - lastProgress < 250 && bytes != 0L && bytes != total) return
         lastProgress = now
         main.post {
-            val percent = (bytes * 100 / total).coerceIn(0, 100).toInt()
+            val percent = if (total > 0) (bytes * 100 / total).coerceIn(0, 100).toInt() else 0
             status = "$stage · $percent%"
             transfer?.takeIf { it.running }?.let { transfer = it.copy(stage = stage, percent = percent) }
             progressed?.invoke()
         }
     }
 
-    private fun work(label: String, book: CatalogEntry? = null, action: () -> Unit) {
+    private fun work(label: String, book: CatalogEntry? = null, filename: String? = book?.filename,
+                     localTitle: String? = book?.let(::title), action: () -> Unit) {
         if (busy) return
         busy = true; status = label; failure = false
-        if (book != null) transfer = TransferInfo(label, book.cacheKey)
+        if (filename != null) transfer = TransferInfo(label, book?.cacheKey, filename, localTitle ?: filename)
         changed?.invoke()
         executor.execute {
             var error: String? = null
             try { action() } catch (e: Exception) { error = e.message ?: "Operation failed. Reconnect and try again." }
             main.post {
                 if (error != null) { status = error; failure = true }
-                if (book != null) transfer = transfer?.copy(running = false, failed = error != null,
-                    stage = error ?: if (label == "Download") "Saved offline" else "Read-back verified", percent = null)
+                if (filename != null) transfer = transfer?.copy(running = false, failed = error != null,
+                    stage = error ?: when (label) {
+                        "Download" -> "Saved offline"
+                        "Remove" -> "Removed from pen · phone backup kept"
+                        else -> "Read-back verified"
+                    }, percent = null)
                 busy = false; changed?.invoke()
             }
         }

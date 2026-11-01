@@ -46,6 +46,11 @@ class UsbSmokeInstrumentation : Instrumentation() {
             }
             val tree = app.tree ?: error("Grant the pen's folder through the app before running this check.")
             val original = app.storage.scan(tree)
+            arguments.getString("removalFixtureProductId")?.toInt()?.let { id ->
+                removalFixture(app, original, id, results)
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             results.putInt("inventoryFiles", original.files.size)
             results.putInt("inventoryProductIds", original.ids)
             if (arguments.getString("refreshCatalog") == "true") operation(app) { app.refreshCatalog() }
@@ -84,6 +89,60 @@ class UsbSmokeInstrumentation : Instrumentation() {
             results.putString("stream", "USB smoke failed: ${e.message}\n")
             finish(Activity.RESULT_CANCELED, results)
         }
+    }
+
+    /** Create, remove and restore only our uniquely named disposable copy. Never delete a prior book. */
+    private fun removalFixture(app: ManagerApp, original: PenSnapshot, id: Int, results: Bundle) {
+        val entry = app.catalog.single { it.id == id }
+        check(app.cached(entry)) { "Cache the explicitly selected product before this offline test." }
+        val name = "Tiptoi manager removal test ${java.util.UUID.randomUUID()}.gme"
+        val inventory = original.files.map { Triple(it.name, it.size, it.id) }.toSet()
+        var backup: RemovalBackup? = null
+        try {
+            app.storage.install(original, entry.copy(filename = name), app.cache(entry)) { _, _ -> }
+            operation(app) { app.refreshPen() }
+            val fixture = app.pen!!.files.single { it.name == name }
+            check(fixture.modifiedAt != null) { "Provider did not expose the fixture's file date." }
+            operation(app) { app.remove(fixture) }
+            check(app.pen!!.files.none { it.name == name })
+            check(app.pen!!.files.map { Triple(it.name, it.size, it.id) }.toSet() == inventory)
+            val reloaded = RemovalBackups(app.backups.directory).apply { load() }
+            backup = reloaded.latest(name, original.fingerprint) ?: error("Durable backup missing after removal.")
+            check(backup.sourceDate == fixture.modifiedAt)
+            val source = app.cache(entry).inputStream().use { RawIntegrity.inspect(it, entry.size) }
+            check(backup.sha256 == source.sha256)
+            operation(app) { app.restore(backup) }
+            val restored = app.pen!!.files.single { it.name == name }
+            val checked = targetContext.contentResolver.openInputStream(restored.uri)!!.use { RawIntegrity.inspect(it, restored.size) }
+            check(checked.sha256 == source.sha256)
+            assertExistingDestinationRefused(app, backup)
+            results.putBoolean("verifiedBackupPersisted", true)
+            results.putBoolean("offlineRestoreReadBackVerified", true)
+            results.putBoolean("existingDestinationPreserved", true)
+            results.putBoolean("fileDatesAvailable", true)
+        } finally {
+            val current = app.storage.scan(original.tree)
+            check(current.fingerprint == original.fingerprint) { "Pen changed; retain fixture backup for recovery." }
+            // Exact unique test filename only; no caller-supplied original filename can reach this delete.
+            current.files.singleOrNull { it.name == name }?.let {
+                check(android.provider.DocumentsContract.deleteDocument(targetContext.contentResolver, it.uri))
+            }
+            val after = app.storage.scan(original.tree)
+            check(after.fingerprint == original.fingerprint)
+            check(after.files.map { Triple(it.name, it.size, it.id) }.toSet() == inventory) { "Prior inventory changed." }
+            backup?.directory?.deleteRecursively()
+            app.backups.load()
+            operation(app) { app.refreshPen() }
+        }
+        results.putBoolean("priorInventoryPreserved", true)
+        results.putString("stream", "Disposable copy: backup, removal, offline restore, no-overwrite and cleanup passed; prior inventory preserved.\n")
+    }
+
+    private fun assertExistingDestinationRefused(app: ManagerApp, backup: RemovalBackup) {
+        var refused = false
+        try { app.storage.restore(app.pen!!, backup) { _, _ -> } }
+        catch (e: IllegalStateException) { refused = e.message?.contains("already on the pen") == true }
+        check(refused) { "Restoration must refuse an existing destination." }
     }
 
     private fun operation(app: ManagerApp, action: () -> Unit) {
