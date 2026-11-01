@@ -8,8 +8,9 @@ import java.security.MessageDigest
 import java.util.Locale
 
 /** These are filesystem dates, never playback or inferred installation dates. */
-enum class PenSort(val label: String) {
-    TITLE("Title"), OLDEST("File date · oldest first"), NEWEST("File date · newest first"), LARGEST("Size · largest first");
+enum class PenSort(private val labelId: Int) {
+    TITLE(R.string.label_title), OLDEST(R.string.label_file_date_oldest_first), NEWEST(R.string.label_file_date_newest_first), LARGEST(R.string.label_size_largest_first);
+    val label: String get() = t(labelId)
     fun <T> order(items: List<T>, title: (T) -> String, size: (T) -> Long, date: (T) -> Long?): List<T> {
         val names = compareBy<T> { title(it).lowercase(Locale.ROOT) }
         val comparator = when (this) {
@@ -54,12 +55,12 @@ object RawIntegrity {
             val count = input.read(buffer)
             if (count < 0) break
             total += count
-            check(total <= expectedSize) { "The file grew or its size is unavailable. Rescan before trying again." }
+            check(total <= expectedSize) { t(R.string.error_the_file_grew_or_its_size_is_unavailable_rescan_before_trying_again) }
             output?.write(buffer, 0, count)
             digest.update(buffer, 0, count)
             progress(total)
         }
-        check(total == expectedSize) { "The file changed or the copy ended early. Nothing was intentionally removed." }
+        check(total == expectedSize) { t(R.string.error_the_file_changed_or_the_copy_ended_early_nothing_was_intentionally_r) }
         return FileDigest(total, digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) })
     }
 }

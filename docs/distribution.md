@@ -50,3 +50,10 @@ Owned workflow references remain pinned in `repos.yaml`:
 - [JSTorrent](https://github.com/kzahel/jstorrent): APK release artifacts.
 - [YepControl](https://github.com/kzahel/yepcontrol): source provenance and
   separation of GitHub releases from Play publication.
+
+## Pen Library / Google Play
+
+The owner authorized a public Play release on 2026-11-01. Follow
+[the publication runbook](play-publication.md) for dedicated signing, localized
+listings, privacy, CI candidates and submission evidence. Automatic debug
+previews continue separately; they are not production-signed releases.

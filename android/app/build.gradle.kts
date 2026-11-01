@@ -7,6 +7,8 @@ val local = Properties().apply {
 }
 val previewDirectory = providers.environmentVariable("TIPTOI_PREVIEW_SIGNING_DIR").orNull
     ?: local.getProperty("previewSigningDir")
+val releaseDirectory = providers.environmentVariable("PEN_LIBRARY_RELEASE_SIGNING_DIR").orNull
+    ?: local.getProperty("releaseSigningDir")
 val catalogClientFile = providers.environmentVariable("TIPTOI_CATALOG_CLIENT_FILE").orNull
     ?: local.getProperty("catalogClientFile")
 val catalogClient = Properties().apply {
@@ -17,13 +19,14 @@ fun quoted(value: String): String = "\"" + value.replace("\\", "\\\\").replace("
 android {
     namespace = "io.github.kzahel.tiptoimanager"
     compileSdk = 36
+    bundle { language { enableSplit = false } }
     buildFeatures { buildConfig = true }
     defaultConfig {
         applicationId = "io.github.kzahel.tiptoimanager"
         minSdk = 26
         targetSdk = 36
         versionCode = providers.environmentVariable("TIPTOI_VERSION_CODE").orElse("1").get().toInt()
-        versionName = "0.1.0-spike"
+        versionName = "0.1.0"
         testInstrumentationRunner = "io.github.kzahel.tiptoimanager.UsbSmokeInstrumentation"
         buildConfigField("String", "CATALOG_CLIENT_ID", quoted(catalogClient.getProperty("client.id", "")))
         buildConfigField("String", "CATALOG_CLIENT_SECRET", quoted(catalogClient.getProperty("client.secret", "")))
@@ -34,7 +37,18 @@ android {
         keyAlias = "preview"
         keyPassword = storePassword
     }
-    buildTypes { getByName("debug") {
+    if (releaseDirectory != null) signingConfigs.create("production") {
+        storeFile = file("$releaseDirectory/upload.jks")
+        storePassword = file("$releaseDirectory/password.secret").readText().trim()
+        keyAlias = "upload"
+        keyPassword = storePassword
+    }
+    buildTypes {
+      getByName("release") {
+        isMinifyEnabled = false
+        if (releaseDirectory != null) signingConfig = signingConfigs.getByName("production")
+      }
+      getByName("debug") {
         applicationIdSuffix = ".debug"
         if (previewDirectory != null) signingConfig = signingConfigs.getByName("preview")
     } }

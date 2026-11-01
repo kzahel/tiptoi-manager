@@ -1,0 +1,28 @@
+{
+  "terms": [
+    {
+      "term": "pen",
+      "definition": "The physical reading pen, never a drawing tool."
+    },
+    {
+      "term": "cache",
+      "definition": "Phone copies for reuse, separate from pen content and removal backups."
+    },
+    {
+      "term": "backup",
+      "definition": "Verified phone copy made before explicit removal from pen; restore is non-overwriting."
+    },
+    {
+      "term": "selection",
+      "definition": "An additive shared/per-pen selection; no automatic deletion."
+    },
+    {
+      "term": "filedate",
+      "definition": "Filesystem modification date; never playback history."
+    },
+    {
+      "term": "install",
+      "definition": "Copy verified book audio onto connected pen."
+    }
+  ]
+}

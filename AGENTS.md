@@ -21,8 +21,10 @@ selections and explicitly reviewed additive synchronization. Never automatically
 remove extra books or overwrite a conflicting filename during selection sync.
 
 Use `io.github.kzahel.tiptoimanager` for this independent utility, with a
-`.debug` suffix for development previews. No Play listing or production
-signing identity is established. Start with `README.md`, `docs/vision.md`,
+`.debug` suffix for development previews. The owner subsequently authorized Pen Library branding, a public Play release,
+original store artwork/screenshots, and English, German and French localization.
+Use the existing owner account and a dedicated signing identity; never reuse
+another app’s credentials. Start with `README.md`, `docs/vision.md`,
 `docs/research.md`, and `docs/distribution.md`; report actual evidence rather
 than treating a build as proof of physical-device behavior.
 
@@ -96,9 +98,11 @@ mock-only tests.
 The intended distribution is public source and CI-built Android artifacts,
 following the owned Babytrack, JSTorrent and YepControl references. Keep signing
 credentials out of source and ordinary PR jobs. Do not invent a release flow
-before a real APK can be built and accepted. Google Play is a later delivery
-decision; repository bootstrap does not authorize creating store accounts,
-copying another product's signing key or publishing a Play release.
+before a real APK can be built and accepted. The owner authorized public Play publication on 2026-11-01. A release must
+include accurate privacy disclosures, actual app screenshots and checked
+translations. Keep original household data out of store media; use the
+publicly labeled demo library. Do not create a new developer account or copy
+another product’s signing key.
 
 Working directly on `main` is allowed. Keep commits scoped and leave unrelated
 sibling repositories unchanged.

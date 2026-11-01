@@ -3,9 +3,9 @@ name: Android preview
 on:
   push:
     branches: [main]
-    paths: ['android/**', '.github/workflows/android.yml']
+    paths: ['android/**', 'localization/**', 'scripts/*localization*', 'scripts/i18n.py', '.github/workflows/android.yml']
   pull_request:
-    paths: ['android/**', '.github/workflows/android.yml']
+    paths: ['android/**', 'localization/**', 'scripts/*localization*', 'scripts/i18n.py', '.github/workflows/android.yml']
   workflow_dispatch:
 
 permissions:

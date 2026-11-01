@@ -12,7 +12,7 @@ import android.os.Looper
 import java.io.File
 import java.util.concurrent.Executors
 
-data class TransferInfo(val action: String, val bookKey: String?, val filename: String, val title: String, val stage: String = "Preparing",
+data class TransferInfo(val action: String, val bookKey: String?, val filename: String, val title: String, val stage: String = t(R.string.msg_preparing),
     val percent: Int? = null, val running: Boolean = true, val failed: Boolean = false, val target: String? = null)
 
 class ManagerApp : Application() {
@@ -23,10 +23,26 @@ class ManagerApp : Application() {
     val profiles by lazy { PenProfiles(File(filesDir, "pens.json")) }
     var selectedProfileId: String? = null
         private set
-    val viewedProfile: PenProfile? get() = profiles.all.find { it.id == selectedProfileId }
-    val viewedPen: PenSnapshot? get() = pen?.takeIf { it.identity.key == viewedProfile?.identity?.key }
+    var demoMode = false
+        private set
+    private var realSelection: String? = null
+    val knownProfiles: List<PenProfile> get() = if (demoMode) DemoLibrary.pens else profiles.all
+    val familySelection: List<CatalogEntry> get() = if (demoMode) DemoLibrary.entries else profiles.family
+    fun targets(profile: PenProfile): List<CatalogEntry> = if (demoMode) DemoLibrary.entries else profiles.targets(profile)
+    val displayConnection: PenSnapshot? get() = if (demoMode) DemoLibrary.connected else pen
+    fun setDemo(enabled: Boolean) {
+        if (busy || enabled == demoMode) return
+        connectionEpoch++
+        if (enabled) { realSelection = selectedProfileId; selectedProfileId = DemoLibrary.pens.first().id }
+        else selectedProfileId = realSelection
+        demoMode = enabled
+        failure = false
+        changed?.invoke()
+    }
+    val viewedProfile: PenProfile? get() = knownProfiles.find { it.id == selectedProfileId }
+    val viewedPen: PenSnapshot? get() = displayConnection?.takeIf { it.identity.key == viewedProfile?.identity?.key }
     val visibleFiles: List<SavedPenFile> get() = viewedProfile?.files.orEmpty()
-    val connectedName: String? get() = pen?.let { live -> profiles.all.find { it.identity.key == live.identity.key }?.name }
+    val connectedName: String? get() = displayConnection?.let { live -> knownProfiles.find { it.identity.key == live.identity.key }?.name }
     val storage by lazy { PenStorage(contentResolver) }
     val downloads by lazy { File(filesDir, "downloads").apply { mkdirs() } }
     val backups by lazy { RemovalBackups(File(filesDir, "pen-backups")) }
@@ -46,11 +62,13 @@ class ManagerApp : Application() {
         private set
     var pen: PenSnapshot? = null
         private set
-    var catalog: List<CatalogEntry> = emptyList()
-        private set
+    private var realCatalog: List<CatalogEntry> = emptyList()
+    var catalog: List<CatalogEntry>
+        get() = if (demoMode) DemoLibrary.entries else realCatalog
+        private set(value) { realCatalog = value }
     @Volatile var busy = false
         private set
-    var status = "Connect a pen to get started."
+    var status = t(R.string.msg_connect_a_pen_to_get_started)
         private set
     var failure = false
         private set
@@ -62,12 +80,13 @@ class ManagerApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        UiText.initialize(this)
         val usbChanged = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 connectionEpoch++
                 if (intent.action == UsbManager.ACTION_USB_DEVICE_DETACHED) {
                     pen = null
-                    status = "USB disconnected. Saved inventories are still available."
+                    status = t(R.string.msg_usb_disconnected_saved_inventories_are_still_available)
                     changed?.invoke()
                 }
                 probeConnection()
@@ -88,8 +107,8 @@ class ManagerApp : Application() {
             metadata.loadCached()
             val local = File(filesDir, "catalog.csv")
             if (local.exists()) catalog = Catalog.parse(local.readText())
-            status = if (catalog.isEmpty()) "Refresh the catalog to browse books." else "Catalog loaded from this phone."
-            discover()?.let { record(it, true); status = "${connectedName} connected." }
+            status = if (catalog.isEmpty()) t(R.string.msg_refresh_the_catalog_to_browse_books) else t(R.string.msg_catalog_loaded_from_this_phone)
+            discover()?.let { record(it, true); status = t(R.string.ui_connected_sentence, connectedName) }
         }
     }
 
@@ -97,9 +116,9 @@ class ManagerApp : Application() {
 
     fun refreshPen() = work("Reading pen") {
         pen = null
-        val snapshot = discover() ?: error("No pen found in the granted USB folders. Connect a pen or choose its folder.")
+        val snapshot = discover() ?: error(t(R.string.error_no_pen_found_in_the_granted_usb_folders_connect_a_pen_or_choose_its))
         record(snapshot, true)
-        status = "${connectedName} scanned. ${snapshot.files.size} files."
+        status = t(R.string.msg_1_s_scanned_2_d_files, connectedName, snapshot.files.size)
     }
 
     private fun candidates(): List<Uri> = (listOfNotNull(tree) + profiles.all.map { Uri.parse(it.tree) } +
@@ -118,16 +137,16 @@ class ManagerApp : Application() {
 
     fun selectProfile(id: String, notify: Boolean = true) {
         if (busy && notify) return
-        require(profiles.all.any { it.id == id })
+        require(knownProfiles.any { it.id == id })
         selectedProfileId = id
-        preferences.edit().putString("selectedProfile", id).apply()
+        if (!demoMode) preferences.edit().putString("selectedProfile", id).apply()
         if (notify) changed?.invoke()
     }
 
     fun renameProfile(id: String, name: String) = work("Naming pen") { profiles.rename(id, name) }
     fun forgetProfile(id: String) = work("Forgetting pen") {
-        val profile = profiles.all.find { it.id == id } ?: error("Pen profile not found.")
-        check(pen?.identity?.key != profile.identity.key) { "Disconnect this pen before forgetting its profile." }
+        val profile = profiles.all.find { it.id == id } ?: error(t(R.string.error_pen_profile_not_found))
+        check(pen?.identity?.key != profile.identity.key) { t(R.string.error_disconnect_this_pen_before_forgetting_its_profile) }
         profiles.forget(id)
         if (selectedProfileId == id) {
             selectedProfileId = profiles.all.firstOrNull { it.identity.key == pen?.identity?.key }?.id ?: profiles.all.firstOrNull()?.id
@@ -141,11 +160,12 @@ class ManagerApp : Application() {
     fun setContentTargets(entry: CatalogEntry, profileIds: Set<String>, includeFamily: Boolean) = work("Saving book selection") {
         profiles.setTargets(entry, profileIds, includeFamily)
     }
-    fun plan(): PenPlan? = viewedProfile?.let { PenPlan.create(it, profiles.targets(it)) }
+    fun plan(): PenPlan? = viewedProfile?.let { PenPlan.create(it, targets(it)) }
 
     private fun destination(expectedProfileId: String?): PenSnapshot {
-        check(expectedProfileId != null && selectedProfileId == expectedProfileId) { "The selected pen changed. Review the destination again." }
-        return viewedPen ?: error("Connect ${viewedProfile?.name ?: "the selected pen"} and scan it before writing.")
+        check(!demoMode) { t(R.string.ui_demo_readonly) }
+        check(expectedProfileId != null && selectedProfileId == expectedProfileId) { t(R.string.error_the_selected_pen_changed_review_the_destination_again) }
+        return viewedPen ?: error(t(R.string.error_connect_1_s_and_scan_it_before_writing, viewedProfile?.name ?: t(R.string.ui_selected_pen)))
     }
 
     private var watching = false
@@ -157,18 +177,18 @@ class ManagerApp : Application() {
     fun startConnectionWatch() { if (!watching) { watching = true; main.post(watch) } }
     fun stopConnectionWatch() { watching = false; main.removeCallbacks(watch) }
     private fun probeConnection() {
-        if (busy || probing) return
+        if (demoMode || busy || probing) return
         probing = true
         val epoch = connectionEpoch
         executor.execute {
             try {
-                if (!busy) {
+                if (!demoMode && !busy) {
                     val match = candidates().firstNotNullOfOrNull { uri -> runCatching { uri to storage.identify(uri).first }.getOrNull() }
-                    if (!busy && epoch == connectionEpoch) {
+                    if (!demoMode && !busy && epoch == connectionEpoch) {
                         if (match == null && pen != null) { pen = null; main.post { changed?.invoke() } }
                         else if (match != null && (pen?.tree != match.first || pen?.fingerprint != match.second)) {
                             val snapshot = storage.scan(match.first)
-                            if (!busy && epoch == connectionEpoch) { record(snapshot, true); main.post { changed?.invoke() } }
+                            if (!demoMode && !busy && epoch == connectionEpoch) { record(snapshot, true); main.post { changed?.invoke() } }
                         }
                     }
                 }
@@ -182,20 +202,21 @@ class ManagerApp : Application() {
         try {
             Downloads.fetch(Catalog.URL, partial)
             val parsed = Catalog.parse(partial.readText())
-            check(parsed.isNotEmpty()) { "The catalog contained no supported content." }
-            check(partial.renameTo(File(filesDir, "catalog.csv"))) { "Could not save the catalog." }
+            check(parsed.isNotEmpty()) { t(R.string.error_the_catalog_contained_no_supported_content) }
+            check(partial.renameTo(File(filesDir, "catalog.csv"))) { t(R.string.error_could_not_save_the_catalog) }
             catalog = parsed
             metadataNotice = runCatching { metadata.refresh() }.exceptionOrNull()?.message
             main.post { covers.clearFailures() }
-            status = "Catalog refreshed. ${catalog.size} content files, including companion files."
+            status = t(R.string.msg_catalog_refreshed_1_d_content_files_including_companion_files, catalog.size)
         } finally { partial.delete() }
     }
 
     fun cache(entry: CatalogEntry): File = File(downloads, entry.cacheKey)
-    fun cached(entry: CatalogEntry): Boolean = cache(entry).let { it.isFile && it.length() == entry.size }
-    fun backup(filename: String): RemovalBackup? = backups.latest(filename, viewedProfile?.fingerprint, viewedProfile?.identity?.key, viewedProfile?.fingerprints.orEmpty())
+    fun cached(entry: CatalogEntry): Boolean = !demoMode && cache(entry).let { it.isFile && it.length() == entry.size }
+    fun backup(filename: String): RemovalBackup? = if (demoMode) null else backups.latest(filename, viewedProfile?.fingerprint, viewedProfile?.identity?.key, viewedProfile?.fingerprints.orEmpty())
 
     fun book(filename: String, id: Int?): BookInfo? {
+        if (demoMode) return DemoLibrary.book(filename)
         if (id == 14999) return null // Shared support content is not an individual book.
         val candidates = metadata.forFile(filename, id)
         return candidates.firstOrNull()?.takeIf { candidates.map { book -> book.title }.distinct().size == 1 }
@@ -204,6 +225,7 @@ class ManagerApp : Application() {
     fun title(entry: CatalogEntry): String = book(entry.filename, entry.id)?.title ?: entry.title
 
     fun requestPublisherDetails(book: BookInfo) {
+        if (demoMode) return
         if (metadata.pageFresh(book.article) || book.article in pendingPublisherPages ||
             !metadata.attemptedPages.add(book.article)) return
         pendingPublisherPages.add(book.article)
@@ -215,18 +237,18 @@ class ManagerApp : Application() {
     }
 
     fun download(entry: CatalogEntry) = work("Download", entry) {
-        check(audioRetention == AudioRetention.KEEP) { "Transfer only is selected. Connect a pen and choose Download & install." }
+        check(audioRetention == AudioRetention.KEEP) { t(R.string.error_transfer_only_is_selected_connect_a_pen_and_choose_download_install) }
         fetchToCache(entry)
-        status = "Saved offline: ${entry.title}. Size, product ID and checksum verified."
+        status = t(R.string.msg_saved_offline_1_s_size_product_id_and_checksum_verified, entry.title)
     }
 
     private fun fetchToCache(entry: CatalogEntry) {
         val partial = File(downloads, entry.cacheKey + ".part")
         try {
-            Downloads.fetch(entry.url, partial, entry.size) { progress("Downloading", it, entry.size) }
-            progress("Checking download", 0, entry.size)
+            Downloads.fetch(entry.url, partial, entry.size) { progress(t(R.string.msg_downloading), it, entry.size) }
+            progress(t(R.string.msg_checking_download), 0, entry.size)
             partial.inputStream().buffered().use { Gme.inspect(it, entry.size, entry.id) }
-            check(partial.renameTo(cache(entry))) { "Could not save the verified download." }
+            check(partial.renameTo(cache(entry))) { t(R.string.error_could_not_save_the_verified_download) }
         } finally { partial.delete() }
     }
 
@@ -235,34 +257,34 @@ class ManagerApp : Application() {
         if (snapshot == null) pen = null else record(snapshot)
     }
 
-    fun applySelection(plan: PenPlan) = work("Sync", filename = "@selection", localTitle = "Selected books", target = viewedProfile?.name) {
+    fun applySelection(plan: PenPlan) = work("Sync", filename = "@selection", localTitle = t(R.string.msg_selected_books), target = viewedProfile?.name) {
         val selected = destination(plan.profileId)
         try {
             val fresh = storage.scan(selected.tree)
             plan.requireDestination(plan.profileId, fresh.identity.key, fresh.fingerprint)
             record(fresh, false)
-            check(fresh.identity.hasSerial) { "This pen's serial could not be read. Collection sync needs a recognized serial." }
-            val current = this.plan() ?: error("Select a pen first.")
-            check(current.items == plan.items) { "The pen inventory or selection changed. Review the plan again." }
-            check(current.conflicts == 0) { "Resolve conflicting filenames before applying this selection." }
-            check(fresh.free == null || fresh.free >= current.bytes + 1_048_576) { "The selected books do not fit. Free space and review again." }
+            check(fresh.identity.hasSerial) { t(R.string.error_this_pen_s_serial_could_not_be_read_collection_sync_needs_a_recogniz) }
+            val current = this.plan() ?: error(t(R.string.error_select_a_pen_first))
+            check(current.items == plan.items) { t(R.string.error_the_pen_inventory_or_selection_changed_review_the_plan_again) }
+            check(current.conflicts == 0) { t(R.string.error_resolve_conflicting_filenames_before_applying_this_selection) }
+            check(fresh.free == null || fresh.free >= current.bytes + 1_048_576) { t(R.string.error_the_selected_books_do_not_fit_free_space_and_review_again) }
             var cleanupWarning = false
             for ((index, entry) in current.additions.withIndex()) {
                 val report: (String, Long) -> Unit = { stage, bytes -> progress("${index + 1}/${current.additions.size} · $stage", bytes, entry.size) }
-                val snapshot = pen ?: error("The pen disconnected.")
+                val snapshot = pen ?: error(t(R.string.error_the_pen_disconnected))
                 if (cached(entry) || audioRetention == AudioRetention.KEEP) {
                     if (!cached(entry)) fetchToCache(entry)
                     if (!AudioTransfers.install(cache(entry), audioRetention) { storage.install(snapshot, entry, it, report) }) cleanupWarning = true
                 } else {
                     phoneAudio.temporary.mkdirs()
                     AudioTransfers.temporary(File(phoneAudio.temporary, entry.cacheKey)) { source ->
-                        Downloads.fetch(entry.url, source, entry.size) { report("Downloading temporary copy", it) }
+                        Downloads.fetch(entry.url, source, entry.size) { report(t(R.string.msg_downloading_temporary_copy), it) }
                         storage.install(snapshot, entry, source, report)
                     }
                 }
                 record(storage.scan(snapshot.tree), false)
             }
-            completionNote = if (cleanupWarning) "Books added and verified · phone cleanup needed" else "${current.additions.size} files added · read-back verified"
+            completionNote = if (cleanupWarning) t(R.string.msg_books_added_and_verified_phone_cleanup_needed) else t(R.string.msg_1_d_files_added_read_back_verified, current.additions.size)
             status = completionNote!!
         } finally { rescanAfterWrite(selected.tree) }
     }
@@ -273,47 +295,48 @@ class ManagerApp : Application() {
             storage.install(selected, entry, source) { stage, bytes -> progress(stage, bytes, entry.size) }
         }
         record(storage.scan(selected.tree))
-        status = "Installed and read-back verified: ${entry.title}. Unplug and tap the book to check playback."
-        if (!cleaned) completionNote = "Installed and verified · phone cleanup failed; use Phone storage"
-        else if (audioRetention == AudioRetention.TRANSFER_ONLY) completionNote = "Installed and verified · phone download deleted"
+        status = t(R.string.msg_installed_and_read_back_verified_1_s_unplug_and_tap_the_book_to_chec, entry.title)
+        if (!cleaned) completionNote = t(R.string.msg_installed_and_verified_phone_cleanup_failed_use_phone_storage)
+        else if (audioRetention == AudioRetention.TRANSFER_ONLY) completionNote = t(R.string.msg_installed_and_verified_phone_download_deleted)
     }
 
     fun downloadAndInstall(entry: CatalogEntry, expectedProfileId: String? = selectedProfileId) = work("Install", entry, target = viewedProfile?.name) {
         val selected = destination(expectedProfileId)
         val fresh = storage.scan(selected.tree)
-        check(fresh.fingerprint == selected.fingerprint) { "The connected pen changed. Scan again." }
-        check(fresh.files.none { it.name.equals(entry.filename, true) }) { "This filename is already on the pen." }
-        check(fresh.free == null || fresh.free >= entry.size + 1_048_576) { "The pen does not have enough free space." }
+        check(fresh.fingerprint == selected.fingerprint) { t(R.string.error_the_connected_pen_changed_scan_again) }
+        check(fresh.files.none { it.name.equals(entry.filename, true) }) { t(R.string.error_this_filename_is_already_on_the_pen) }
+        check(fresh.free == null || fresh.free >= entry.size + 1_048_576) { t(R.string.error_the_pen_does_not_have_enough_free_space) }
         phoneAudio.temporary.mkdirs()
         val temporary = File(phoneAudio.temporary, entry.cacheKey)
         AudioTransfers.temporary(temporary) { source ->
-            Downloads.fetch(entry.url, source, entry.size) { progress("Downloading temporary copy", it, entry.size) }
+            Downloads.fetch(entry.url, source, entry.size) { progress(t(R.string.msg_downloading_temporary_copy), it, entry.size) }
             storage.install(fresh, entry, source) { stage, bytes -> progress(stage, bytes, entry.size) }
         }
         record(storage.scan(selected.tree))
-        completionNote = "Installed and verified · temporary phone copy deleted"
-        status = "Installed and verified: ${entry.title}. Temporary phone copy deleted."
+        completionNote = t(R.string.msg_installed_and_verified_temporary_phone_copy_deleted)
+        status = t(R.string.msg_installed_and_verified_1_s_temporary_phone_copy_deleted, entry.title)
     }
 
     fun updateAudioRetention(value: AudioRetention) {
         if (busy) return
+        if (demoMode) { status = t(R.string.ui_demo_readonly); failure = true; changed?.invoke(); return }
         audioRetention = value
         changed?.invoke()
     }
 
     fun deletePhoneDownload(file: File) = work("Deleting phone download") {
         phoneAudio.deleteDownload(file)
-        status = "Phone download deleted."
+        status = t(R.string.msg_phone_download_deleted)
     }
 
     fun deletePhoneBackups(filename: String) = work("Deleting phone backups") {
         phoneAudio.deleteBackups(filename)
-        status = "Phone backups deleted."
+        status = t(R.string.msg_phone_backups_deleted)
     }
 
     fun clearPhoneAudio(includeBackups: Boolean) = work("Clearing phone audio") {
         if (includeBackups) phoneAudio.clearAll() else { phoneAudio.clearDownloads(); phoneAudio.clearTemporary() }
-        status = if (includeBackups) "All phone audio deleted." else "Phone downloads deleted. Pen backups kept."
+        status = if (includeBackups) t(R.string.msg_all_phone_audio_deleted) else t(R.string.msg_phone_downloads_deleted_pen_backups_kept)
     }
 
     fun remove(file: PenFile, expectedProfileId: String? = selectedProfileId) = work("Remove", filename = file.name,
@@ -321,7 +344,7 @@ class ManagerApp : Application() {
         val selected = destination(expectedProfileId)
         try {
             storage.remove(selected, file, backups.directory) { stage, bytes -> progress(stage, bytes, file.size) }
-            status = "Removed from pen. A verified backup is saved on this phone."
+            status = t(R.string.msg_removed_from_pen_a_verified_backup_is_saved_on_this_phone)
         } finally {
             backups.load()
             rescanAfterWrite(selected.tree)
@@ -333,7 +356,7 @@ class ManagerApp : Application() {
         val selected = destination(expectedProfileId)
         try {
             storage.restore(selected, backup) { stage, bytes -> progress(stage, bytes, backup.size) }
-            status = "Restored and read-back verified. Phone backup retained."
+            status = t(R.string.msg_restored_and_read_back_verified_phone_backup_retained)
         } finally { rescanAfterWrite(selected.tree) }
     }
 
@@ -353,20 +376,21 @@ class ManagerApp : Application() {
     private fun work(label: String, book: CatalogEntry? = null, filename: String? = book?.filename,
                      localTitle: String? = book?.let(::title), target: String? = null, action: () -> Unit) {
         if (busy) return
-        busy = true; status = label; failure = false; completionNote = null
+        if (demoMode) { status = t(R.string.ui_demo_readonly); failure = true; changed?.invoke(); return }
+        busy = true; status = taskText(label); failure = false; completionNote = null
         if (filename != null) transfer = TransferInfo(label, book?.cacheKey, filename, localTitle ?: filename, target = target)
         changed?.invoke()
         executor.execute {
             var error: String? = null
-            try { action() } catch (e: Exception) { error = e.message ?: "Operation failed. Reconnect and try again." }
+            try { action() } catch (e: Exception) { error = e.message ?: t(R.string.msg_operation_failed_reconnect_and_try_again) }
             try { audioUsage = phoneAudio.usage() } catch (e: Exception) { if (error == null) error = e.message }
             main.post {
                 if (error != null) { status = error; failure = true }
                 if (filename != null) transfer = transfer?.copy(running = false, failed = error != null,
                     stage = error ?: completionNote ?: when (label) {
-                        "Download" -> "Saved offline"
-                        "Remove" -> "Removed from pen · phone backup kept"
-                        else -> "Read-back verified"
+                        "Download" -> t(R.string.msg_saved_offline)
+                        "Remove" -> t(R.string.msg_removed_from_pen_phone_backup_kept)
+                        else -> t(R.string.msg_read_back_verified)
                     }, percent = null)
                 busy = false; changed?.invoke()
             }

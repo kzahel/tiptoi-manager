@@ -10,7 +10,7 @@ data class PenIdentity(val key: String, val serialSuffix: String?, val firmware:
     val hasSerial: Boolean get() = key.startsWith("serial:")
     companion object {
         fun parse(bytes: ByteArray): PenIdentity {
-            require(bytes.size == 64) { "This pen metadata format is not supported." }
+            require(bytes.size == 64) { t(R.string.error_this_pen_metadata_format_is_not_supported) }
             fun field(offset: Int): String? {
                 val block = bytes.copyOfRange(offset, offset + 16)
                 val end = block.indexOfFirst { it == 0.toByte() || it == 255.toByte() }.let { if (it < 0) 16 else it }
@@ -45,7 +45,7 @@ class PenProfiles(private val file: File) {
     fun load() {
         if (file.exists()) {
             val root = JSONObject(file.readText())
-            require(root.getInt("schema") == 1) { "Unsupported pen-profile format." }
+            require(root.getInt("schema") == 1) { t(R.string.error_unsupported_pen_profile_format) }
             val records = root.getJSONArray("pens").objects().map { json ->
                 val identity = json.getJSONObject("identity")
                 val key = identity.getString("key")
@@ -92,7 +92,7 @@ class PenProfiles(private val file: File) {
     fun targets(profile: PenProfile): List<CatalogEntry> =
         ((if (profile.useFamily) family else emptyList()) + profile.additions).distinctBy { it.filename.lowercase(Locale.ROOT) to it.cacheKey }
     private fun update(id: String, transform: (PenProfile) -> PenProfile) {
-        require(all.any { it.id == id }) { "This pen profile no longer exists." }
+        require(all.any { it.id == id }) { t(R.string.error_this_pen_profile_no_longer_exists) }
         save(all.map { if (it.id == id) transform(it) else it }, family)
     }
     private fun nextName(): String {
@@ -101,7 +101,7 @@ class PenProfiles(private val file: File) {
         return "Pen $number"
     }
     private fun save(pens: List<PenProfile>, selected: List<CatalogEntry>) {
-        check(loaded) { "Load pen profiles successfully before changing them." }
+        check(loaded) { t(R.string.error_load_pen_profiles_successfully_before_changing_them) }
         val root = JSONObject().put("schema", 1).put("family", encodeEntries(selected))
         root.put("pens", JSONArray(pens.map { pen ->
             JSONObject().put("id", pen.id).put("identity", JSONObject().put("key", pen.identity.key)
@@ -125,7 +125,7 @@ class PenProfiles(private val file: File) {
     })
     companion object {
         fun validName(name: String): String = name.trim().also {
-            require(it.isNotEmpty() && it.length <= 40 && it.none { c -> c.isISOControl() }) { "Use a name with 1–40 characters." }
+            require(it.isNotEmpty() && it.length <= 40 && it.none { c -> c.isISOControl() }) { t(R.string.error_use_a_name_with_1_40_characters) }
         }
     }
 }
@@ -143,7 +143,7 @@ data class PenPlan(val profileId: String, val identityKey: String, val fingerpri
     val bytes: Long get() = additions.sumOf { it.size }
     fun requireDestination(profileId: String, identityKey: String, fingerprint: String) {
         check(this.profileId == profileId && this.identityKey == identityKey && this.fingerprint == fingerprint) {
-            "The destination pen changed. Review this pen's selection again."
+            t(R.string.msg_the_destination_pen_changed_review_this_pen_s_selection_again)
         }
     }
     companion object {

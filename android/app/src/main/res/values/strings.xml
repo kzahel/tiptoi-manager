@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">"Pen Library"</string>
+    <string name="app_title">"Pen Library for tiptoi"</string>
+    <!-- PenStorage.kt: , target.size) }             check(checked.sha256 == copied.sha256) {  -->
+    <string name="error_backup_verification_failed_nothing_was_removed">"Backup verification failed. Nothing was removed."</string>
+    <!-- PenStorage.kt: data = entries.find { it.name == ".tiptoi.log" }             ?: error( -->
+    <string name="error_choose_the_pen_s_top_level_folder_its_tiptoi_log_identity_file_is_mi">"Choose the pen\'s top-level folder. Its .tiptoi.log identity file is missing."</string>
+    <!-- ManagerApp.kt: d. Review the destination again." }         return viewedPen ?: error( -->
+    <string name="error_connect_1_s_and_scan_it_before_writing">"Connect %1$s and scan it before writing."</string>
+    <!-- PenStorage.kt: le(backupRoot, UUID.randomUUID().toString()).apply { check(mkdir()) {  -->
+    <string name="error_could_not_create_a_backup_folder">"Could not create a backup folder."</string>
+    <!-- PhoneAudio.kt: loads.canonicalFile)         check(!file.exists() || file.delete()) {  -->
+    <string name="error_could_not_delete_the_phone_download">"Could not delete the phone download."</string>
+    <!-- PenStorage.kt: lder, "content.gme")             check(partial.renameTo(savedFile)) {  -->
+    <string name="error_could_not_finalize_the_backup_nothing_was_removed">"Could not finalize the backup. Nothing was removed."</string>
+    <!-- PenStorage.kt: s.renameDocument(resolver, target, filename)                 ?: error( -->
+    <string name="error_could_not_finalize_the_verified_file">"Could not finalize the verified file."</string>
+    <!-- PhoneAudio.kt: n emptyList()         return directory.listFiles()?.toList() ?: error( -->
+    <string name="error_could_not_list_phone_audio_files">"Could not list phone audio files."</string>
+    <!-- PenStorage.kt:   val descriptor = resolver.openFileDescriptor(target, "wt") ?: error( -->
+    <string name="error_could_not_open_the_temporary_file">"Could not open the temporary file."</string>
+    <!-- PenStorage.kt: metadata.uri)?.use { it.readBytesBounded(4096) }             ?: error( -->
+    <string name="error_could_not_read_the_pen_identity">"Could not read the pen identity."</string>
+    <!-- PenStorage.kt: &gt; progress("Saving phone backup", bytes) }                 } ?: error( -->
+    <string name="error_could_not_read_the_selected_file_nothing_was_removed">"Could not read the selected file. Nothing was removed."</string>
+    <!-- PenStorage.kt: cursor = resolver.query(children, columns, null, null, null) ?: error( -->
+    <string name="error_could_not_read_this_folder">"Could not read this folder."</string>
+    <!-- PenStorage.kt: es -&gt; progress("Rechecking pen file", bytes) }             } ?: error( -->
+    <string name="error_could_not_recheck_the_file_the_backup_is_safe">"Could not recheck the file. The backup is safe."</string>
+    <!-- BookMetadata.kt: tes); it.fd.sync() }         check(temporary.renameTo(destination)) {  -->
+    <string name="error_could_not_save_downloaded_details">"Could not save downloaded details."</string>
+    <!-- ManagerApp.kt:              check(partial.renameTo(File(filesDir, "catalog.csv"))) {  -->
+    <string name="error_could_not_save_the_catalog">"Could not save the catalog."</string>
+    <!-- ManagerApp.kt: size, entry.id) }             check(partial.renameTo(cache(entry))) {  -->
+    <string name="error_could_not_save_the_verified_download">"Could not save the verified download."</string>
+    <!-- PenStorage.kt:  -&gt; progress("Reading back from pen", bytes) }             } ?: error( -->
+    <string name="error_could_not_verify_the_transferred_file">"Could not verify the transferred file."</string>
+    <!-- ManagerApp.kt:  found.")         check(pen?.identity?.key != profile.identity.key) {  -->
+    <string name="error_disconnect_this_pen_before_forgetting_its_profile">"Disconnect this pen before forgetting its profile."</string>
+    <!-- Content.kt:                check(expectedSize == null || total == expectedSize) {  -->
+    <string name="error_download_ended_before_all_bytes_arrived">"Download ended before all bytes arrived."</string>
+    <!-- Content.kt:    total += n                                 check(total &lt;= limit) {  -->
+    <string name="error_download_exceeded_the_expected_size">"Download exceeded the expected size."</string>
+    <!-- Content.kt:        repeat(6) {             require(Catalog.allowedUrl(current)) {  -->
+    <string name="error_download_source_must_be_the_ravensburger_https_cdn">"Download source must be the Ravensburger HTTPS CDN."</string>
+    <!-- PenStorage.kt:  DataInputStream(it).readFully(header) }                     ?: error( -->
+    <string name="error_file_cannot_be_opened">"File cannot be opened."</string>
+    <!-- Content.kt: )             require(expectedSize == null || size &lt;= expectedSize) {  -->
+    <string name="error_file_is_larger_than_advertised">"File is larger than advertised."</string>
+    <!-- Content.kt: ader)         require(expectedSize == null || expectedSize == size) {  -->
+    <string name="error_file_size_does_not_match_the_catalog">"File size does not match the catalog."</string>
+    <!-- Content.kt:  }) and 0xffffffffL         require(word(orderedTail, 0) == actual) {  -->
+    <string name="error_gme_checksum_failed_file_may_be_incomplete_or_corrupt">"GME checksum failed; file may be incomplete or corrupt."</string>
+    <!-- Content.kt:  }             progress(size)         }         require(size &gt;= 28) {  -->
+    <string name="error_gme_file_is_incomplete">"GME file is incomplete."</string>
+    <!-- Content.kt: ductId(header: ByteArray): Int {         require(header.size &gt;= 24) {  -->
+    <string name="error_gme_header_is_incomplete">"GME header is incomplete."</string>
+    <!-- PenProfiles.kt: &lt;PenProfile&gt;, selected: List&lt;CatalogEntry&gt;) {         check(loaded) {  -->
+    <string name="error_load_pen_profiles_successfully_before_changing_them">"Load pen profiles successfully before changing them."</string>
+    <!-- BookMetadata.kt:             val next = connection.getHeaderField("Location") ?: error( -->
+    <string name="error_missing_redirect_address">"Missing redirect address."</string>
+    <!-- PenStorage.kt:  val file = entries.firstOrNull { it.name == ".tiptoi.log" } ?: error( -->
+    <string name="error_no_file_descriptor_available">"No file descriptor available."</string>
+    <!-- ManagerApp.kt: pen") {         pen = null         val snapshot = discover() ?: error( -->
+    <string name="error_no_pen_found_in_the_granted_usb_folders_connect_a_pen_or_choose_its">"No pen found in the granted USB folders. Connect a pen or choose its folder."</string>
+    <!-- Content.kt: eader is incomplete." }         require(word(header, 8) == 0x238bL) {  -->
+    <string name="error_not_a_recognized_gme_file">"Not a recognized GME file."</string>
+    <!-- ManagerApp.kt: ") {         val profile = profiles.all.find { it.id == id } ?: error( -->
+    <string name="error_pen_profile_not_found">"Pen profile not found."</string>
+    <!-- Content.kt: catalog." }         require(expectedId == null || expectedId == id) {  -->
+    <string name="error_product_id_does_not_match_the_catalog">"Product ID does not match the catalog."</string>
+    <!-- BookMetadata.kt:  {                     check(authorization == null &amp;&amp; form == null) {  -->
+    <string name="error_publisher_authentication_redirected_unexpectedly">"Publisher authentication redirected unexpectedly."</string>
+    <!-- BookMetadata.kt: UTF_8)).getString("access_token")         check(token.isNotBlank()) {  -->
+    <string name="error_publisher_catalog_authorization_was_unavailable">"Publisher catalog authorization was unavailable."</string>
+    <!-- BookMetadata.kt: g(data.toString(Charsets.UTF_8))         check(parsed.isNotEmpty()) {  -->
+    <string name="error_publisher_catalog_contained_no_matching_content">"Publisher catalog contained no matching content."</string>
+    <!-- BookMetadata.kt: ONArray("products")         require(products.length() in 1..10_000) {  -->
+    <string name="error_publisher_catalog_has_an_unexpected_size">"Publisher catalog has an unexpected size."</string>
+    <!-- BookMetadata.kt: g()                 } else {                     check(code == 200) {  -->
+    <string name="error_publisher_data_unavailable_http_1_d">"Publisher data unavailable (HTTP %1$d)."</string>
+    <!-- BookMetadata.kt: break                             check(output.size() + n &lt;= limit) {  -->
+    <string name="error_publisher_response_was_too_large">"Publisher response was too large."</string>
+    <!-- PenStorage.kt: the transferred file.")             check(checked.sha256 == sha256) {  -->
+    <string name="error_read_back_hash_differs_from_the_phone_copy">"Read-back hash differs from the phone copy."</string>
+    <!-- Content.kt:         val location = connection.getHeaderField("Location") ?: error( -->
+    <string name="error_redirect_has_no_destination">"Redirect has no destination."</string>
+    <!-- PenStorage.kt: )             check(Documents.deleteDocument(resolver, target.uri)) {  -->
+    <string name="error_removal_was_not_confirmed_the_phone_backup_is_safe_scan_again">"Removal was not confirmed. The phone backup is safe; scan again."</string>
+    <!-- ManagerApp.kt: Review the plan again." }             check(current.conflicts == 0) {  -->
+    <string name="error_resolve_conflicting_filenames_before_applying_this_selection">"Resolve conflicting filenames before applying this selection."</string>
+    <!-- PenStorage.kt: re." }         check(snapshot.files.any { sameFile(it, selected) }) {  -->
+    <string name="error_select_a_file_from_the_scanned_pen_first">"Select a file from the scanned pen first."</string>
+    <!-- ManagerApp.kt:  recognized serial." }             val current = this.plan() ?: error( -->
+    <string name="error_select_a_pen_first">"Select a pen first."</string>
+    <!-- PenStorage.kt:  {         check(BookActions.removable(selected.name, selected.id)) {  -->
+    <string name="error_shared_support_files_cannot_be_removed_here">"Shared support files cannot be removed here."</string>
+    <!-- PhoneAudio.kt: tory) clear(child)         check(!child.exists() || child.delete()) {  -->
+    <string name="error_some_phone_audio_could_not_be_deleted_try_again">"Some phone audio could not be deleted. Try again."</string>
+    <!-- ManagerApp.kt: og.parse(partial.readText())             check(parsed.isNotEmpty()) {  -->
+    <string name="error_the_catalog_contained_no_supported_content">"The catalog contained no supported content."</string>
+    <!-- Content.kt:  field.append(c)             i++         }         require(!quoted) {  -->
+    <string name="error_the_catalog_contains_an_incomplete_quoted_field">"The catalog contains an incomplete quoted field."</string>
+    <!-- ManagerApp.kt: cted.tree)         check(fresh.fingerprint == selected.fingerprint) {  | PenStorage.kt: shot.tree)         check(fresh.fingerprint == snapshot.fingerprint) {  -->
+    <string name="error_the_connected_pen_changed_scan_again">"The connected pen changed. Scan again."</string>
+    <!-- PenStorage.kt: shot.tree)         check(fresh.fingerprint == snapshot.fingerprint) {  -->
+    <string name="error_the_connected_pen_changed_scan_it_again">"The connected pen changed. Scan it again."</string>
+    <!-- PenStorage.kt: k(documents(snapshot.tree).none { it.name.equals(filename, true) }) {  -->
+    <string name="error_the_destination_appeared_during_transfer_preserving_it">"The destination appeared during transfer; preserving it."</string>
+    <!-- Content.kt: g()                 } else {                     check(code == 200) {  -->
+    <string name="error_the_download_server_returned_http_1_d">"The download server returned HTTP %1$d."</string>
+    <!-- FileManagement.kt:      progress(total)         }         check(total == expectedSize) {  -->
+    <string name="error_the_file_changed_or_the_copy_ended_early_nothing_was_intentionally_r">"The file changed or the copy ended early. Nothing was intentionally removed."</string>
+    <!-- FileManagement.kt:             total += count             check(total &lt;= expectedSize) {  -->
+    <string name="error_the_file_grew_or_its_size_is_unavailable_rescan_before_trying_again">"The file grew or its size is unavailable. Rescan before trying again."</string>
+    <!-- PenStorage.kt: heck(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) {  -->
+    <string name="error_the_pen_changed_during_installation">"The pen changed during installation."</string>
+    <!-- PenStorage.kt: heck(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) {  -->
+    <string name="error_the_pen_changed_the_backup_is_safe">"The pen changed. The backup is safe."</string>
+    <!-- ManagerApp.kt: ge", bytes, entry.size) }                 val snapshot = pen ?: error( -->
+    <string name="error_the_pen_disconnected">"The pen disconnected."</string>
+    <!-- ManagerApp.kt:   check(fresh.free == null || fresh.free &gt;= entry.size + 1_048_576) {  | PenStorage.kt:         check(fresh.free == null || fresh.free &gt;= size + 1_048_576) {  -->
+    <string name="error_the_pen_does_not_have_enough_free_space">"The pen does not have enough free space."</string>
+    <!-- PenStorage.kt: kup is safe.")             check(original.sha256 == checked.sha256) {  -->
+    <string name="error_the_pen_file_changed_during_backup_it_was_not_removed">"The pen file changed during backup. It was not removed."</string>
+    <!-- ManagerApp.kt: elect a pen first.")             check(current.items == plan.items) {  -->
+    <string name="error_the_pen_inventory_or_selection_changed_review_the_plan_again">"The pen inventory or selection changed. Review the plan again."</string>
+    <!-- PenStorage.kt: ct(it, backup.size) }         check(source.sha256 == backup.sha256) {  -->
+    <string name="error_the_phone_backup_changed_it_was_not_restored">"The phone backup changed. It was not restored."</string>
+    <!-- PenStorage.kt:   staging = null             check(documentName(final) == filename) {  -->
+    <string name="error_the_provider_changed_the_final_filename_inspect_the_pen">"The provider changed the final filename; inspect the pen."</string>
+    <!-- PenStorage.kt: ate a file.")             check(documentName(staging) == stageName) {  -->
+    <string name="error_the_provider_changed_the_temporary_filename">"The provider changed the temporary filename."</string>
+    <!-- BookMetadata.kt: &amp; it.optString("mpn") == article }         require(product != null) {  -->
+    <string name="error_the_publisher_page_did_not_match_this_edition">"The publisher page did not match this edition."</string>
+    <!-- ManagerApp.kt: heck(fresh.free == null || fresh.free &gt;= current.bytes + 1_048_576) {  -->
+    <string name="error_the_selected_books_do_not_fit_free_space_and_review_again">"The selected books do not fit. Free space and review again."</string>
+    <!-- ManagerApp.kt: xpectedProfileId != null &amp;&amp; selectedProfileId == expectedProfileId) {  -->
+    <string name="error_the_selected_pen_changed_review_the_destination_again">"The selected pen changed. Review the destination again."</string>
+    <!-- PenStorage.kt: ree), "application/octet-stream", stageName)                 ?: error( -->
+    <string name="error_the_storage_provider_could_not_create_a_file">"The storage provider could not create a file."</string>
+    <!-- BookMetadata.kt: {         check(clientId.isNotBlank() &amp;&amp; clientSecret.isNotBlank()) {  -->
+    <string name="error_this_build_has_no_publisher_catalog_configuration">"This build has no publisher catalog configuration."</string>
+    <!-- PenStorage.kt: sh.files.singleOrNull { sameFile(it, selected) }             ?: error( -->
+    <string name="error_this_file_changed_since_the_scan_scan_again_before_removing_it">"This file changed since the scan. Scan again before removing it."</string>
+    <!-- ManagerApp.kt:    check(fresh.files.none { it.name.equals(entry.filename, true) }) {  -->
+    <string name="error_this_filename_is_already_on_the_pen">"This filename is already on the pen."</string>
+    <!-- PenStorage.kt:          check(fresh.files.none { it.name.equals(filename, true) }) {  -->
+    <string name="error_this_filename_is_already_on_the_pen_existing_files_are_preserved">"This filename is already on the pen. Existing files are preserved."</string>
+    <!-- PenProfiles.kt: es: ByteArray): PenIdentity {             require(bytes.size == 64) {  -->
+    <string name="error_this_pen_metadata_format_is_not_supported">"This pen metadata format is not supported."</string>
+    <!-- PenProfiles.kt: nProfile) -&gt; PenProfile) {         require(all.any { it.id == id }) {  -->
+    <string name="error_this_pen_profile_no_longer_exists">"This pen profile no longer exists."</string>
+    <!-- PenStorage.kt: ould not read the pen identity.")         require(bytes.size == 64) {  -->
+    <string name="error_this_pen_s_identity_format_is_not_supported_by_the_spike">"This pen\'s identity format is not supported by this app."</string>
+    <!-- ManagerApp.kt:    record(fresh, false)             check(fresh.identity.hasSerial) {  -->
+    <string name="error_this_pen_s_serial_could_not_be_read_collection_sync_needs_a_recogniz">"This pen\'s serial could not be read. Collection sync needs a recognized serial."</string>
+    <!-- PenStorage.kt:       check(flags and Documents.Document.FLAG_SUPPORTS_RENAME != 0) {  -->
+    <string name="error_this_storage_provider_cannot_safely_finalize_an_install">"This storage provider cannot safely finalize an install."</string>
+    <!-- Content.kt:         } finally { connection.disconnect() }         }         error( -->
+    <string name="error_too_many_download_redirects">"Too many download redirects."</string>
+    <!-- BookMetadata.kt:         } finally { connection.disconnect() }         }         error( -->
+    <string name="error_too_many_publisher_redirects">"Too many publisher redirects."</string>
+    <!-- PhoneAudio.kt:  } finally {             check(!source.exists() || source.delete()) {  -->
+    <string name="error_transfer_ended_but_the_temporary_phone_file_could_not_be_deleted_cle">"Transfer ended, but the temporary phone file could not be deleted. Clear it in Phone storage."</string>
+    <!-- ManagerApp.kt: oad", entry) {         check(audioRetention == AudioRetention.KEEP) {  -->
+    <string name="error_transfer_only_is_selected_connect_a_pen_and_choose_download_install">"Transfer only is selected. Connect a pen and choose Download &amp; install."</string>
+    <!-- PhoneAudio.kt:     require(child.canonicalFile.parentFile == parent.canonicalFile) {  | PhoneAudio.kt:  require(child.canonicalFile.parentFile == directory.canonicalFile) {  -->
+    <string name="error_unexpected_link_in_phone_audio_storage">"Unexpected link in phone audio storage."</string>
+    <!-- BookMetadata.kt: ent = url         repeat(5) {             require(allowed(current)) {  -->
+    <string name="error_unexpected_publisher_address">"Unexpected publisher address."</string>
+    <!-- PenStorage.kt:        if (n &lt; 0) break         require(output.size() + n &lt;= limit) {  -->
+    <string name="error_unexpectedly_large_pen_metadata">"Unexpectedly large pen metadata."</string>
+    <!-- PenProfiles.kt: ct(file.readText())             require(root.getInt("schema") == 1) {  -->
+    <string name="error_unsupported_pen_profile_format">"Unsupported pen-profile format."</string>
+    <!-- Content.kt: = word(header, 20)         require(id in 0..Int.MAX_VALUE.toLong()) {  -->
+    <string name="error_unsupported_product_id">"Unsupported product ID."</string>
+    <!-- PenProfiles.kt: NotEmpty() &amp;&amp; it.length &lt;= 40 &amp;&amp; it.none { c -&gt; c.isISOControl() }) {  -->
+    <string name="error_use_a_name_with_1_40_characters">"Use a name with 1–40 characters."</string>
+    <!-- MainActivity.kt: ("Storage"),     BROWSE("Browse books"), DOWNLOADS("Downloads"), BOOK( -->
+    <string name="label_book_details">"Book details"</string>
+    <!-- MainActivity.kt:  title: String) {     PENS("My pens"), PEN("Pen details"), COLLECTION( -->
+    <string name="label_book_selections">"Book selections"</string>
+    <!-- MainActivity.kt: ction"), INSTALLED("Installed books"), STORAGE("Storage"),     BROWSE( -->
+    <string name="label_browse_books">"Browse books"</string>
+    <!-- MainActivity.kt: ed books"), STORAGE("Storage"),     BROWSE("Browse books"), DOWNLOADS( -->
+    <string name="label_downloads">"Downloads"</string>
+    <!-- FileManagement.kt: ing) {     TITLE("Title"), OLDEST("File date · oldest first"), NEWEST( -->
+    <string name="label_file_date_newest_first">"File date · newest first"</string>
+    <!-- FileManagement.kt: */ enum class PenSort(val label: String) {     TITLE("Title"), OLDEST( -->
+    <string name="label_file_date_oldest_first">"File date · oldest first"</string>
+    <!-- MainActivity.kt: s"),     PHONE_STORAGE("Phone storage"), TRANSFERS("Transfers"), HELP( -->
+    <string name="label_help_about">"Help &amp; about"</string>
+    <!-- MainActivity.kt: ), COLLECTION("Book selections"), PLAN("Review selection"), INSTALLED( -->
+    <string name="label_installed_books">"Installed books"</string>
+    <!-- PhoneAudio.kt: java.io.File  enum class AudioRetention(val label: String) {     KEEP( -->
+    <string name="label_keep_downloads">"Keep downloads"</string>
+    <!-- MainActivity.kt: va.util.Date  private enum class Screen(val title: String) {     PENS( -->
+    <string name="label_my_pens">"My pens"</string>
+    <!-- MainActivity.kt: ivate enum class Screen(val title: String) {     PENS("My pens"), PEN( -->
+    <string name="label_pen_details">"Pen details"</string>
+    <!-- MainActivity.kt: ks"), DOWNLOADS("Downloads"), BOOK("Book details"),     PHONE_STORAGE( -->
+    <string name="label_phone_storage">"Phone storage"</string>
+    <!-- MainActivity.kt: S("My pens"), PEN("Pen details"), COLLECTION("Book selections"), PLAN( -->
+    <string name="label_review_selection">"Review selection"</string>
+    <!-- FileManagement.kt: le date · oldest first"), NEWEST("File date · newest first"), LARGEST( -->
+    <string name="label_size_largest_first">"Size · largest first"</string>
+    <!-- MainActivity.kt: ns"), PLAN("Review selection"), INSTALLED("Installed books"), STORAGE( -->
+    <string name="label_storage">"Storage"</string>
+    <!-- FileManagement.kt: tallation dates. */ enum class PenSort(val label: String) {     TITLE( -->
+    <string name="label_title">"Title"</string>
+    <!-- PhoneAudio.kt: ention(val label: String) {     KEEP("Keep downloads"), TRANSFER_ONLY( -->
+    <string name="label_transfer_only">"Transfer only"</string>
+    <!-- MainActivity.kt: , BOOK("Book details"),     PHONE_STORAGE("Phone storage"), TRANSFERS( -->
+    <string name="label_transfers">"Transfers"</string>
+    <!-- ManagerApp.kt: leanupWarning) "Books added and verified · phone cleanup needed" else  -->
+    <string name="msg_1_d_files_added_read_back_verified">"%1$d files added · read-back verified"</string>
+    <!-- ManagerApp.kt:  choose its folder.")         record(snapshot, true)         status =  -->
+    <string name="msg_1_s_scanned_2_d_files">"%1$s scanned. %2$d files."</string>
+    <!-- ManagerApp.kt: ); phoneAudio.clearTemporary() }         status = if (includeBackups)  -->
+    <string name="msg_all_phone_audio_deleted">"All phone audio deleted."</string>
+    <!-- BookMetadata.kt: bn") ?: field("ISBN"))?.takeIf(::validIsbn)         val pages = field( -->
+    <!-- ManagerApp.kt: false)             }             completionNote = if (cleanupWarning)  -->
+    <string name="msg_books_added_and_verified_phone_cleanup_needed">"Books added and verified · phone cleanup needed"</string>
+    <!-- ManagerApp.kt:  = if (catalog.isEmpty()) "Refresh the catalog to browse books." else  -->
+    <string name="msg_catalog_loaded_from_this_phone">"Catalog loaded from this phone."</string>
+    <!-- ManagerApp.kt:             main.post { covers.clearFailures() }             status =  -->
+    <string name="msg_catalog_refreshed_1_d_content_files_including_companion_files">"Catalog refreshed. %1$d content files, including companion files."</string>
+    <!-- PenStorage.kt: : RemovalBackup, progress: (String, Long) -&gt; Unit) {         progress( -->
+    <string name="msg_checking_backup">"Checking backup"</string>
+    <!-- PenStorage.kt: y, cached: File, progress: (String, Long) -&gt; Unit) {         progress( -->
+    <string name="msg_checking_cached_file">"Checking cached file"</string>
+    <!-- ManagerApp.kt: ize) { progress("Downloading", it, entry.size) }             progress( -->
+    <string name="msg_checking_download">"Checking download"</string>
+    <!-- PenStorage.kt: t.fd.sync()                 result             }             progress( -->
+    <string name="msg_checking_phone_backup">"Checking phone backup"</string>
+    <!-- ManagerApp.kt: t     @Volatile var busy = false         private set     var status =  -->
+    <string name="msg_connect_a_pen_to_get_started">"Connect a pen to get started."</string>
+    <!-- PenStorage.kt:            RawIntegrity.copy(input, output, size) { bytes -&gt; progress( -->
+    <string name="msg_copying_to_pen">"Copying to pen"</string>
+    <!-- ManagerApp.kt:            Downloads.fetch(entry.url, partial, entry.size) { progress( -->
+    <string name="msg_downloading">"Downloading"</string>
+    <!-- ManagerApp.kt:               Downloads.fetch(entry.url, source, entry.size) { report( | ManagerApp.kt:             Downloads.fetch(entry.url, source, entry.size) { progress( -->
+    <string name="msg_downloading_temporary_copy">"Downloading temporary copy"</string>
+    <!-- ManagerApp.kt:        }         record(storage.scan(selected.tree))         status =  -->
+    <string name="msg_installed_and_read_back_verified_1_s_unplug_and_tap_the_book_to_chec">"Installed and read-back verified: %1$s. Unplug and tap the book to check playback."</string>
+    <!-- ManagerApp.kt: stalled and verified · temporary phone copy deleted"         status =  -->
+    <string name="msg_installed_and_verified_1_s_temporary_phone_copy_deleted">"Installed and verified: %1$s. Temporary phone copy deleted."</string>
+    <!-- ManagerApp.kt: p the book to check playback."         if (!cleaned) completionNote =  -->
+    <string name="msg_installed_and_verified_phone_cleanup_failed_use_phone_storage">"Installed and verified · phone cleanup failed; use Phone storage"</string>
+    <!-- ManagerApp.kt:  if (audioRetention == AudioRetention.TRANSFER_ONLY) completionNote =  -->
+    <string name="msg_installed_and_verified_phone_download_deleted">"Installed and verified · phone download deleted"</string>
+    <!-- ManagerApp.kt:          record(storage.scan(selected.tree))         completionNote =  -->
+    <string name="msg_installed_and_verified_temporary_phone_copy_deleted">"Installed and verified · temporary phone copy deleted"</string>
+    <!-- ManagerApp.kt:          try { action() } catch (e: Exception) { error = e.message ?:  -->
+    <string name="msg_operation_failed_reconnect_and_try_again">"Operation failed. Reconnect and try again."</string>
+    <!-- PenStorage.kt:  }.map { Triple(it.name, it.size, it.id) }.toSet()) {                  -->
+    <string name="msg_other_inventory_changes_were_observed_the_phone_backup_is_safe_scan">"Other inventory changes were observed. The phone backup is safe; scan again."</string>
+    <!-- ManagerApp.kt: ckups") {         phoneAudio.deleteBackups(filename)         status =  -->
+    <string name="msg_phone_backups_deleted">"Phone backups deleted."</string>
+    <!-- ManagerApp.kt: download") {         phoneAudio.deleteDownload(file)         status =  -->
+    <string name="msg_phone_download_deleted">"Phone download deleted."</string>
+    <!-- ManagerApp.kt:          status = if (includeBackups) "All phone audio deleted." else  -->
+    <string name="msg_phone_downloads_deleted_pen_backups_kept">"Phone downloads deleted. Pen backups kept."</string>
+    <!-- ManagerApp.kt: String?, val filename: String, val title: String, val stage: String =  -->
+    <string name="msg_preparing">"Preparing"</string>
+    <!-- ManagerApp.kt: Removed from pen · phone backup kept"                         else -&gt;  -->
+    <string name="msg_read_back_verified">"Read-back verified"</string>
+    <!-- PenStorage.kt:  {                 RawIntegrity.inspect(it, size) { bytes -&gt; progress( | PenStorage.kt: ; descriptor.fileDescriptor.sync()             }             progress( -->
+    <string name="msg_reading_back_from_pen">"Reading back from pen"</string>
+    <!-- PenStorage.kt:             RawIntegrity.inspect(it, target.size) { bytes -&gt; progress( | PenStorage.kt: e backup even when delete or confirmation fails.             progress( -->
+    <string name="msg_rechecking_pen_file">"Rechecking pen file"</string>
+    <!-- ManagerApp.kt: g.parse(local.readText())             status = if (catalog.isEmpty())  -->
+    <string name="msg_refresh_the_catalog_to_browse_books">"Refresh the catalog to browse books."</string>
+    <!-- PenStorage.kt: r.files.none { it.name.equals(target.name, true) }) {                  -->
+    <string name="msg_removal_could_not_be_confirmed_the_phone_backup_is_safe_scan_again">"Removal could not be confirmed. The phone backup is safe; scan again."</string>
+    <!-- ManagerApp.kt: ge, bytes -&gt; progress(stage, bytes, file.size) }             status =  -->
+    <string name="msg_removed_from_pen_a_verified_backup_is_saved_on_this_phone">"Removed from pen. A verified backup is saved on this phone."</string>
+    <!-- ManagerApp.kt:     "Download" -&gt; "Saved offline"                         "Remove" -&gt;  -->
+    <string name="msg_removed_from_pen_phone_backup_kept">"Removed from pen · phone backup kept"</string>
+    <!-- PenStorage.kt: rint) { "The pen changed. The backup is safe." }             progress( -->
+    <string name="msg_removing_from_pen">"Removing from pen"</string>
+    <!-- ManagerApp.kt: , bytes -&gt; progress(stage, bytes, backup.size) }             status =  -->
+    <string name="msg_restored_and_read_back_verified_phone_backup_retained">"Restored and read-back verified. Phone backup retained."</string>
+    <!-- ManagerApp.kt: ompletionNote ?: when (label) {                         "Download" -&gt;  -->
+    <string name="msg_saved_offline">"Saved offline"</string>
+    <!-- ManagerApp.kt: e Download &amp; install." }         fetchToCache(entry)         status =  -->
+    <string name="msg_saved_offline_1_s_size_product_id_and_checksum_verified">"Saved offline: %1$s. Size, product ID and checksum verified."</string>
+    <!-- PenStorage.kt:        RawIntegrity.copy(it, output, target.size) { bytes -&gt; progress( | PenStorage.kt:       val partial = File(folder, "content.part")             progress( -->
+    <string name="msg_saving_phone_backup">"Saving phone backup"</string>
+    <!-- ManagerApp.kt: n(plan: PenPlan) = work("Sync", filename = "@selection", localTitle =  -->
+    <string name="msg_selected_books">"Selected books"</string>
+    <!-- PenProfiles.kt: yKey == identityKey &amp;&amp; this.fingerprint == fingerprint) {              -->
+    <string name="msg_the_destination_pen_changed_review_this_pen_s_selection_again">"The destination pen changed. Review this pen\'s selection again."</string>
+    <!-- PenStorage.kt: rint &amp;&amp; current.files.any { sameFile(it, target) }) {                  -->
+    <string name="msg_the_pen_or_file_changed_the_backup_is_safe_the_file_was_not_removed">"The pen or file changed. The backup is safe; the file was not removed."</string>
+    <!-- PenStorage.kt: upRoot.path).availableBytes &gt;= target.size + 1_048_576) {              -->
+    <string name="msg_the_phone_needs_more_space_for_a_backup_nothing_was_removed_from_the">"The phone needs more space for a backup. Nothing was removed from the pen."</string>
+    <!-- PenStorage.kt: d(header)             } catch (e: Exception) { problem = e.message ?:  -->
+    <string name="msg_unreadable_header">"Unreadable header"</string>
+    <!-- ManagerApp.kt: TACHED) {                     pen = null                     status =  -->
+    <string name="msg_usb_disconnected_saved_inventories_are_still_available">"USB disconnected. Saved inventories are still available."</string>
+    <!-- Operation status/noun: Clearing phone audio -->
+    <string name="task_clearing_phone_audio">"Clearing phone audio"</string>
+    <!-- Operation status/noun: Deleting phone backups -->
+    <string name="task_deleting_phone_backups">"Deleting phone backups"</string>
+    <!-- Operation status/noun: Deleting phone download -->
+    <string name="task_deleting_phone_download">"Deleting phone download"</string>
+    <!-- Operation status/noun: Download -->
+    <string name="task_download">"Download"</string>
+    <!-- Operation status/noun: Downloading catalog -->
+    <string name="task_downloading_catalog">"Downloading catalog"</string>
+    <!-- Operation status/noun: Forgetting pen -->
+    <string name="task_forgetting_pen">"Forgetting pen"</string>
+    <!-- Operation status/noun: Install -->
+    <string name="task_install">"Install"</string>
+    <!-- Operation status/noun: Loading local library -->
+    <string name="task_loading_local_library">"Loading local library"</string>
+    <!-- Operation status/noun: Naming pen -->
+    <string name="task_naming_pen">"Naming pen"</string>
+    <!-- Operation status/noun: Reading pen -->
+    <string name="task_reading_pen">"Reading pen"</string>
+    <!-- Operation status/noun: Remove -->
+    <string name="task_remove">"Remove"</string>
+    <!-- Operation status/noun: Restore -->
+    <string name="task_restore">"Restore"</string>
+    <!-- Operation status/noun: Saving book selection -->
+    <string name="task_saving_book_selection">"Saving book selection"</string>
+    <!-- Operation status/noun: Saving pen selection -->
+    <string name="task_saving_pen_selection">"Saving pen selection"</string>
+    <!-- Operation status/noun: Sync -->
+    <string name="task_sync">"Sync"</string>
+    <!-- MainActivity.kt: 2, ink, true)); gap(body, 20)         body.addView(navRow(UiIcon.PEN,  -->
+    <string name="ui_1_connect_your_pen">"1. Connect your pen"</string>
+    <!-- MainActivity.kt:  }, { it.size }, { it.modifiedAt })                 body.addView(text( -->
+    <string name="ui_1_d_audio_files">"%1$d audio files"</string>
+    <!-- MainActivity.kt: ORAGE) })         body.addView(navRow(UiIcon.BOOKS, "Selected books",  -->
+    <string name="ui_1_d_audio_files_review_changes">"%1$d audio files · review changes"</string>
+    <!-- MainActivity.kt:         })         body.addView(navRow(UiIcon.STORAGE, "Pen backups",  -->
+    <string name="ui_1_d_copies_2_s">"%1$d copies · %2$s"</string>
+    <!-- MainActivity.kt: Files()         body.addView(navRow(UiIcon.BOOKS, "Downloaded audio",  | MainActivity.kt: ap(body, 20)         body.addView(navRow(UiIcon.BOOKS, "Audio files",  -->
+    <string name="ui_1_d_files_2_s">"%1$d files · %2$s"</string>
+    <!-- MainActivity.kt: is).setTitle("Add books to ${profile.name}?")             .setMessage( -->
+    <string name="ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place">"%1$d files · %2$s\n%3$d downloads needed. Existing pen files stay in place.\n"</string>
+    <!-- MainActivity.kt: s = mutableListOf&lt;String&gt;()         if (editions.size &gt; 1) fields.add( -->
+    <string name="ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo">"%1$d publisher products share this audio. The pen does not identify your printed edition."</string>
+    <!-- MainActivity.kt: ilder(this).setTitle("Delete phone backups?")             .setMessage( -->
+    <string name="ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion">"%1$s\n%2$d backups · %3$s. These backups cannot be restored after deletion. The pen is unchanged."</string>
+    <!-- MainActivity.kt: e { it.readText() } }             showMessage("Open-source licenses",  -->
+    <string name="ui_1_s_2_s">"%1$s\n\n%2$s"</string>
+    <!-- MainActivity.kt: this).setTitle("Install on ${profile.name}?")             .setMessage( -->
+    <string name="ui_1_s_2_s_existing_files_stay_untouched_3_s">"%1$s\n%2$s · Existing files stay untouched.%3$s"</string>
+    <!-- MainActivity.kt: this).setTitle("Restore to ${profile.name}?")             .setMessage( -->
+    <string name="ui_1_s_2_s_from_this_phone_s_backup_existing_filenames_are_preserved">"%1$s\n%2$s from this phone\'s backup. Existing filenames are preserved."</string>
+    <!-- MainActivity.kt: lder(this).setTitle("Delete phone download?")             .setMessage( -->
+    <string name="ui_1_s_2_s_on_this_phone_the_pen_and_pen_backups_are_unchanged">"%1$s\n%2$s on this phone. The pen and pen backups are unchanged."</string>
+    <!-- MainActivity.kt: py?" else "Download phone copy?")                         .setMessage( -->
+    <string name="ui_1_s_2_s_saved_on_this_phone_for_offline_installation">"%1$s\n%2$s saved on this phone for offline installation."</string>
+    <!-- MainActivity.kt: (navRow(UiIcon.STORAGE, "Storage", profile.free?.let { if (connected)  -->
+    <string name="ui_1_s_free">"%1$s free"</string>
+    <!-- MainActivity.kt: "Storage", profile.free?.let { if (connected) "${size(it)} free" else  -->
+    <string name="ui_1_s_free_last_observed">"%1$s free · last observed"</string>
+    <!-- MainActivity.kt: his).setTitle("Remove from ${profile.name}?")             .setMessage( -->
+    <string name="ui_1_s_free_up_2_s_on_the_pen_a_verified_backup_will_be_kept_on_this_ph">"%1$s\nFree up %2$s on the pen. A verified backup will be kept on this phone for offline restoration.%3$s"</string>
+    <!-- MainActivity.kt: on.INFO else UiIcon.CHECK         val heading = if (transfer.running)  -->
+    <string name="ui_1_s_in_progress">"%1$s in progress"</string>
+    <!-- MainActivity.kt: oList()         val labels = listOf("Family collection") + pens.map {  -->
+    <string name="ui_1_s_individual_selection">"%1$s · individual selection"</string>
+    <!-- MainActivity.kt: SENT }}", 19, ink, true)); gap(body, 8)             body.addView(text( -->
+    <string name="ui_1_s_to_add_existing_files_are_kept">"%1$s to add · existing files are kept"</string>
+    <!-- MainActivity.kt: igate(Screen.PEN, false) })         body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_2_find_a_book">"2. Find a book"</string>
+    <!-- MainActivity.kt: Screen.BROWSE, false) })         body.addView(navRow(UiIcon.DOWNLOAD,  -->
+    <string name="ui_3_download_install">"3. Download &amp; install"</string>
+    <!-- MainActivity.kt: nk() }?.let {             gap(body, 24)             body.addView(text( -->
+    <string name="ui_about_this_book">"About this book"</string>
+    <!-- MainActivity.kt:    } catch (e: Exception) { showMessage("Folder access", e.message ?:  -->
+    <string name="ui_access_was_not_granted">"Access was not granted."</string>
+    <!-- MainActivity.kt: RS &amp;&amp; app.transfer?.failed == true)) {             val problem = text( -->
+    <string name="ui_action_failed_view_details">"Action failed · View details"</string>
+    <!-- MainActivity.kt: iIcon.STORAGE); item(Screen.COLLECTION, UiIcon.BOOKS)         section( -->
+    <string name="ui_activity">"ACTIVITY"</string>
+    <!-- MainActivity.kt: r.")             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_add_books">"Add books"</string>
+    <!-- MainActivity.kt: .count { !app.cached(it) }         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_add_books_to_1_s">"Add books to %1$s?"</string>
+    <!-- MainActivity.kt: are present", UiIcon.CHECK))                 else body.addView(action( -->
+    <string name="ui_add_selected_books">"Add selected books"</string>
+    <!-- MainActivity.kt: en() {         if (app.profiles.all.isEmpty()) emptyState(UiIcon.PEN,  -->
+    <string name="ui_add_your_first_pen">"Add your first pen"</string>
+    <!-- MainActivity.kt: f (plan.additions.isEmpty() &amp;&amp; plan.conflicts == 0) body.addView(chip( -->
+    <string name="ui_all_selected_books_are_present">"All selected books are present"</string>
+    <!-- MainActivity.kt: status = when (item.state) {                     PlanState.PRESENT -&gt;  -->
+    <string name="ui_already_present_filename_size_and_audio_id_match">"Already present · filename, size and audio ID match"</string>
+    <!-- MainActivity.kt: iew(summary); gap(body, 20)         body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_audio_files">"Audio files"</string>
+    <!-- MainActivity.kt:   body.addView(navRow(UiIcon.BOOKS, "Installed books", if (connected)  -->
+    <string name="ui_audio_files_1_d">"Audio files: %1$d"</string>
+    <!-- MainActivity.kt: lds.addAll(listOfNotNull(selectedFile, (entry?.id ?: file?.id)?.let {  -->
+    <string name="ui_audio_id_1_s">"Audio ID %1$s"</string>
+    <!-- MainActivity.kt: (text(size(usage.total), 36, ink, true))         summary.addView(text( -->
+    <string name="ui_audio_on_this_phone">"Audio on this phone"</string>
+    <!-- MainActivity.kt:  file?.id)?.let { "Audio ID $it" },             entry?.version?.let {  -->
+    <string name="ui_audio_version_1_s">"Audio version %1$s"</string>
+    <!-- MainActivity.kt: &amp; app.metadataNotice != null) {                     body.addView(text( -->
+    <string name="ui_book_details_unavailable_refresh_to_retry">"Book details unavailable · refresh to retry"</string>
+    <!-- MainActivity.kt: og?.dismiss()         infoDialog = AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_book_file_details">"Book &amp; file details"</string>
+    <!-- MainActivity.kt: N) })             gap(body, 20)         }         body.addView(action( | MainActivity.kt: ansfers", "Downloads and installs appear here."); body.addView(action( | MainActivity.kt: fline installation.")                             body.addView(action( | MainActivity.kt: te(UiIcon.BOOKS, "No selected books")             body.addView(action( -->
+    <string name="ui_browse_books">"Browse books"</string>
+    <!-- MainActivity.kt: false) })         body.addView(navRow(UiIcon.BOOKS, "2. Find a book",  -->
+    <string name="ui_browse_or_search_the_catalog">"Browse or search the catalog."</string>
+    <!-- MainActivity.kt:  enabled -&gt; checked[which] = enabled }             .setNegativeButton( | MainActivity.kt: ); dialog.dismiss(); render()                     }.setNegativeButton( | MainActivity.kt: .setTitle("Rename pen").setView(input)             .setNegativeButton( | MainActivity.kt: ch -&gt;             choices[which].second()         }.setNegativeButton( | MainActivity.kt: e pen and pen backups are unchanged.")             .setNegativeButton( | MainActivity.kt: ed after a verified install." else "")             .setNegativeButton( | MainActivity.kt: electContent(entry, profileId, false)             }.setNegativeButton( | MainActivity.kt: fter deletion. The pen is unchanged.")             .setNegativeButton( | MainActivity.kt: io is discarded after each transfer.")             .setNegativeButton( | MainActivity.kt: ion.entries[which]); dialog.dismiss()             }.setNegativeButton( | MainActivity.kt: kups are kept. The pen is unchanged.")             .setNegativeButton( | MainActivity.kt: loads and backups stay in place.")                 .setNegativeButton( | MainActivity.kt: one for offline restoration.$warning")             .setNegativeButton( | MainActivity.kt: or offline installation.")                         .setNegativeButton( | MainActivity.kt: p. Existing filenames are preserved.")             .setNegativeButton( -->
+    <string name="ui_cancel">"Cancel"</string>
+    <!-- MainActivity.kt: Profile                 if (profile == null) { emptyState(UiIcon.PEN,  -->
+    <string name="ui_choose_a_pen_profile">"Choose a pen profile"</string>
+    <!-- MainActivity.kt:  backups", false) {             showMessage("Phone copies &amp; backups",  -->
+    <string name="ui_choose_keep_downloads_for_offline_reuse_or_transfer_only_to_discard">"Choose Keep downloads for offline reuse, or Transfer only to discard temporary audio after a transfer. A failed transfer also discards its temporary download. Pen-removal backups are kept separately until you delete them. Manage individual copies on a book, or clear audio in Phone storage. Uninstalling the app or clearing its storage erases all phone copies and backups."</string>
+    <!-- MainActivity.kt:  14, muted))         }         if (entry != null) body.addView(action( | MainActivity.kt: tions) }).toBooleanArray()         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_choose_pens">"Choose pens"</string>
+    <!-- MainActivity.kt: ody, 16)         if (app.profiles.family.isEmpty()) body.addView(text( -->
+    <string name="ui_choose_pens_on_a_book_to_add_it_here">"Choose pens on a book to add it here."</string>
+    <!-- MainActivity.kt: body, 16)         body.addView(action(if (app.profiles.all.isEmpty())  | MainActivity.kt: der.")             .setNegativeButton("Done", null).setPositiveButton( | MainActivity.kt: ll) { emptyState(UiIcon.PEN, "Connect your pen"); body.addView(action( | MainActivity.kt: t this pen") { connectionHelp(profile) })         body.addView(action( -->
+    <string name="ui_choose_usb_folder">"Choose USB folder"</string>
+    <!-- MainActivity.kt: y)}", 14, muted)) }         gap(body, 16)         body.addView(action( -->
+    <string name="ui_clear_downloads">"Clear downloads"</string>
+    <!-- MainActivity.kt: der(this).setTitle(if (includeBackups) "Delete all phone audio?" else  -->
+    <string name="ui_clear_downloads_e81a1d">"Clear downloads?"</string>
+    <!-- MainActivity.kt: })                 if (!profile.identity.hasSerial) body.addView(text( -->
+    <string name="ui_collection_sync_needs_a_recognized_pen_serial">"Collection sync needs a recognized pen serial."</string>
+    <!-- MainActivity.kt: gap(body, 16)             if (plan.conflicts &gt; 0) { body.addView(text( -->
+    <string name="ui_conflicting_filenames_need_review_no_existing_file_will_be_overwritt">"Conflicting filenames need review. No existing file will be overwritten."</string>
+    <!-- MainActivity.kt: elp(profile: PenProfile) {         AlertDialog.Builder(this).setTitle( | MainActivity.kt: muted))             }             if (!connected) body.addView(action( -->
+    <string name="ui_connect_1_s">"Connect %1$s"</string>
+    <!-- MainActivity.kt: ue) } })             BookPrimaryAction.CONNECT -&gt; body.addView(action( -->
+    <string name="ui_connect_a_pen">"Connect a pen"</string>
+    <!-- MainActivity.kt: dView(action(if (app.profiles.all.isEmpty()) "Choose USB folder" else  -->
+    <string name="ui_connect_another_pen">"Connect another pen"</string>
+    <!-- MainActivity.kt: .profiles.all.isEmpty()) emptyState(UiIcon.PEN, "Add your first pen",  -->
+    <string name="ui_connect_by_usb_and_choose_its_folder">"Connect by USB and choose its folder."</string>
+    <!-- MainActivity.kt:  ).joinToString("\n")) })         if (!connected) body.addView(action( -->
+    <string name="ui_connect_this_pen">"Connect this pen"</string>
+    <!-- MainActivity.kt: p.viewedProfile         if (profile == null) { emptyState(UiIcon.PEN,  -->
+    <string name="ui_connect_your_pen">"Connect your pen"</string>
+    <!-- MainActivity.kt:          body.addView(navRow(UiIcon.PEN, profile.name, if (connected)  -->
+    <string name="ui_connected_1_d_audio_files">"Connected · %1$d audio files"</string>
+    <!-- MainActivity.kt:  color, true)); gap(hero, 8)         hero.addView(text(if (connected)  | MainActivity.kt: 5, ink, true)); gap(body, 8)         body.addView(text(if (connected)  -->
+    <string name="ui_connected_by_usb">"Connected by USB"</string>
+    <!-- MainActivity.kt: lename) })         }         if (transfer.failed) body.addView(action( -->
+    <string name="ui_connection_help">"Connection help"</string>
+    <!-- MainActivity.kt: ; isFocusable = true                 setOnClickListener { showMessage( -->
+    <string name="ui_couldn_t_complete_the_action">"Couldn\'t complete the action"</string>
+    <!-- MainActivity.kt: aleType = ImageView.ScaleType.FIT_CENTER         contentDescription =  -->
+    <string name="ui_cover_of_1_s">"Cover of %1$s"</string>
+    <!-- MainActivity.kt: { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?:  -->
+    <string name="ui_date_unavailable">"Date unavailable"</string>
+    <!-- MainActivity.kt: d.")             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_delete">"Delete"</string>
+    <!-- MainActivity.kt:  usage.downloads + usage.temporary &gt; 0 })         body.addView(action( -->
+    <string name="ui_delete_all_phone_audio">"Delete all phone audio"</string>
+    <!-- MainActivity.kt: ean) {         AlertDialog.Builder(this).setTitle(if (includeBackups)  -->
+    <string name="ui_delete_all_phone_audio_1e6a6f">"Delete all phone audio?"</string>
+    <!-- MainActivity.kt: ache(entry)) })         if (app.backup(filename) != null) choices.add( -->
+    <string name="ui_delete_pen_backups">"Delete pen backups"</string>
+    <!-- MainActivity.kt: e.equals(filename, true) }         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_delete_phone_backups">"Delete phone backups?"</string>
+    <!-- MainActivity.kt:  -&gt; Unit&gt;&gt;()         if (entry?.let(app::cached) == true) choices.add( -->
+    <string name="ui_delete_phone_download">"Delete phone download"</string>
+    <!-- MainActivity.kt: load(file: java.io.File) {         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_delete_phone_download_a3aa92">"Delete phone download?"</string>
+    <!-- MainActivity.kt:  else "Clear downloads?")             .setMessage(if (includeBackups)  -->
+    <string name="ui_deletes_all_downloaded_audio_temporary_files_and_all_pen_backups_on">"Deletes all downloaded audio, temporary files and ALL pen backups on this phone. Backup-only books will lose their offline restoration copy. The pen is unchanged."</string>
+    <!-- MainActivity.kt: offline restoration copy. The pen is unchanged."                 else  -->
+    <string name="ui_deletes_downloaded_and_temporary_audio_on_this_phone_pen_removal_bac">"Deletes downloaded and temporary audio on this phone. Pen-removal backups are kept. The pen is unchanged."</string>
+    <!-- MainActivity.kt: })             navItems[destination] = line         }         section( -->
+    <string name="ui_device">"DEVICE"</string>
+    <!-- MainActivity.kt: DeleteBackups(copies[which].filename)             }.setNegativeButton( | MainActivity.kt: access, choose the pen's USB folder.")             .setNegativeButton( | MainActivity.kt: etails").setMessage(fileInfoMessage())             .setPositiveButton( | MainActivity.kt: g.Builder(this).setTitle(title).setMessage(message).setPositiveButton( | MainActivity.kt: nfirmDeleteDownload(downloads[which])             }.setNegativeButton( -->
+    <string name="ui_done">"Done"</string>
+    <!-- MainActivity.kt:                  .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_download">"Download"</string>
+    <!-- MainActivity.kt:             BookPrimaryAction.DOWNLOAD_INSTALL -&gt; body.addView(action( -->
+    <string name="ui_download_install">"Download &amp; install"</string>
+    <!-- MainActivity.kt:     PlanState.ADD -&gt; if (app.cached(item.entry)) "Ready offline" else  -->
+    <string name="ui_download_needed">"Download needed"</string>
+    <!-- MainActivity.kt:      val label = if (app.cached(entry)) "Re-download phone copy" else  -->
+    <string name="ui_download_phone_copy">"Download phone copy"</string>
+    <!-- MainActivity.kt: ivity).setTitle(if (app.cached(entry)) "Re-download phone copy?" else  -->
+    <string name="ui_download_phone_copy_9fea6b">"Download phone copy?"</string>
+    <!-- MainActivity.kt: (summary); gap(body, 20)         body.addView(navRow(UiIcon.DOWNLOAD,  | MainActivity.kt: te fun chooseRetention() {         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_download_storage">"Download storage"</string>
+    <!-- MainActivity.kt: all) })             BookPrimaryAction.DOWNLOAD -&gt; body.addView(action( -->
+    <string name="ui_download_to_phone">"Download to phone"</string>
+    <!-- MainActivity.kt: kup(entry.filename) != null) "Pen backup" else if (app.cached(entry))  -->
+    <string name="ui_downloaded">"Downloaded"</string>
+    <!-- MainActivity.kt: .phoneAudio.downloadFiles()         body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_downloaded_audio">"Downloaded audio"</string>
+    <!-- MainActivity.kt:             else { emptyState(UiIcon.TRANSFER, "No active transfers",  -->
+    <string name="ui_downloads_and_installs_appear_here">"Downloads and installs appear here."</string>
+    <!-- MainActivity.kt: .\n" +                 if (app.audioRetention == AudioRetention.KEEP)  -->
+    <string name="ui_downloads_stay_on_this_phone_for_your_other_pens">"Downloads stay on this phone for your other pens."</string>
+    <!-- MainActivity.kt: g files stay untouched.$unknown" +                 if (downloadFirst)  -->
+    <string name="ui_downloads_temporarily_verifies_the_pen_copy_then_discards_the_phone">"\nDownloads temporarily, verifies the pen copy, then discards the phone file."</string>
+    <!-- MainActivity.kt:      val pens = app.profiles.all.toList()         val labels = listOf( | MainActivity.kt:     }      private fun collectionScreen() {         body.addView(text( | MainActivity.kt: , true)); gap(body, 10)             body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_family_collection">"Family collection"</string>
+    <!-- MainActivity.kt:         body.addView(bookRow(app.title(entry), if (profileId == null)  -->
+    <string name="ui_family_selection">"Family selection"</string>
+    <!-- MainActivity.kt: ile?.problem))         if (file != null || backup != null) fields.add( -->
+    <string name="ui_file_dates_are_reported_by_storage_they_may_reflect_a_copy_or_publis">"File dates are reported by storage. They may reflect a copy or publisher date; creation and last-played dates are unavailable."</string>
+    <!-- MainActivity.kt: reen.BOOK -&gt; {                 header.addView(iconButton(UiIcon.INFO,  -->
+    <string name="ui_file_details">"File details"</string>
+    <!-- MainActivity.kt: || penSort == PenSort.NEWEST) {                     body.addView(text( -->
+    <string name="ui_file_modified_date_not_last_played">"File modified date · not last played"</string>
+    <!-- MainActivity.kt: e, size and audio ID match"                     PlanState.CONFLICT -&gt;  -->
+    <string name="ui_filename_conflict">"Filename conflict"</string>
+    <!-- MainActivity.kt:  app.selectTree(uri)             } catch (e: Exception) { showMessage( -->
+    <string name="ui_folder_access">"Folder access"</string>
+    <!-- MainActivity.kt:                  .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_forget">"Forget"</string>
+    <!-- MainActivity.kt: get profile", false) {             AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_forget_1_s">"Forget %1$s?"</string>
+    <!-- MainActivity.kt: alse) { chooseFolder() })         if (!connected) body.addView(action( -->
+    <string name="ui_forget_profile">"Forget profile"</string>
+    <!-- MainActivity.kt: , ink, true))         summary.addView(text(if (app.viewedPen != null)  -->
+    <string name="ui_free_space_1_s">"Free space · %1$s"</string>
+    <!-- MainActivity.kt: p.viewedProfile ?: return         val unknown = if (pen.free == null)  -->
+    <string name="ui_free_space_is_unavailable">"\nFree space is unavailable."</string>
+    <!-- MainActivity.kt: tatus     }      private fun helpScreen() {         body.addView(text( -->
+    <string name="ui_getting_started">"Getting started"</string>
+    <!-- MainActivity.kt:    if (present) { body.addView(chip(if (connected) "On your pen" else  -->
+    <string name="ui_in_saved_inventory">"In saved inventory"</string>
+    <!-- MainActivity.kt: View(navRow(UiIcon.BOOKS, "Family collection", if (profile.useFamily)  -->
+    <string name="ui_included">"Included"</string>
+    <!-- MainActivity.kt: .app_name), 19, ink, true)); gap(about, 8)         about.addView(text( -->
+    <string name="ui_independent_open_source_usb_manager_no_account_your_library_stays_on">"Independent, open-source USB manager.\nNo account. Your library stays on this phone."</string>
+    <!-- MainActivity.kt: kRow(app.title(entry), if (profileId == null) "Family selection" else  -->
+    <string name="ui_individual_selection">"Individual selection"</string>
+    <!-- MainActivity.kt:  "")             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_install">"Install"</string>
+    <!-- MainActivity.kt: e is unavailable." else ""         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_install_on_1_s">"Install on %1$s?"</string>
+    <!-- MainActivity.kt: tore) })             BookPrimaryAction.INSTALL -&gt; body.addView(action( -->
+    <string name="ui_install_on_pen">"Install on pen"</string>
+    <!-- MainActivity.kt: 4, muted)); gap(body, 12) }         body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_installed_books">"Installed books"</string>
+    <!-- MainActivity.kt: : if (book.article in app.pendingPublisherPages) "Loading ISBN…" else  -->
+    <string name="ui_isbn_not_available">"ISBN not available"</string>
+    <!-- MainActivity.kt: etTitle("Download storage")             .setSingleChoiceItems(arrayOf( -->
+    <string name="ui_keep_downloads_reuse_audio_offline">"Keep downloads\nReuse audio offline"</string>
+    <!-- MainActivity.kt: Margin = dp(16) })             gap(summary, 14); summary.addView(text( -->
+    <string name="ui_keep_the_app_open_and_the_pen_connected">"Keep the app open and the pen connected."</string>
+    <!-- MainActivity.kt:         body.addView(navRow(UiIcon.DOWNLOAD, "3. Download &amp; install",  -->
+    <string name="ui_keep_the_pen_connected_until_done">"Keep the pen connected until done."</string>
+    <!-- MainActivity.kt: lled books", if (connected) "Audio files: ${profile.files.size}" else  -->
+    <string name="ui_last_observed_audio_files_1_d">"Last observed audio files: %1$d"</string>
+    <!-- MainActivity.kt: w(text(if (app.viewedPen != null) "Free space · ${profile.name}" else  -->
+    <string name="ui_last_observed_free_space_1_s">"Last observed free space · %1$s"</string>
+    <!-- MainActivity.kt:  "Connected · ${profile.files.size} audio files"                 else  -->
+    <string name="ui_last_seen_1_s_2_d_files">"Last seen %1$s · %2$d files"</string>
+    <!-- MainActivity.kt: sent) if (app.viewedPen != null) "On ${app.viewedProfile?.name}" else  -->
+    <string name="ui_last_seen_on_1_s">"Last seen on %1$s"</string>
+    <!-- MainActivity.kt:      section("DEVICE"); item(Screen.PENS, UiIcon.PEN)         section( -->
+    <string name="ui_library">"LIBRARY"</string>
+    <!-- MainActivity.kt:  { emptyState(UiIcon.BOOKS, "Load your library"); body.addView(action( -->
+    <string name="ui_load_catalog">"Load catalog"</string>
+    <!-- MainActivity.kt:          }                         else -&gt; { emptyState(UiIcon.BOOKS,  -->
+    <string name="ui_load_your_library">"Load your library"</string>
+    <!-- MainActivity.kt: .let { "ISBN $it" } ?: if (book.article in app.pendingPublisherPages)  -->
+    <string name="ui_loading_isbn">"Loading ISBN…"</string>
+    <!-- MainActivity.kt: 45f                 })                 if (!fits) body.addView(action( | MainActivity.kt: e) })             BookPrimaryAction.MAKE_SPACE -&gt; body.addView(action( -->
+    <string name="ui_make_space_on_pen">"Make space on pen"</string>
+    <!-- MainActivity.kt: ectedFile?.let { app.backup(it) } != null) {                 menu.add( | MainActivity.kt: s(entry) })         if (cached || backup != null) body.addView(action( -->
+    <string name="ui_manage_phone_copies">"Manage phone copies"</string>
+    <!-- MainActivity.kt: al.", 14, muted))             }         }         body.addView(action( -->
+    <string name="ui_manage_selections">"Manage selections"</string>
+    <!-- MainActivity.kt: ) } != null) {                     val more = iconButton(UiIcon.MORE,  -->
+    <string name="ui_more_book_actions">"More book actions"</string>
+    <!-- MainActivity.kt: tion == AudioRetention.TRANSFER_ONLY) {             body.addView(text( -->
+    <string name="ui_new_downloads_are_temporary_existing_downloads_stay_until_installed">"New downloads are temporary. Existing downloads stay until installed or cleared."</string>
+    <!-- MainActivity.kt: dView(progressLabel) }             else { emptyState(UiIcon.TRANSFER,  -->
+    <string name="ui_no_active_transfers">"No active transfers"</string>
+    <!-- MainActivity.kt: OWNLOADS -&gt; {                             emptyState(UiIcon.DOWNLOAD,  -->
+    <string name="ui_no_downloads_yet">"No downloads yet"</string>
+    <!-- MainActivity.kt:                        query.isNotEmpty() -&gt; emptyState(UiIcon.BOOKS,  | MainActivity.kt:       }                 if (files.isEmpty()) emptyState(UiIcon.BOOKS,  -->
+    <string name="ui_no_matches">"No matches"</string>
+    <!-- MainActivity.kt: drawerConnection.text = app.connectedName?.let { "$it connected" } ?:  -->
+    <string name="ui_no_pen_connected">"No pen connected"</string>
+    <!-- MainActivity.kt:      if (plan.items.isEmpty()) {             emptyState(UiIcon.BOOKS,  -->
+    <string name="ui_no_selected_books">"No selected books"</string>
+    <!-- MainActivity.kt: on.BOOKS, "Family collection", if (profile.useFamily) "Included" else  -->
+    <string name="ui_not_included">"Not included"</string>
+    <!-- MainActivity.kt:     app.catalog.find { it.cacheKey == file.name }?.let(app::title) ?:  -->
+    <string name="ui_older_download_1_s">"Older download · %1$s"</string>
+    <!-- MainActivity.kt: p(body, 10) }         if (present) { body.addView(chip(if (connected)  -->
+    <string name="ui_on_your_pen">"On your pen"</string>
+    <!-- MainActivity.kt: utton(if (child) UiIcon.BACK else UiIcon.MENU, if (child) "Back" else  -->
+    <string name="ui_open_navigation_menu">"Open navigation menu"</string>
+    <!-- MainActivity.kt: ME}", 12, muted))         gap(about, 12)         about.addView(action( | MainActivity.kt: ame).bufferedReader().use { it.readText() } }             showMessage( -->
+    <string name="ui_open_source_licenses">"Open-source licenses"</string>
+    <!-- MainActivity.kt: d &amp;&amp; it.name != file.name } == true         val warning = if (shared)  -->
+    <string name="ui_other_files_share_this_audio_id_and_will_stay_on_the_pen_related_con">"\nOther files share this audio ID and will stay on the pen. Related content may depend on this file."</string>
+    <!-- MainActivity.kt:      gap(body, 20)         app.viewedProfile?.let { body.addView(text( -->
+    <string name="ui_pen_1_s">"Pen: %1$s"</string>
+    <!-- MainActivity.kt: pp.viewedProfile?.name}" else if (app.backup(entry.filename) != null)  -->
+    <string name="ui_pen_backup">"Pen backup"</string>
+    <!-- MainActivity.kt: s.forEach { backup -&gt; body.addView(bookRow(titleFor(backup.filename),  -->
+    <string name="ui_pen_backup_1_s">"Pen backup · %1$s"</string>
+    <!-- MainActivity.kt: AD)); gap(body, 10) }         if (backup != null) { body.addView(chip( -->
+    <string name="ui_pen_backup_on_this_phone">"Pen backup on this phone"</string>
+    <!-- MainActivity.kt: , null).show()         })         body.addView(navRow(UiIcon.STORAGE,  -->
+    <string name="ui_pen_backups">"Pen backups"</string>
+    <!-- MainActivity.kt: backups.latestCopies()             AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_pen_backups_on_phone">"Pen backups on phone"</string>
+    <!-- MainActivity.kt: .total &gt; 0         })         gap(body, 16)         body.addView(text( -->
+    <string name="ui_pen_backups_stay_until_you_delete_them_catalog_details_and_artwork_a">"Pen backups stay until you delete them. Catalog details and artwork are stored separately."</string>
+    <!-- MainActivity.kt:              entry?.version?.let { "Audio version $it" }, file?.let {  -->
+    <string name="ui_pen_file_modified_1_s">"Pen file modified: %1$s"</string>
+    <!-- MainActivity.kt: name pen", false) { renamePen(profile) })         body.addView(action( -->
+    <string name="ui_pen_information">"Pen information"</string>
+    <!-- MainActivity.kt: eLine(true); setText(profile.name); selectAll(); contentDescription =  -->
+    <string name="ui_pen_name">"Pen name"</string>
+    <!-- MainActivity.kt: n file modified: ${date(it.modifiedAt)}" },             backup?.let {  -->
+    <string name="ui_phone_backup_saved_1_s_original_pen_file_modified_2_s">"Phone backup saved: %1$s\nOriginal pen file modified: %2$s"</string>
+    <!-- MainActivity.kt: DeleteBackups(filename) })         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_phone_copies">"Phone copies"</string>
+    <!-- MainActivity.kt: iew(action("Phone copies &amp; backups", false) {             showMessage( | MainActivity.kt: ne.", 14, muted))         gap(about, 12)         about.addView(action( -->
+    <string name="ui_phone_copies_backups">"Phone copies &amp; backups"</string>
+    <!-- MainActivity.kt:               if (app.audioRetention == AudioRetention.TRANSFER_ONLY)  -->
+    <string name="ui_phone_download_deleted_after_a_verified_install">"\nPhone download deleted after a verified install."</string>
+    <!-- MainActivity.kt: (usage.downloads)}") {             AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_phone_downloads">"Phone downloads"</string>
+    <!-- MainActivity.kt:   if (screen == Screen.DOWNLOADS) body.addView(navRow(UiIcon.STORAGE,  | MainActivity.kt: ener { managePhoneCopies(); true }             }             menu.add( -->
+    <string name="ui_phone_storage">"Phone storage"</string>
+    <!-- MainActivity.kt: der(this).setTitle("Connect ${profile.name}")             .setMessage( -->
+    <string name="ui_plug_this_pen_into_your_phone_its_saved_profile_will_be_recognized_a">"Plug this pen into your phone. Its saved profile will be recognized automatically. If Android needs access, choose the pen\'s USB folder."</string>
+    <!-- MainActivity.kt:         selectedBooks().firstOrNull()?.let { book -&gt; setNeutralButton( -->
+    <string name="ui_publisher_page">"Publisher page"</string>
+    <!-- MainActivity.kt: oRetention.KEEP) {                 val label = if (app.cached(entry))  -->
+    <string name="ui_re_download_phone_copy">"Re-download phone copy"</string>
+    <!-- MainActivity.kt: lertDialog.Builder(this@MainActivity).setTitle(if (app.cached(entry))  -->
+    <string name="ui_re_download_phone_copy_773303">"Re-download phone copy?"</string>
+    <!-- MainActivity.kt: ANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)) {  -->
+    <string name="ui_read_and_write_access_are_needed">"Read and write access are needed."</string>
+    <!-- MainActivity.kt: lipsize = TextUtils.TruncateAt.END })             body.addView(action( -->
+    <string name="ui_read_more">"Read more"</string>
+    <!-- MainActivity.kt: ict"                     PlanState.ADD -&gt; if (app.cached(item.entry))  -->
+    <string name="ui_ready_offline">"Ready offline"</string>
+    <!-- MainActivity.kt:            Screen.BROWSE -&gt; header.addView(iconButton(UiIcon.REFRESH,  -->
+    <string name="ui_refresh_catalog">"Refresh catalog"</string>
+    <!-- MainActivity.kt: AN -&gt; if (app.tree != null) header.addView(iconButton(UiIcon.REFRESH,  -->
+    <string name="ui_refresh_pen">"Refresh pen"</string>
+    <!-- MainActivity.kt: ng")             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_remove">"Remove"</string>
+    <!-- MainActivity.kt: end on this file." else ""         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_remove_from_1_s">"Remove from %1$s?"</string>
+    <!-- MainActivity.kt: _ONLY)) {             BookPrimaryAction.REMOVE -&gt; body.addView(action( -->
+    <string name="ui_remove_from_pen">"Remove from pen"</string>
+    <!-- MainActivity.kt: uilder(this).setTitle(app.title(entry)).setItems(arrayOf("View book",  -->
+    <string name="ui_remove_from_selection">"Remove from selection"</string>
+    <!-- MainActivity.kt: this).setTitle("Forget ${profile.name}?")                 .setMessage( -->
+    <string name="ui_removes_this_phone_s_name_saved_inventory_and_individual_selection_b">"Removes this phone\'s name, saved inventory and individual selection. Books, downloads and backups stay in place."</string>
+    <!-- MainActivity.kt:  "Pen name" }         val dialog = AlertDialog.Builder(this).setTitle( | MainActivity.kt: view changes") { navigate(Screen.PLAN) })         body.addView(action( -->
+    <string name="ui_rename_pen">"Rename pen"</string>
+    <!-- MainActivity.kt: d.")             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_restore">"Restore"</string>
+    <!-- MainActivity.kt: pp.viewedProfile ?: return         AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_restore_to_1_s">"Restore to %1$s?"</string>
+    <!-- MainActivity.kt:       })             BookPrimaryAction.RESTORE -&gt; body.addView(action( -->
+    <string name="ui_restore_to_pen">"Restore to pen"</string>
+    <!-- MainActivity.kt:  -&gt; selectionRow(entry, profile.id) }             body.addView(action( -->
+    <string name="ui_review_for_1_s">"Review for %1$s"</string>
+    <!-- MainActivity.kt: bytes)}") { navigate(Screen.INSTALLED) })         body.addView(action( -->
+    <string name="ui_review_oldest_files">"Review oldest files"</string>
+    <!-- MainActivity.kt:            if (transfer.filename == "@selection") body.addView(action( -->
+    <string name="ui_review_selection">"Review selection"</string>
+    <!-- MainActivity.kt: ed }             .setNegativeButton("Cancel", null).setPositiveButton( | MainActivity.kt: put)             .setNegativeButton("Cancel", null).setPositiveButton( -->
+    <string name="ui_save">"Save"</string>
+    <!-- MainActivity.kt:                       emptyState(UiIcon.DOWNLOAD, "No downloads yet",  -->
+    <string name="ui_save_books_for_offline_installation">"Save books for offline installation."</string>
+    <!-- MainActivity.kt: , 8)         body.addView(text(if (connected) "Connected by USB" else  | MainActivity.kt: , 8)         hero.addView(text(if (connected) "Connected by USB" else  | MainActivity.kt: turn }                 if (app.viewedPen == null) { body.addView(text( -->
+    <string name="ui_saved_inventory_1_s">"Saved inventory · %1$s"</string>
+    <!-- MainActivity.kt: Icon.CHECK)); gap(body, 10) }         if (cached) { body.addView(chip( -->
+    <string name="ui_saved_on_this_phone">"Saved on this phone"</string>
+    <!-- MainActivity.kt: { chooseFolder() })         if (app.tree != null) body.addView(action( -->
+    <string name="ui_scan_connected_pen">"Scan connected pen"</string>
+    <!-- MainActivity.kt: ply {             hint = "Search titles or IDs"; contentDescription =  -->
+    <string name="ui_search_books">"Search books"</string>
+    <!-- MainActivity.kt: en() {         val search = EditText(this).apply {             hint =  -->
+    <string name="ui_search_titles_or_ids">"Search titles or IDs"</string>
+    <!-- MainActivity.kt:             if (entries.size &gt; 80) { gap(body, 12); body.addView(text( -->
+    <string name="ui_search_to_see_more_titles">"Search to see more titles"</string>
+    <!-- MainActivity.kt: navigate(Screen.STORAGE) })         body.addView(navRow(UiIcon.BOOKS,  -->
+    <string name="ui_selected_books">"Selected books"</string>
+    <!-- MainActivity.kt: name, listOfNotNull(             profile.identity.serialSuffix?.let {  -->
+    <string name="ui_serial_ending_1_s">"Serial ending %1$s"</string>
+    <!-- MainActivity.kt: ody, 20)         if (!profile.identity.hasSerial) { body.addView(text( -->
+    <string name="ui_serial_unavailable_identity_unverified">"Serial unavailable · identity unverified"</string>
+    <!-- MainActivity.kt: file.identity.processor,             if (!profile.identity.hasSerial)  -->
+    <string name="ui_serial_unavailable_this_profile_uses_an_unverified_metadata_fingerpr">"Serial unavailable. This profile uses an unverified metadata fingerprint; firmware changes may create a new profile."</string>
+    <!-- MainActivity.kt:  collection", 22, ink, true)); gap(body, 8)         body.addView(text( -->
+    <string name="ui_shared_selections_connect_each_pen_to_review_and_apply">"Shared selections · connect each pen to review and apply."</string>
+    <!-- MainActivity.kt:              BookPrimaryAction.NONE -&gt; if (present) body.addView(text( -->
+    <string name="ui_shared_support_file">"Shared support file"</string>
+    <!-- MainActivity.kt: lename, true) } }) {                 gap(body, 12); body.addView(text( -->
+    <string name="ui_some_audio_shares_an_id_with_other_files_select_any_required_compani">"Some audio shares an ID with other files. Select any required companion files separately."</string>
+    <!-- MainActivity.kt:     if (screen == Screen.INSTALLED) {             root.addView(action( -->
+    <string name="ui_sort_1_s">"Sort: %1$s"</string>
+    <!-- MainActivity.kt: .label}", false) {                 AlertDialog.Builder(this).setTitle( -->
+    <string name="ui_sort_installed_files">"Sort installed files"</string>
+    <!-- MainActivity.kt: gate(Screen.INSTALLED) })         body.addView(navRow(UiIcon.STORAGE,  -->
+    <string name="ui_storage">"Storage"</string>
+    <!-- MainActivity.kt: ("ACTIVITY"); item(Screen.TRANSFERS, UiIcon.TRANSFER)         section( -->
+    <string name="ui_support">"SUPPORT"</string>
+    <!-- MainActivity.kt: })         if (usage.temporary &gt; 0) { gap(body, 8); body.addView(text( -->
+    <string name="ui_temporary_audio_1_s">"Temporary audio: %1$s"</string>
+    <!-- MainActivity.kt:          transfer.target?.let { gap(summary, 8); summary.addView(text( -->
+    <string name="ui_to_1_s">"To: %1$s"</string>
+    <!-- MainActivity.kt: reen.BROWSE, false) })         } else {             body.addView(text( -->
+    <string name="ui_to_add_1_d_already_present_2_d">"To add: %1$d · Already present: %2$d"</string>
+    <!-- MainActivity.kt: 20)))             busyLabel = text(if (app.transfer?.running == true)  -->
+    <string name="ui_transfer_in_progress">"Transfer in progress"</string>
+    <!-- MainActivity.kt: ention.KEEP) "Downloads stay on this phone for your other pens." else  -->
+    <string name="ui_transfer_only_audio_is_discarded_after_each_transfer">"Transfer-only audio is discarded after each transfer."</string>
+    <!-- MainActivity.kt:  .setSingleChoiceItems(arrayOf("Keep downloads\nReuse audio offline",  -->
+    <string name="ui_transfer_only_temporary_audio_deleted_after_transfer">"Transfer only\nTemporary audio, deleted after transfer"</string>
+    <!-- MainActivity.kt: ummary, 16)         summary.addView(text(profile.free?.let(::size) ?:  -->
+    <string name="ui_unknown">"Unknown"</string>
+    <!-- MainActivity.kt: y, 20)         body.addView(navRow(UiIcon.PEN, "1. Connect your pen",  -->
+    <string name="ui_use_a_usb_data_cable_or_adapter">"Use a USB data cable or adapter."</string>
+    <!-- MainActivity.kt: ckups.")         })         gap(about, 12)         about.addView(text( -->
+    <string name="ui_version_1_s">"Version %1$s"</string>
+    <!-- MainActivity.kt: AlertDialog.Builder(this).setTitle(app.title(entry)).setItems(arrayOf( | MainActivity.kt: ion") { navigate(Screen.PLAN) })             else body.addView(action( -->
+    <string name="ui_view_book">"View book"</string>
+    <!-- MainActivity.kt: cted) "${size(it)} free" else "${size(it)} free · last observed" } ?:  -->
+    <string name="ui_view_storage">"View storage"</string>
+    <!-- MainActivity.kt: fer == null) {             if (app.busy) { emptyState(UiIcon.REFRESH,  -->
+    <string name="ui_working">"Working…"</string>
+    <plurals name="saved_files">
+        <item quantity="one">"%1$d saved file"</item>
+        <item quantity="other">"%1$d saved files"</item>
+    </plurals>
+    <plurals name="catalog_items">
+        <item quantity="one">"%1$d item"</item>
+        <item quantity="other">"%1$d items"</item>
+    </plurals>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_connected_name">"%1$s connected"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_back">"Back"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_firmware">"Firmware %1$s"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_on_named_pen">"On %1$s"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_age_range">"Ages %1$d–%2$d"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_age_min">"Ages %1$d+"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_article">"Article %1$s"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_isbn">"ISBN %1$s"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_pages">"%1$d pages"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_task_failed">"%1$s failed"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_task_complete">"%1$s complete"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_language">"App language"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_device_language">"Device language"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_privacy">"Privacy policy"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_source_support">"Source &amp; support"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_catalog_language">"The book catalog and audio currently shown are in German. App language does not change book audio."</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_independent">"Independent app. Not affiliated with or endorsed by Ravensburger. tiptoi is a trademark of Ravensburger."</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_demo">"Explore demo"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_demo_banner">"Demo · sample data"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_exit_demo">"Exit demo"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_demo_readonly">"This is a sample library. Exit the demo and connect a real pen to make changes."</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_selected_pen">"the selected pen"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_gb">"%1$.2f GB"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_mb">"%1$.1f MB"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_home">"Home pen"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_travel">"Travel pen"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_forest">"A walk in the forest"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_space">"Space and stars"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_music">"Music and rhythm"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_series">"Sample book"</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="demo_description">"An original sample book used to explore Pen Library. No audio file is included."</string>
+    <!-- App settings, release identity and public sample library. -->
+    <string name="ui_connected_sentence">"%1$s connected."</string>
+</resources>

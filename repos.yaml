@@ -53,3 +53,10 @@ checkouts:
     purpose: Owned Kotlin Android build, exact-source checks and separate release/Play jobs.
     license_summary: MIT; public patterns only, no private keys or product configuration.
     sparse_paths: [.github/workflows, scripts, docs, android]
+  - name: web-server-chrome
+    repository: https://github.com/kzahel/web-server-chrome.git
+    revision: 010c3b1ffb9ad3a521d05dbb0dee214de3200010
+    path: references/web-server-chrome
+    purpose: Owned Android localization resources, terminology, exact-source checks and release provenance.
+    license_summary: MIT; Android localization tooling adapted with attribution; no publisher credentials reused.
+    sparse_paths: [scripts, localization, docs/topics/android-play-publishing.md, .github/workflows]

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "locale": "fr",
+  "register": "Français naturel et concis. Infinitif pour les actions, vous dans les instructions. Conserver Pen Library, tiptoi, Ravensburger, USB, HTTP, ISBN, SHA-256 et les noms de fichiers.",
+  "terms": {
+    "pen": {
+      "sourceTerms": [
+        "pen",
+        "pens"
+      ],
+      "meaning": "The physical reading pen, never a drawing tool.",
+      "preferred": "stylet"
+    },
+    "cache": {
+      "sourceTerms": [
+        "cache",
+        "download",
+        "downloads"
+      ],
+      "meaning": "Phone copies for reuse, separate from pen content and removal backups.",
+      "preferred": "téléchargements / copies sur le téléphone"
+    },
+    "backup": {
+      "sourceTerms": [
+        "backup",
+        "backups",
+        "restore"
+      ],
+      "meaning": "Verified phone copy made before explicit removal from pen; restore is non-overwriting.",
+      "preferred": "sauvegarde / restaurer"
+    },
+    "selection": {
+      "sourceTerms": [
+        "selection",
+        "collection",
+        "family"
+      ],
+      "meaning": "An additive shared/per-pen selection; no automatic deletion.",
+      "preferred": "sélection de livres / sélection partagée"
+    },
+    "filedate": {
+      "sourceTerms": [
+        "file date",
+        "file modified",
+        "last played"
+      ],
+      "meaning": "Filesystem modification date; never playback history.",
+      "preferred": "date de modification du fichier / dernière lecture"
+    },
+    "install": {
+      "sourceTerms": [
+        "install",
+        "installed"
+      ],
+      "meaning": "Copy verified book audio onto connected pen.",
+      "preferred": "installer / transférer sur le stylet"
+    }
+  }
+}

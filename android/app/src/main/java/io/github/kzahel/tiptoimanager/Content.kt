@@ -44,7 +44,7 @@ object Catalog {
             } else field.append(c)
             i++
         }
-        require(!quoted) { "The catalog contains an incomplete quoted field." }
+        require(!quoted) { t(R.string.error_the_catalog_contains_an_incomplete_quoted_field) }
         if (field.isNotEmpty() || row.isNotEmpty()) {
             row.add(field.toString().trimEnd('\r')); rows.add(row)
         }
@@ -71,10 +71,10 @@ data class GmeResult(val id: Int, val size: Long, val sha256: String)
 
 object Gme {
     fun productId(header: ByteArray): Int {
-        require(header.size >= 24) { "GME header is incomplete." }
-        require(word(header, 8) == 0x238bL) { "Not a recognized GME file." }
+        require(header.size >= 24) { t(R.string.error_gme_header_is_incomplete) }
+        require(word(header, 8) == 0x238bL) { t(R.string.error_not_a_recognized_gme_file) }
         val id = word(header, 20)
-        require(id in 0..Int.MAX_VALUE.toLong()) { "Unsupported product ID." }
+        require(id in 0..Int.MAX_VALUE.toLong()) { t(R.string.error_unsupported_product_id) }
         return id.toInt()
     }
 
@@ -101,16 +101,16 @@ object Gme {
             }
             size += count
             digest.update(buffer, 0, count)
-            require(expectedSize == null || size <= expectedSize) { "File is larger than advertised." }
+            require(expectedSize == null || size <= expectedSize) { t(R.string.error_file_is_larger_than_advertised) }
             progress(size)
         }
-        require(size >= 28) { "GME file is incomplete." }
+        require(size >= 28) { t(R.string.error_gme_file_is_incomplete) }
         val id = productId(header)
-        require(expectedSize == null || expectedSize == size) { "File size does not match the catalog." }
-        require(expectedId == null || expectedId == id) { "Product ID does not match the catalog." }
+        require(expectedSize == null || expectedSize == size) { t(R.string.error_file_size_does_not_match_the_catalog) }
+        require(expectedId == null || expectedId == id) { t(R.string.error_product_id_does_not_match_the_catalog) }
         val orderedTail = ByteArray(4) { tail[((size - 4 + it) % 4).toInt()] }
         val actual = (sum - orderedTail.sumOf { it.toLong() and 255 }) and 0xffffffffL
-        require(word(orderedTail, 0) == actual) { "GME checksum failed; file may be incomplete or corrupt." }
+        require(word(orderedTail, 0) == actual) { t(R.string.error_gme_checksum_failed_file_may_be_incomplete_or_corrupt) }
         return GmeResult(id, size, digest.digest().joinToString("") { "%02x".format(it.toInt() and 255) })
     }
 }
@@ -119,7 +119,7 @@ object Downloads {
     fun fetch(url: String, destination: File, expectedSize: Long? = null, progress: (Long) -> Unit = {}) {
         var current = url
         repeat(6) {
-            require(Catalog.allowedUrl(current)) { "Download source must be the Ravensburger HTTPS CDN." }
+            require(Catalog.allowedUrl(current)) { t(R.string.error_download_source_must_be_the_ravensburger_https_cdn) }
             val connection = URI(current).toURL().openConnection() as HttpsURLConnection
             connection.connectTimeout = 20_000
             connection.readTimeout = 30_000
@@ -127,10 +127,10 @@ object Downloads {
             try {
                 val code = connection.responseCode
                 if (code in listOf(301, 302, 303, 307, 308)) {
-                    val location = connection.getHeaderField("Location") ?: error("Redirect has no destination.")
+                    val location = connection.getHeaderField("Location") ?: error(t(R.string.error_redirect_has_no_destination))
                     current = URI(current).resolve(location).toString()
                 } else {
-                    check(code == 200) { "The download server returned HTTP $code." }
+                    check(code == 200) { t(R.string.error_the_download_server_returned_http_1_d, code) }
                     val limit = expectedSize ?: 5_000_000L
                     connection.inputStream.use { input ->
                         destination.outputStream().buffered().use { output ->
@@ -140,17 +140,17 @@ object Downloads {
                                 val n = input.read(buffer)
                                 if (n < 0) break
                                 total += n
-                                check(total <= limit) { "Download exceeded the expected size." }
+                                check(total <= limit) { t(R.string.error_download_exceeded_the_expected_size) }
                                 output.write(buffer, 0, n)
                                 progress(total)
                             }
-                            check(expectedSize == null || total == expectedSize) { "Download ended before all bytes arrived." }
+                            check(expectedSize == null || total == expectedSize) { t(R.string.error_download_ended_before_all_bytes_arrived) }
                         }
                     }
                     return
                 }
             } finally { connection.disconnect() }
         }
-        error("Too many download redirects.")
+        error(t(R.string.error_too_many_download_redirects))
     }
 }

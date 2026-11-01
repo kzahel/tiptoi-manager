@@ -42,7 +42,7 @@ object PublisherUrls {
 object BookMetadataParser {
     fun parseCatalog(json: String): List<BookInfo> {
         val products = JSONObject(json).getJSONArray("products")
-        require(products.length() in 1..10_000) { "Publisher catalog has an unexpected size." }
+        require(products.length() in 1..10_000) { t(R.string.error_publisher_catalog_has_an_unexpected_size) }
         return products.objects().mapNotNull { product ->
             val article = product.text("id")?.takeIf { it.matches(Regex("[0-9]{1,8}")) } ?: return@mapNotNull null
             val title = plain(product.text("name")).takeIf { it.isNotBlank() } ?: return@mapNotNull null
@@ -71,7 +71,7 @@ object BookMetadataParser {
         val product = document.select("script[type=application/ld+json]").mapNotNull { script ->
             runCatching { JSONObject(script.data()) }.getOrNull()
         }.firstOrNull { it.optString("@type") == "Product" && it.optString("mpn") == article }
-        require(product != null) { "The publisher page did not match this edition." }
+        require(product != null) { t(R.string.error_the_publisher_page_did_not_match_this_edition) }
         fun field(label: String): String? = document.getElementsByTag("div")
             .firstOrNull { it.ownText().trim().removeSuffix(":").equals(label, true) }?.nextElementSibling()?.text()
         val isbn = (product.text("isbn") ?: field("ISBN"))?.takeIf(::validIsbn)
@@ -97,7 +97,7 @@ object PublisherHttp {
             form: String? = null): ByteArray {
         var current = url
         repeat(5) {
-            require(allowed(current)) { "Unexpected publisher address." }
+            require(allowed(current)) { t(R.string.error_unexpected_publisher_address) }
             val connection = URI(current).toURL().openConnection() as HttpsURLConnection
             connection.instanceFollowRedirects = false
             connection.connectTimeout = 15_000; connection.readTimeout = 20_000
@@ -111,18 +111,18 @@ object PublisherHttp {
                 }
                 val code = connection.responseCode
                 if (code in listOf(301, 302, 303, 307, 308)) {
-                    check(authorization == null && form == null) { "Publisher authentication redirected unexpectedly." }
-                    val next = connection.getHeaderField("Location") ?: error("Missing redirect address.")
+                    check(authorization == null && form == null) { t(R.string.error_publisher_authentication_redirected_unexpectedly) }
+                    val next = connection.getHeaderField("Location") ?: error(t(R.string.error_missing_redirect_address))
                     current = URI(current).resolve(next).toString()
                 } else {
-                    check(code == 200) { "Publisher data unavailable (HTTP $code)." }
+                    check(code == 200) { t(R.string.error_publisher_data_unavailable_http_1_d, code) }
                     val output = ByteArrayOutputStream()
                     connection.inputStream.use { input ->
                         val buffer = ByteArray(16 * 1024)
                         while (true) {
                             val n = input.read(buffer)
                             if (n < 0) break
-                            check(output.size() + n <= limit) { "Publisher response was too large." }
+                            check(output.size() + n <= limit) { t(R.string.error_publisher_response_was_too_large) }
                             output.write(buffer, 0, n)
                         }
                     }
@@ -130,7 +130,7 @@ object PublisherHttp {
                 }
             } finally { connection.disconnect() }
         }
-        error("Too many publisher redirects.")
+        error(t(R.string.error_too_many_publisher_redirects))
     }
 }
 
@@ -154,15 +154,15 @@ class BookMetadataStore(private val directory: File, private val clientId: Strin
     }
 
     fun refresh() {
-        check(clientId.isNotBlank() && clientSecret.isNotBlank()) { "This build has no publisher catalog configuration." }
+        check(clientId.isNotBlank() && clientSecret.isNotBlank()) { t(R.string.error_this_build_has_no_publisher_catalog_configuration) }
         val basic = Base64.getEncoder().encodeToString("$clientId:$clientSecret".toByteArray(Charsets.UTF_8))
         val response = PublisherHttp.get(PublisherUrls.TOKEN, 64_000, { it == PublisherUrls.TOKEN },
             "Basic $basic", "grant_type=client_credentials")
         val token = JSONObject(response.toString(Charsets.UTF_8)).getString("access_token")
-        check(token.isNotBlank()) { "Publisher catalog authorization was unavailable." }
+        check(token.isNotBlank()) { t(R.string.error_publisher_catalog_authorization_was_unavailable) }
         val data = PublisherHttp.get(PublisherUrls.CATALOG, 20_000_000, { it == PublisherUrls.CATALOG }, "Bearer $token")
         val parsed = BookMetadataParser.parseCatalog(data.toString(Charsets.UTF_8))
-        check(parsed.isNotEmpty()) { "Publisher catalog contained no matching content." }
+        check(parsed.isNotEmpty()) { t(R.string.error_publisher_catalog_contained_no_matching_content) }
         atomicWrite(catalogFile, data)
         books = parsed; attemptedPages.clear()
     }
@@ -188,6 +188,6 @@ internal fun atomicWrite(destination: File, bytes: ByteArray) {
     val temporary = File(destination.parentFile, destination.name + ".part")
     try {
         temporary.outputStream().use { it.write(bytes); it.fd.sync() }
-        check(temporary.renameTo(destination)) { "Could not save downloaded details." }
+        check(temporary.renameTo(destination)) { t(R.string.error_could_not_save_downloaded_details) }
     } finally { temporary.delete() }
 }

@@ -146,3 +146,25 @@ owner's second physical pen, physical cable-swap timing, recognition across a
 real firmware/language update, cold-start while disconnected, batch interruption
 recovery and simultaneous USB connections remain separate acceptance. Synthetic
 profiles are not evidence of compatibility with a second physical pen model.
+
+## Pen Library public-release preparation — 2026-11-01
+
+- English source plus 401 German and 401 French resources pass coverage,
+  positional-format, plural-category and protected-literal checks. Translation
+  tooling's 15 regression tests pass. This campaign is single-session author
+  checked; independent translation review is not claimed.
+- All 26 Kotlin unit tests and debug/release Android lint pass. Signed release
+  APK/AAB build successfully. Hardware transport behavior remains subject to
+  the physical acceptance above; a signed build is not proof of playback.
+- A dedicated Android 15 emulator rendered the actual production app in all
+  three languages. Four store screenshots per locale cover pen profiles,
+  connected-pen detail, installed books and book detail. Only visibly labeled
+  original sample data and original sample cover vectors appear in those media.
+- Opt-in `demoReadOnly=true` instrumentation passed on the emulator: two sample
+  profiles/three sample books, navigation, attempts at cache deletion, changing
+  retention, renaming, selection edits, download/install/sync all blocked;
+  original profile bytes, local audio fixture and previous selection preserved.
+  The disposable audio marker was removed afterward. No physical pen writes.
+- Publisher-page parsing deliberately retains German HTML field names as
+  protocol data; they are not localized. Saved file-read problems use a stable
+  code and display localized text rather than persisting translated messages.

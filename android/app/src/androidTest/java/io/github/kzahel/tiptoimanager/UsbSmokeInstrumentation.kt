@@ -20,6 +20,50 @@ class UsbSmokeInstrumentation : Instrumentation() {
         try {
             val app = targetContext.applicationContext as ManagerApp
             waitIdle(app)
+            if (arguments.getString("demoReadOnly") == "true") {
+                val selection = app.selectedProfileId
+                val profileFile = java.io.File(app.filesDir, "pens.json")
+                val before = profileFile.takeIf { it.exists() }?.readBytes()?.toList()
+                val marker = java.io.File(app.downloads, ".demo-write-guard-fixture")
+                check(!marker.exists())
+                marker.writeText("Disposable demo guard fixture")
+                try {
+                    runOnMainSync { app.setDemo(true) }
+                    check(app.knownProfiles.size == 2 && app.catalog.size == 3)
+                    check(app.book(app.catalog.first().filename, app.catalog.first().id) != null)
+                    val retention = app.audioRetention
+                    val previousTransfer = app.transfer
+                    val operations: List<() -> Unit> = listOf(
+                        { app.updateAudioRetention(if (retention == AudioRetention.KEEP) AudioRetention.TRANSFER_ONLY else AudioRetention.KEEP) },
+                        { app.clearPhoneAudio(false) }, { app.clearPhoneAudio(true) },
+                        { app.renameProfile(app.knownProfiles.first().id, "Must not persist") },
+                        { app.selectContent(app.catalog.first(), null, true) },
+                        { app.download(app.catalog.first()) },
+                        { app.install(app.catalog.first()) },
+                        { app.applySelection(app.plan()!!) }
+                    )
+                    operations.forEach { action ->
+                        runOnMainSync { action() }
+                        check(!app.busy && app.failure && app.status == t(R.string.ui_demo_readonly))
+                        check(app.transfer == previousTransfer)
+                        check(app.audioRetention == retention)
+                        check(marker.readText() == "Disposable demo guard fixture")
+                        check(profileFile.takeIf { it.exists() }?.readBytes()?.toList() == before)
+                    }
+                    runOnMainSync { app.selectProfile(app.knownProfiles.last().id) }
+                    runOnMainSync { app.setDemo(false) }
+                    check(app.selectedProfileId == selection)
+                    check(profileFile.takeIf { it.exists() }?.readBytes()?.toList() == before)
+                    results.putBoolean("demoMutationsBlocked", true)
+                    results.putBoolean("realSelectionAndProfilesPreserved", true)
+                    results.putString("stream", "Public demo navigation and write/cache guards passed; no pen writes.\n")
+                } finally {
+                    runOnMainSync { app.setDemo(false) }
+                    check(marker.delete())
+                }
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             arguments.getString("metadataProductId")?.toInt()?.let { id ->
                 val offline = arguments.getString("metadataCachedOnly") == "true"
                 if (!offline) operation(app) { app.refreshCatalog() }

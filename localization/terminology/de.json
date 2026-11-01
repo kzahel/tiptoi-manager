@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "locale": "de",
+  "register": "Knappe, natürliche deutsche Bedienoberfläche. Einheitlich informelles du; Schaltflächen im Infinitiv. Pen Library, tiptoi, Ravensburger, USB, HTTP, ISBN, SHA-256 und Dateinamen unverändert lassen.",
+  "terms": {
+    "pen": {
+      "sourceTerms": [
+        "pen",
+        "pens"
+      ],
+      "meaning": "The physical reading pen, never a drawing tool.",
+      "preferred": "Stift"
+    },
+    "cache": {
+      "sourceTerms": [
+        "cache",
+        "download",
+        "downloads"
+      ],
+      "meaning": "Phone copies for reuse, separate from pen content and removal backups.",
+      "preferred": "Downloads / auf dem Smartphone gespeicherte Dateien"
+    },
+    "backup": {
+      "sourceTerms": [
+        "backup",
+        "backups",
+        "restore"
+      ],
+      "meaning": "Verified phone copy made before explicit removal from pen; restore is non-overwriting.",
+      "preferred": "Sicherung / wiederherstellen"
+    },
+    "selection": {
+      "sourceTerms": [
+        "selection",
+        "collection",
+        "family"
+      ],
+      "meaning": "An additive shared/per-pen selection; no automatic deletion.",
+      "preferred": "Buchauswahl / gemeinsame Auswahl"
+    },
+    "filedate": {
+      "sourceTerms": [
+        "file date",
+        "file modified",
+        "last played"
+      ],
+      "meaning": "Filesystem modification date; never playback history.",
+      "preferred": "Änderungsdatum der Datei / zuletzt abgespielt"
+    },
+    "install": {
+      "sourceTerms": [
+        "install",
+        "installed"
+      ],
+      "meaning": "Copy verified book audio onto connected pen.",
+      "preferred": "installieren / auf den Stift übertragen"
+    }
+  }
+}

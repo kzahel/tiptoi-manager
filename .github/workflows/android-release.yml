@@ -1,0 +1,119 @@
+name: Android release candidate
+on:
+  workflow_dispatch:
+    inputs:
+      version_code:
+        description: 'Unused, increasing Google Play version code'
+        required: true
+        default: '101'
+permissions:
+  contents: read
+concurrency:
+  group: android-release
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+      - name: Check localization
+        run: |
+          python3 scripts/i18n.py check
+          python3 -m unittest discover -s scripts -p 'test_localization*.py'
+      - name: Prepare dedicated upload key and catalog registration
+        env:
+          KEYSTORE_BASE64: ${{ secrets.PLAY_UPLOAD_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.PLAY_UPLOAD_STORE_PASSWORD }}
+          CATALOG_CLIENT_ID: ${{ secrets.CATALOG_CLIENT_ID }}
+          CATALOG_CLIENT_SECRET: ${{ secrets.CATALOG_CLIENT_SECRET }}
+        run: |
+          python3 - <<'PY'
+          import base64, os
+          from pathlib import Path
+          folder = Path(os.environ['RUNNER_TEMP']) / 'pen-library-release'
+          folder.mkdir(mode=0o700)
+          for name, data in [('upload.jks', base64.b64decode(os.environ['KEYSTORE_BASE64'], validate=True)), ('password.secret', os.environ['STORE_PASSWORD'].encode())]:
+              assert data, 'Release signing configuration is missing'
+              path = folder / name
+              path.write_bytes(data)
+              path.chmod(0o600)
+          client_id, client_secret = os.environ['CATALOG_CLIENT_ID'], os.environ['CATALOG_CLIENT_SECRET']
+          assert client_id and client_secret and not any(c in client_id + client_secret for c in '\r\n'), 'Catalog configuration missing or invalid'
+          config = folder / 'catalog.properties'
+          config.write_text('client.id=' + client_id + '\nclient.secret=' + client_secret + '\n')
+          config.chmod(0o600)
+          with open(os.environ['GITHUB_ENV'], 'a') as env:
+              env.write(f'PEN_LIBRARY_RELEASE_SIGNING_DIR={folder}\nTIPTOI_CATALOG_CLIENT_FILE={config}\n')
+          PY
+      - name: Test, lint, build signed production APK and AAB
+        env:
+          TIPTOI_VERSION_CODE: ${{ inputs.version_code }}
+        run: |
+          python3 - <<'PY'
+          import os
+          value = os.environ['TIPTOI_VERSION_CODE']
+          assert value.isdecimal() and 1 <= int(value) <= 2100000000, 'Invalid version code'
+          PY
+          android/gradlew -p android :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:bundleRelease --console=plain
+          jarsigner -verify android/app/build/outputs/bundle/release/app-release.aab
+      - name: Prepare immutable candidate receipt
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          VERSION_CODE: ${{ inputs.version_code }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          mkdir candidate
+          cp android/app/build/outputs/bundle/release/app-release.aab candidate/pen-library.aab
+          cp android/app/build/outputs/apk/release/app-release.apk candidate/pen-library.apk
+          python3 - <<'PY'
+          import hashlib, json, os, re
+          from pathlib import Path
+          folder = Path('candidate')
+          files = {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.iterdir()}
+          version = re.search(r'versionName = "([^"]+)"', Path('android/app/build.gradle.kts').read_text()).group(1)
+          (folder/'source.json').write_text(json.dumps({'package':'io.github.kzahel.tiptoimanager','commit':os.environ['SOURCE_SHA'],'run':os.environ['RUN_URL'],'versionName':version,'versionCode':int(os.environ['VERSION_CODE']),'sha256':files},indent=2)+'\n')
+          (folder/'SHA256SUMS').write_text(''.join(f'{value}  {name}\n' for name,value in sorted(files.items())))
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: pen-library-release
+          path: candidate/*
+          retention-days: 90
+      - name: Clean signing material
+        if: always()
+        run: rm -rf "${RUNNER_TEMP}/pen-library-release"
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: pen-library-release
+          path: candidate
+      - name: Publish source-bound release candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('candidate/source.json').read_text())
+          Path('notes.md').write_text('Pen Library '+r['versionName']+' release candidate.\n\nEnglish, German and French interface. USB pen management, verified transfers and removal backups, local phone storage controls and multiple pen profiles.\n\nRequires compatible USB mass storage and a data cable/adapter. Catalog audio is currently German. Keep the app open during transfers.\n\nSource: '+r['commit']+'\nCI: '+r['run']+'\n\nIndependent utility, not affiliated with Ravensburger. GitHub availability does not imply Google Play approval.\n')
+          PY
+          VERSION=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["versionName"])')
+          SOURCE=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["commit"])')
+          CODE=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["versionCode"])')
+          gh release create "v${VERSION}-rc${CODE}" candidate/* --target "$SOURCE" --title "Pen Library ${VERSION} (candidate ${CODE})" --prerelease --notes-file notes.md

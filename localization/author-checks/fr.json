@@ -1,0 +1,2013 @@
+{
+  "author": "codex/pen-library-release-2026-11-01",
+  "locale": "fr",
+  "resources": {
+    "app_title": {
+      "sourceHash": "38664ca3138365a8c779fa096743fd9d5797b62aaa5f2d62fe5df7f44aca2681",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "ef0656b37da4371c10b9c094d5efadd8145a9ee31e5b4af45d8ee94deedeafff"
+    },
+    "catalog_items": {
+      "sourceHash": "1a0af910844bc178ccb7a882ece92c713730a8e4e9f6bc35e69ec012622d97d5",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d9b11ece4e3b25e574f00589ef252f38bbc1c334e2e1107bd7d3e5ca79194ecd"
+    },
+    "demo_description": {
+      "sourceHash": "04851b3923a1a4e53d114c53bd5a4f74046fd3c846c4850560f41fc425570d5d",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "f75f168be4270b60006d517b85d318f2300f84b9b082236f72c9a9a77887c10a"
+    },
+    "demo_forest": {
+      "sourceHash": "0de99be92306556fc65cd86636e2204d091c2f3f83a333161add69258282a01e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "93b1077f9718ed91cfe83aba3337cc1b6ae4b8b60f51b9aa19146723c571d434"
+    },
+    "demo_home": {
+      "sourceHash": "ecd71ab438d219bac4aef33e01f5577834024f822ab1b49a5cf7ab3573f6e4ab",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "5942f28c46a9719566258919bb745e99c2bbb1b7c56214430f5fad936e208538"
+    },
+    "demo_music": {
+      "sourceHash": "485624f9724472b9697f5a6f2d561b8501c1efad4772b515392009516825077b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "cbc832818f058d0152bea3a17b021eb5a3f2d42f76606f2bf5ac836f9f902088"
+    },
+    "demo_series": {
+      "sourceHash": "f0f3b1eacc616a84c869cda5034b3dd3a9a577f4ec1fa946d5b9003556483656",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "a1e405d3d01605e911930af4a80417901b30f5c1cb58da500850c7042ffd5159"
+    },
+    "demo_space": {
+      "sourceHash": "dab8e16a245ba90975aa8d83dd699f238fbf61ab2284e5348c69092c77aa4c50",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "770161ebfb35b471d05225a62e1fff40acb900b14453ced307c685e8d123f6ce"
+    },
+    "demo_travel": {
+      "sourceHash": "478fde8200439e57ba8a099e76238141d182e9d9306efbadec5514a185c52501",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "7a65ddbcd75840494217c5368064dcfb9797628a1538d7ff26599f04b8ba4cc0"
+    },
+    "error_backup_verification_failed_nothing_was_removed": {
+      "sourceHash": "b6019c7926c984414c07ee8d33c58b1be2a5bcc2ed394897f86e1a1cb522b53b",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "52cd82bf7c1ceaf3c99ec6770a6deeee70ed592b49c4ea3effc5c1b85fd56989"
+    },
+    "error_choose_the_pen_s_top_level_folder_its_tiptoi_log_identity_file_is_mi": {
+      "sourceHash": "96d88b9fbe467653dc5f81c9748573e5b06a722a2060920649e09ba9a745b09f",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "0e1fd7a6c92887e2c6812d852982f7cffc9fa4998863f3a6a4e6384c9421dd56"
+    },
+    "error_connect_1_s_and_scan_it_before_writing": {
+      "sourceHash": "79bda984239e253afc9656041ff7490da8b70828d00421a22d1e2ed4e5df74d1",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "673ac36f41d0b0b869a2c484e8f08ca0a5373576e25f5daa616a17d283b58f63"
+    },
+    "error_could_not_create_a_backup_folder": {
+      "sourceHash": "eff03070bc7334ce9786d562bd88673d3f9cc6b4c73fe3ccec706d01c69fb428",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "45ccac3489139beb36a89559ebcce314b5e67ac7280cc1f1b60f97189b2ed593"
+    },
+    "error_could_not_delete_the_phone_download": {
+      "sourceHash": "7ec1c1184fab7d6bc2457a31639edb69ebca8c4bba4539b534af30ffd4a89fdd",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "d3e61df75fc89d591143561172d0e5caec34f591bdd0d2c3fd7cab64940ec88e"
+    },
+    "error_could_not_finalize_the_backup_nothing_was_removed": {
+      "sourceHash": "2d2dc6a9bf213f8ecee30099ea9d955b8d62aad0d827917ada3e6f52821d6ce0",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "f919b5957434b6479f285b13d59a84d08d92484ec96d73e2a8f3d1b17caaf8aa"
+    },
+    "error_could_not_finalize_the_verified_file": {
+      "sourceHash": "4ab6697f4898753b9a7f612e0a86ec4ad44e9b424ea2d9e2ef8850612deb6ed9",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1b99b58ddaf1fbe175f305550885676d79dbe2511cc268b1c882bf1621c6d7b9"
+    },
+    "error_could_not_list_phone_audio_files": {
+      "sourceHash": "2f4a53a5293b5f63e0d252d0768e0f52fcd46c7593b1bfb3228fddec807f4df9",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "17f36a92028cff25daea40631f7b515383d6a5c13a606c24d8b5881685edc6b9"
+    },
+    "error_could_not_open_the_temporary_file": {
+      "sourceHash": "eb500910f73a29490ddd313e86327fc4504848e4344f2a0f67ce56aeef7aaa6e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d7f59e4c6ffd45702f0847fb0f854cc3848c331aa8abfa284423b2503de9f823"
+    },
+    "error_could_not_read_the_pen_identity": {
+      "sourceHash": "fdd09d3d22dc7d5f86672a3eb577b398598b86f80c4b207af5dfb4433fa5b342",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "60879c521374a0195c33b4512d988346e262485b5039f47bfb0267a05e3c839c"
+    },
+    "error_could_not_read_the_selected_file_nothing_was_removed": {
+      "sourceHash": "256d10ae358561ec9c10fd7273ace34c18cce5e76f5a92282a9061f11363948e",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "bf53f5abba21990a03b37a6b64c98891bb0e66445cf852dc73cc627e2b4e4c22"
+    },
+    "error_could_not_read_this_folder": {
+      "sourceHash": "d6a2983b6ad4d4aecffcdfad3549e4cecf8c33709868c3bf82cba045a3792b6f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "be9d96d329e6833a0150c0d23b216869bda17e2f6f737424cbfb68f708fc1349"
+    },
+    "error_could_not_recheck_the_file_the_backup_is_safe": {
+      "sourceHash": "e9a4bd218a09e5662a49a95cc915a6dd076f96e30308d29d6f1dadb8f2986fac",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "053921eb41d514a01205414a12da24279023c22dcaed37aa0f5a8230b369387e"
+    },
+    "error_could_not_save_downloaded_details": {
+      "sourceHash": "019cb28a8452dea012a3588288fe8b442f31f1807c70e5e9387805f84ca26f93",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "48f4718401d8a0af3f60586ff6203f30a20999a6c57688bbe5e4298ba612c5ca"
+    },
+    "error_could_not_save_the_catalog": {
+      "sourceHash": "dd7fb1e1f56573c6f4c87f797dad4651dd2c2c360964ffb6c80b5edba8179d17",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "07f6fa2563ce8a26c838a6f71defad301150bb71cf650fb51e52e2ef34ccc1fc"
+    },
+    "error_could_not_save_the_verified_download": {
+      "sourceHash": "78cbbb9b3c0a451cfccb80e395586e772b30c97679a56fc59e4df3d0da786a1f",
+      "terminologyHash": "db794a907dbadf95d0d75b16ff2157293ecdba7f9c08fddfa69477d993840a67",
+      "translationHash": "9fa4c677ef6df857bb8a4dc8fca864110c02505efc64de78f18e1490d34b0adb"
+    },
+    "error_could_not_verify_the_transferred_file": {
+      "sourceHash": "54daf15d62f7dc981e22f3ae60d426c4fc107f35c607d7e269fad2afb55f1bbb",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "be01b0dbd6d6b8d050f73c3bfdcf00e2a884f0c8c4b8c9e72d0e6ca977fbb940"
+    },
+    "error_disconnect_this_pen_before_forgetting_its_profile": {
+      "sourceHash": "fa6de8d1b46d12711c23bfa20c1cf8b57379692859f0b42d5d8918f5652584b2",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "fdef329bb1295122db97c22619faccb3cdc090396ec0049002bb6d9c8cc62c8b"
+    },
+    "error_download_ended_before_all_bytes_arrived": {
+      "sourceHash": "373fa7d939a624cf3f0a8d8559cea66b53843221d302c4ead4cfcdb2d5bccffc",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "c6bbbbc91907f0e28bacb54aef228a7120a0e5d4bbbd18113edd1de928b5d239"
+    },
+    "error_download_exceeded_the_expected_size": {
+      "sourceHash": "a490380b1bd60358686589122d61e4aad8c7e063cb24a7be6cafba1db7cda8fb",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "770fad27520854da908d77ff6c9ad08cda6f572888660bd4dd7bf5d1713e3b53"
+    },
+    "error_download_source_must_be_the_ravensburger_https_cdn": {
+      "sourceHash": "f32bc49db58dff82be6e5632e03700ea86a98cee29ed23316a9b693022417867",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "f68ae8e6f269d82bdf079ca7cf45f1c39c3554d3b251612226a5d9380f368bf2"
+    },
+    "error_file_cannot_be_opened": {
+      "sourceHash": "6ffe365831abdf8e1b0c811fdf0d56bab94affd14ca550987c0f42ed5407d973",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "7f67034d893898cb1b0c956b053f246cfd4ee005775ff8828da1f1d34ce74c9c"
+    },
+    "error_file_is_larger_than_advertised": {
+      "sourceHash": "8c1e784f4299f76e91175b72353d19d44200d078b7c4d2f825dbe380db9bbb8e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6114f37c670f60400f8d393e76fdccc0ea0f0fa7230ffaa3661b3965e3b5e102"
+    },
+    "error_file_size_does_not_match_the_catalog": {
+      "sourceHash": "1414b6c532814b596a02fb5ca4095842ae13f9d80fe5b71be4173e112e1cc18e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "45a7fd6dec8d45516d12c561038772915ab43e1948eade067c4ad214f3214f80"
+    },
+    "error_gme_checksum_failed_file_may_be_incomplete_or_corrupt": {
+      "sourceHash": "83170ad99d926024f0437610233e5451d2955e391882c33b9e6ee7da318f86fd",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "7c46c9c6cac9672fd12ac69c4e3208c178777266a295abdeb582a79d7a647cdd"
+    },
+    "error_gme_file_is_incomplete": {
+      "sourceHash": "230118104c4dc9be92f481c5fe61a84ee439439e1e5c487e11ab1a7be56a365b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "f03b04b9b834994c413a856c48250002e3c7f0c3954ee28edc7acbe1027422ac"
+    },
+    "error_gme_header_is_incomplete": {
+      "sourceHash": "eb99157e7ad51e7275bed00ee631b38f0c4ad30e4d4c2ff95d34deab5fb9c05c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6f2fa01a9bc9db3abc9cfe4ef9e4230dac079b8599a990f6442a8a6ec07ef596"
+    },
+    "error_load_pen_profiles_successfully_before_changing_them": {
+      "sourceHash": "9414725258066abe5b1bc80cf227aa73d0e673fc419bd0989433c8953ec7a4f9",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "6a4a620ba944d9acd337674720360a77ddb24c27001a16deb4908d93717610dd"
+    },
+    "error_missing_redirect_address": {
+      "sourceHash": "bd95a422cc899d9531350f6d53d3877caf6ff9b254196931e00e547874a40524",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d9b208d8ab7ec0ef9f03ae6642a24ac7822ceb0dbb47bd1fa2db2b33aa935961"
+    },
+    "error_no_file_descriptor_available": {
+      "sourceHash": "5e5ec67a849bdc78ca01a9fe175c6fbfd1ff287df90032ff7ad1a2c0825619f3",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "982c773274d2d490474025baec2187cdc18171bbcb061bddb80483ebdf9852bf"
+    },
+    "error_no_pen_found_in_the_granted_usb_folders_connect_a_pen_or_choose_its": {
+      "sourceHash": "056aa01cce14e1034938ab8bf8f5498a13b92cea78b0cb75963e11ec8d898893",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "6d45deffe741520cab42d99929582a11ad4de87769038a59a98d507227052835"
+    },
+    "error_not_a_recognized_gme_file": {
+      "sourceHash": "7d663e41cf321d07597e7f6bf60cd1b3362b9d24769b003c34aed2213f120e5b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1fc55b658ad844786100660696ac16cde98772123514d5e93394969cc57b62af"
+    },
+    "error_pen_profile_not_found": {
+      "sourceHash": "7b42b2deabf51a95488204e48a812ff14b39abc1b73616eb523d62efbd83a8c0",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "801574d152cd1f64d10d56dfb64f90ad16a8d0c8f0e96eba34cb5b028acf4439"
+    },
+    "error_product_id_does_not_match_the_catalog": {
+      "sourceHash": "40ef114a987b6c26692858411d83e617d5fd7b400274049487517929cd4c3b3d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "02f56f4cde7c269ffcb4626b7dfbd89598c6f5738caee2101303c7475c97d94e"
+    },
+    "error_publisher_authentication_redirected_unexpectedly": {
+      "sourceHash": "5be1e172573eba945d615da25a56a7ac49515872734c6e98d31514e9a5bd647d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8cd71d2a447e344183c0e7fbf3d16804e3a0452fb909511060d008d9fec5020d"
+    },
+    "error_publisher_catalog_authorization_was_unavailable": {
+      "sourceHash": "42f7175f7d7a40739251695753ec74adf40b3ab373e8d3cead96430c1dc5dde2",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "21a7164ee27e61a31e061f34a7180f59dd37b4f6baa11c6a7c0db8d5aaefa75f"
+    },
+    "error_publisher_catalog_contained_no_matching_content": {
+      "sourceHash": "9ca5c3570b0d57239a2f215abe1fd5b2ea925d3cf2b0bddc7664c668c88da37c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5be53f95489c1c6a0c67c2f88437bf5416d4f2f56e80048f646f78aca6900247"
+    },
+    "error_publisher_catalog_has_an_unexpected_size": {
+      "sourceHash": "423c81336fadc9b0967406a6f3c4b96f549544c5271015c3a2bb6ba28bd9accf",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8220be2f449ed9171e76e00540175bb21b5b3d13f0a1c3d002bc6b137950fd93"
+    },
+    "error_publisher_data_unavailable_http_1_d": {
+      "sourceHash": "260ff0d9abe9f0b3bf0a250c23ac1e30ef329b355d04afb3992d9b8ee6a89935",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "19a9d2423753d531c8417cbb6956dfb8d5be7f5bb07a80646766765661aa4a55"
+    },
+    "error_publisher_response_was_too_large": {
+      "sourceHash": "559020a48c46933dbfb9d8ea90073c4ddc61510db0f932c1bcd1d2d1def2ea80",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ef1278b95b387cbf5d32c97583920ca3520e9ce8b4f8beb9ed6a148843be53d7"
+    },
+    "error_read_back_hash_differs_from_the_phone_copy": {
+      "sourceHash": "5bf94ba51071608b032d3f634961226fa228d02818ff4d26c37373e3909325d6",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c69bf5023e22d77a6bf95d47084d403cbf827640031254a25f016a7ba0e59567"
+    },
+    "error_redirect_has_no_destination": {
+      "sourceHash": "450bde8e7baf8f02dad460037bc521b7fd0855baeb65887e4ecee559df285f61",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1a6e18565123e73462ba7c141c857f9aaf9a2b0db94cd60648d5fb1c381d5eef"
+    },
+    "error_removal_was_not_confirmed_the_phone_backup_is_safe_scan_again": {
+      "sourceHash": "d52751c1838239b051b04b9360d113d13e84b25655465adecd0b11eee5b2a12d",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "ed70891c5a0910b143b96da1acc7bc179b7275a2edb608f8f45f858bc89456c3"
+    },
+    "error_resolve_conflicting_filenames_before_applying_this_selection": {
+      "sourceHash": "af38e2e4532a7c2456ce0fa74ad6f527244ebd84c27402bd171c71208ff9a062",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "60ad94c5bd482a9f968f7f97978afd0cf2202127ad6c69f6b17f3558b3f80a3d"
+    },
+    "error_select_a_file_from_the_scanned_pen_first": {
+      "sourceHash": "33f280048562e6c9ae03664b35e12addd8a32988855fe956684d523cb8d7c222",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "5d7b9afb4a14a09dfb4f0da1f3da80c8a8854fc14a091cbe5a7dfb9ee051fc43"
+    },
+    "error_select_a_pen_first": {
+      "sourceHash": "de993d6430905aa982b648cf3fc6857c89dacdc4f73a1fcf38ff259ed0034b4e",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "3f5f326c02b72302a9c57568ded6bd1968b312f9b7c9fe7c77fba3ec4158bca5"
+    },
+    "error_shared_support_files_cannot_be_removed_here": {
+      "sourceHash": "5c002d5b44e6ddfbf68f2b9c9e4b2b21b69dc86ffb5c6d6bbb7392e5260f9cc0",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "9ec34f7c727ac1ea902ce72d4741999057cfc505ec405ad55e1bb795ae8a94bb"
+    },
+    "error_some_phone_audio_could_not_be_deleted_try_again": {
+      "sourceHash": "2e09c388819adc8f697a77e350e75291134f42216a2f89658e25b095729881ed",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "44d4a8000914465559a1be3b6596d953601f3f631e5ea952ee0c949ff9a59b99"
+    },
+    "error_the_catalog_contained_no_supported_content": {
+      "sourceHash": "e2d7e9dda0aace0e03ff26806063ebf927ff3886b0d80beb9a497231e3a89402",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6906f7768b02b4b0a895b4b60949eadfbb75e3e7a3f2ff57960876f871529e3d"
+    },
+    "error_the_catalog_contains_an_incomplete_quoted_field": {
+      "sourceHash": "97b89fa4f6719221ed011d97b6d1cb4c8b523c2f3429bf487c15a5ac97eb70ef",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1746ab337ea6a73a3c11119a2fed306920ab8af6768490fa7443a9d3de1bf156"
+    },
+    "error_the_connected_pen_changed_scan_again": {
+      "sourceHash": "563ac5b5c01e1db5b4a75a657522a5687710904f69a06c233566130d0d6e682f",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "9a827fbe3948bb3d87a1c112f2e34bbb87f5f00f65bb028ca4abe02477ae6ff2"
+    },
+    "error_the_connected_pen_changed_scan_it_again": {
+      "sourceHash": "6d84ef6c268bc021d6fdad04a1a08a77172116226e6ecd6f3f1764e5f53fbc63",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "173e712d994154e8392dc620eca8dac739b11538946053962b2b06073035d10a"
+    },
+    "error_the_destination_appeared_during_transfer_preserving_it": {
+      "sourceHash": "2a532474bcd57a28e150ac240dacf69d1cb1119e34398234cdc7614502f1ab71",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "013194cb49f0c9adab88ee3e83d39418aaf044abf185da9d9c0056b7c7f83b14"
+    },
+    "error_the_download_server_returned_http_1_d": {
+      "sourceHash": "0fb4adcae194cb237303f1442e74335fabf7a3a54b271096e78031baf3e14225",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "0b26f2fc02579c756d652af0f6ab4f2c09c99225c8fa2ae6033a6eec6fb9bef1"
+    },
+    "error_the_file_changed_or_the_copy_ended_early_nothing_was_intentionally_r": {
+      "sourceHash": "82d7fb9457f36b3e5c4dd4b434a734a8b33c958fc64ee8fd49940326c9531e53",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1a7611ae2f59742f002f6b4fe790118f70743ff852c13b8b0807820bcaab8092"
+    },
+    "error_the_file_grew_or_its_size_is_unavailable_rescan_before_trying_again": {
+      "sourceHash": "db8c154e0f2f948f6541a75f6e28d5d85f44a76748c292148b1a79cf012804f7",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "3239dfe7efa42ba8faf8d65220e86b05b9740c2b19f4d4a8a7d4e54b254033be"
+    },
+    "error_the_pen_changed_during_installation": {
+      "sourceHash": "53aeee82812dd670145bd99e09c2bd8ac51a63cb7680386d5afe1ab7933ae3ba",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "36814d2571d98b8fa69d7e1035363209770d983b8bf6739889c8aeb7578e1670"
+    },
+    "error_the_pen_changed_the_backup_is_safe": {
+      "sourceHash": "dd9dafa40d10ad7a9e32a5f7fd44a11576f8ad9cab0639ddab6fb8d94815c1a6",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "d4d67c3403dce8947e7f4ae331014e1b957c32e058beb56d388e989c4c77e105"
+    },
+    "error_the_pen_disconnected": {
+      "sourceHash": "dbd70f39d44566a542f9a974291869efe667a7544e595eb8e8e841645176a2c2",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "ad076d8d5cad4b28062842f8f8a76b06181ae6e6b88a649f2fe527d9c9147bba"
+    },
+    "error_the_pen_does_not_have_enough_free_space": {
+      "sourceHash": "5f262a4e8791c9c5873e80beb3ab25f10a13ca342ae683f1b751eda46cf579f1",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "0cdc79b0a17afab3a81b760b8b1c2b38dc002bc3817c0ad0f18d6840664e78f6"
+    },
+    "error_the_pen_file_changed_during_backup_it_was_not_removed": {
+      "sourceHash": "ff64b43baa831a112e623fb5ecc197cf854d4c58f24a4c93e9012bcfe6dcb697",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "2800b4a85d999de958d26b95785a2b081d67a6f4f82448332c73b70b2c62cb74"
+    },
+    "error_the_pen_inventory_or_selection_changed_review_the_plan_again": {
+      "sourceHash": "4a8c91279bafbbf3dbe5ede74d522882aba3eb76a672c2f06f80d7f8c2fc2f8d",
+      "terminologyHash": "5d8980dd43d9d46d7ae56d372c58046bf26bb12361771871092adde21df20c58",
+      "translationHash": "afc7d2dd9751e9b00c7bae193c0340cc48732896e5785d637428aec0a70c02cc"
+    },
+    "error_the_phone_backup_changed_it_was_not_restored": {
+      "sourceHash": "09e5e018db0c5ff1eba09f7d2fffce3d11a72d7d700c1b30b812c46bf3ed8579",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "1ac096292b170965d3654a138e6bf59a9a0e703371ed607f4a5ed8d4af6d37df"
+    },
+    "error_the_provider_changed_the_final_filename_inspect_the_pen": {
+      "sourceHash": "ef3066a0a5a85c55b086040258e53c4a8cd605a2e1aaffe4e3f91d5b85740f87",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "5acec3b407e94161a8b07546b463124d8343113069dd4f19545d51f162008432"
+    },
+    "error_the_provider_changed_the_temporary_filename": {
+      "sourceHash": "011cbba36e5b06535f5f0ffb14bbfb866a7c6947a913fb658be8ded6992737f6",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "0db343c98cd954c2b6c4d28aa5ce07d7f41fc974f9c2c38ddb25af47c99ccbb9"
+    },
+    "error_the_publisher_page_did_not_match_this_edition": {
+      "sourceHash": "28ac97e11cf77b5f0e28c0f799fdf426ffae3d08f2984e053a346126613d8e90",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "f76f25ed3c44ac29dc923f568f88b77c4f1231bf63e22031ea9c35e076128bbe"
+    },
+    "error_the_selected_books_do_not_fit_free_space_and_review_again": {
+      "sourceHash": "11ee95a1821b3db9e66192de507b0bfa42ff29699ca74939a920f57fccb52f13",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "550dfd6609a3fd8a08e93b677d73f933f7a06d909e0f213609b680f6a2f491d8"
+    },
+    "error_the_selected_pen_changed_review_the_destination_again": {
+      "sourceHash": "dd38c623dc6913405881c9fdd6fe308671d4c6f669a1c2e213d396ef82f22371",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "b90373c03cd1389eb5ab0ef198c428fc1319c506b56a97672727fa91859bd85b"
+    },
+    "error_the_storage_provider_could_not_create_a_file": {
+      "sourceHash": "24eb0f44dedba416fa9d6930e481593977e3d0efb8e80bd2ae74b22319d1faa3",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "a5ba4a537385b73b215a81746dcbeee2aad8b7609a13f907bf236a1177d95ce9"
+    },
+    "error_this_build_has_no_publisher_catalog_configuration": {
+      "sourceHash": "6195a7dacab82306e11acd224bef521f05024b8f09e411801b12275de655b16a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "55688afb18a24e67e64e206f00961221f98ea197ebb9dc6fdbe893447e344cc6"
+    },
+    "error_this_file_changed_since_the_scan_scan_again_before_removing_it": {
+      "sourceHash": "a3157dd72ad3df18cd2024450df9d95f2fcb0edfa42d5f26c2939d1a0170d5ad",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "156aa758393e1eff6e526265109e41809bb7f2c7284f337f9f54ea4b541a4f30"
+    },
+    "error_this_filename_is_already_on_the_pen": {
+      "sourceHash": "04e2cb9118abae52fce421bbbc1bb06c0f6cabdc1b911797ca62b9baff01d28c",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "fa067453b6e496e2873d22fca82a4063d6ef1a5164ed15a91e39de9020bfa143"
+    },
+    "error_this_filename_is_already_on_the_pen_existing_files_are_preserved": {
+      "sourceHash": "a4e68997fa91297e2666c78e6d729acbc18794d13f98fcee3b23c6de191a683e",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "9a79a3093ae2e1ce5c1ab7a7f87fe9ad0f7a9ddc0ef159d562ccf8b5eb56d41b"
+    },
+    "error_this_pen_metadata_format_is_not_supported": {
+      "sourceHash": "d68e5171834d883337ab5ac66279951e8c3e8267b7741ad1c61eddec45f16a92",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "66f9946cb5aeebae75385d8b8673a8577cc4993d0f5ddb467b2a83d2adeba204"
+    },
+    "error_this_pen_profile_no_longer_exists": {
+      "sourceHash": "d2776fc300bfb7726150d3c36e94c8953c5cccb2a28f67e30827740487390f3c",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "a170a2056ad4211369a7a70478fde57a62b3727a0b7dc0621b6c6428ddbafa83"
+    },
+    "error_this_pen_s_identity_format_is_not_supported_by_the_spike": {
+      "sourceHash": "36fc48b6d1f2604c3e7193e2fa4367f7f3bba75f16c986883f7d73ea4b6f78d1",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "f2384730f80e310aaa36d61f7ab6fc7ddcba706cab4aaa40f885a56fff5e673f"
+    },
+    "error_this_pen_s_serial_could_not_be_read_collection_sync_needs_a_recogniz": {
+      "sourceHash": "4da5ace8d837907c0a45b3f1724f4cb3172ca454235fed3706a1800df1f96627",
+      "terminologyHash": "c5e263ce865b9e17db3a6bc8a40e6ffe9fb2b7ddfd22df82d5ad9dbde3d2c600",
+      "translationHash": "cd91c3035fe2a01c03362d1b0c1a403bd15de0bad04df499f92e2d43ab442a0d"
+    },
+    "error_this_storage_provider_cannot_safely_finalize_an_install": {
+      "sourceHash": "c00b6b04a29a64115993e70fd6b790beeb1d14f4246f8f2050ad274f8d30330d",
+      "terminologyHash": "7b9be1b42290dbf2c647df2989bf50a9ffe14b0b9d8682974e9a4f7d4de73ec3",
+      "translationHash": "205f0f9862e3d6685000abc61c17dbb68eaae18accf90ce8c797f7b614577bb1"
+    },
+    "error_too_many_download_redirects": {
+      "sourceHash": "d73299661b491703905d4fcb0f1ece6cb926c117ce91041f8f5f6dfbed1bf46d",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "010a1e2ff734488fba70891b5cbf30b0a83ede35618ce70d60ca3452416cf4eb"
+    },
+    "error_too_many_publisher_redirects": {
+      "sourceHash": "8fbfa6225133c4142b0c1982f91e9b3a672ae62427f6bd56ba65f2bacec12198",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c54ef55157136640e47f000e946b85c585ab52036b63d7d69729a2acb3c0cf84"
+    },
+    "error_transfer_ended_but_the_temporary_phone_file_could_not_be_deleted_cle": {
+      "sourceHash": "ab951eaad2619fbdd635473b97b42bfe776a704329a7461128a177055053490f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "04cb1067b25d5803f0ae8b11f1237e3d6f59a1223394c55baa5b0a435a0a21b2"
+    },
+    "error_transfer_only_is_selected_connect_a_pen_and_choose_download_install": {
+      "sourceHash": "d13449deba9a74c4035cdf4a2c07af28847c3d68faba3b8113aef2fd08e2def1",
+      "terminologyHash": "55a9e789b68e8b7f52565e91551bbc8ab493d80a057ab991ad917b60eb930e51",
+      "translationHash": "0c95629e98b58089abffc9c87c54fa7732b3c23a97d5ec2f815cddd2a7cd3bce"
+    },
+    "error_unexpected_link_in_phone_audio_storage": {
+      "sourceHash": "f653b84c6e18ce9cac6ef7d21ead28348182f4f6770f53a75cd59d81e3ad6995",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "a57f450e2ca6aaa909fe7920a38670b96488db660d3a329dfa9784015c1623be"
+    },
+    "error_unexpected_publisher_address": {
+      "sourceHash": "dcb56435fc3d8e09a69ccc799db2d72c8d4dfb0afe68f6849f777b419babf8ee",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "0710d0b1a3780f22f20c04b280b154fb4d48af592ca04f372483dbc5cc4c3086"
+    },
+    "error_unexpectedly_large_pen_metadata": {
+      "sourceHash": "8a6e0c5f9e1b1e08302645e6f22f85c7312a343ee41f377ab6812e2066f899d3",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "73b631ea5fb304196ecae524e83c6ce02c7fa9c46db4820b1481dca19ba21cb2"
+    },
+    "error_unsupported_pen_profile_format": {
+      "sourceHash": "80ec62a9131f8405dfbc58ed95d9d79d6881667b8b1474614346d266a99a90bc",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "594864b967ac9623101a4b242cf68ea5a14af894dae0e4a6fa286409ac32599e"
+    },
+    "error_unsupported_product_id": {
+      "sourceHash": "aeea3d4a3e1d2319d304198b4dd8f976fb50737b0a581ab686da4c5f7a0f9f2d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "e424aa65acb5a17e713587d448357409c4109eef41e15d5d76ae724c6b571e37"
+    },
+    "error_use_a_name_with_1_40_characters": {
+      "sourceHash": "ac10d67fa06c02306d6219d5f17178e94173753c80c2c2f9daf24b911df78f4f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ec7b0531743ea7eaeb89c5a3b3331abc997d2e665041424d27a3663de62a7965"
+    },
+    "label_book_details": {
+      "sourceHash": "4be9b88f5f31200e0dd0a4d8dc91cc1aff43fc18df5eab45e6a9b0b8522a6ac5",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "995150c122305299eb44b02971f7fe901bdd7a65a101746437baaa32c8796540"
+    },
+    "label_book_selections": {
+      "sourceHash": "0bbbddc9c67e6c7ca70846dddbabd2cc60f4b93367cf1bf737d4130f430335b6",
+      "terminologyHash": "c5e263ce865b9e17db3a6bc8a40e6ffe9fb2b7ddfd22df82d5ad9dbde3d2c600",
+      "translationHash": "7be50aaf2c41eb4b984aa586dfebf1154a458f29d530c4c4a90ecb5254d9c1b9"
+    },
+    "label_browse_books": {
+      "sourceHash": "1225fa060fd96ee3c82e27ba5fd50f195915c7a9d2b8a0efe6f9d75896bf9ac4",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "c282aa47b11812c96f084c4887df78d1875df0eaec70793c5beeae0caf3a9c8e"
+    },
+    "label_downloads": {
+      "sourceHash": "b59e1a423367bcd4f84f218b5211844c1f574b7fa6b956dd9460e5777c3023fd",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "131f57df1a8ed9f45a34dd81b30231da967ad8d5327450351b7209cf085d7116"
+    },
+    "label_file_date_newest_first": {
+      "sourceHash": "688e8f5cc2ae2a1f24f7ea624d86139ee0fe7d245fe7df837f24aab1bfc6fcf7",
+      "terminologyHash": "aaa0ea95de4b0f1e16d7294df3b7e9c392730671bf120aa7b6172857ecedb14b",
+      "translationHash": "bd99b94408c9fecf781e54603656d2e792d9fb2bacba5bd52c177ab372c4b99d"
+    },
+    "label_file_date_oldest_first": {
+      "sourceHash": "cec96b6ad608f57d23199030543510f8f231d8dc78d7aff08c8cd620d86aba94",
+      "terminologyHash": "aaa0ea95de4b0f1e16d7294df3b7e9c392730671bf120aa7b6172857ecedb14b",
+      "translationHash": "9d71ce91267cf8729bfb2f8bdd4d7d8c3be665ebb185d83edf734a724e991989"
+    },
+    "label_help_about": {
+      "sourceHash": "3840130efc3365b3af65c6185254dcdcaa837b8e1d08a5c7518a915a0b6c1121",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ca6ee98b1de54d873b46ee6e7d933731416ade138fd29c92c00f8adb6849b23b"
+    },
+    "label_installed_books": {
+      "sourceHash": "8f9c223e0c11c3e5ddfe6dc75cf256b2e7a902ac1e3e38275a3234407fef3caa",
+      "terminologyHash": "c7a2eb26e0179b3fc78ccbe2e6fce1fa220a7a3b932ee5d9ad9665bab8d9e6a8",
+      "translationHash": "8c1702282192a20329f173b23b3593e00c6ee0092e28d61b2bc615a5008ace9e"
+    },
+    "label_keep_downloads": {
+      "sourceHash": "87199500874c9d6229337694964d117d426d10d15739997fad60cc4ac075808e",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "a053da1e33807a6de1e945dced8add3ca9f66f3901b3f0096df43063f338b7e5"
+    },
+    "label_my_pens": {
+      "sourceHash": "9c2e25be0215b49c5d8237bf2b5364539f0c0c34fefb2fda609bc029738d084c",
+      "terminologyHash": "3b4eef092b1f7618cdd58971f7507e48354eae1182ab5c5ec177fa8ab02e32ae",
+      "translationHash": "cee0aa940eee4a76d748c8e4dd025304866d276ff2f5c24ce088c684048e6326"
+    },
+    "label_pen_details": {
+      "sourceHash": "243594d43b69a34f393a5876927f072511e9fb3c739b42f22e5bb80df208788b",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "b257a0d862dc2845338eb9f58e3eb3f06b3dbcbff386046d830220359a2a149e"
+    },
+    "label_phone_storage": {
+      "sourceHash": "558e2e7f4304252868ef174e5e3e07f574b15de1383ae07ea4c416950c2f34d2",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "76dae88f34a9ba52422af15f1273a6827d6f63ec7f47cbac807277b74dfe13bb"
+    },
+    "label_review_selection": {
+      "sourceHash": "ef1a7de8c77f178548aaac4189018bca8eb46a0121fa7c7a1be404efb8522a26",
+      "terminologyHash": "5d8980dd43d9d46d7ae56d372c58046bf26bb12361771871092adde21df20c58",
+      "translationHash": "2fdfd8c690e1ea55d48d8ccf04ea5ed75380e9850395c59baa4e021177da2d7f"
+    },
+    "label_size_largest_first": {
+      "sourceHash": "df15bad9529605b99bb9447a4755779ddc6bf108d24b49d1692d947a1ee70429",
+      "terminologyHash": "aaa0ea95de4b0f1e16d7294df3b7e9c392730671bf120aa7b6172857ecedb14b",
+      "translationHash": "181879c674f182bf82919cea539df075cb65497322d67806bdbbe3a289d97c75"
+    },
+    "label_storage": {
+      "sourceHash": "9a90e025506284bd2b08034970244d534bcbec5c944a0171606d6c3b2e032a7e",
+      "terminologyHash": "c7a2eb26e0179b3fc78ccbe2e6fce1fa220a7a3b932ee5d9ad9665bab8d9e6a8",
+      "translationHash": "1496d7408122102b1f9ccd46b5291db85de9677b5dc34394ed9461ee4cc66b37"
+    },
+    "label_title": {
+      "sourceHash": "55d5837283df44948c38309b3647ce83c0125ef4aa4bd91d4b8e8a553901907a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "7c41a83037adf755b512569cfc8418afe7aa1c2ac0fbe81c7b0e93183b67c4e2"
+    },
+    "label_transfer_only": {
+      "sourceHash": "ec3ea998f119c0cd52f540d61855c8df4db7dc6498510b90689e1b609baeb5b5",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "9dfd46502664bb430034f0e677cbf0252a4efcb5ade3e672b0ea0eb4c94d279f"
+    },
+    "label_transfers": {
+      "sourceHash": "422925a5a54df4650a8c6109a77c64d6aac9eb49b7c092c5471ecc2f7819f073",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5feea3fe5cf3109237fa80615be59d19e4bdca3ed5ed4797b89d7e2e9d84b267"
+    },
+    "msg_1_d_files_added_read_back_verified": {
+      "sourceHash": "99150e4999ede1eb5bb5c8802d28daa8dafb785e0bfac5f95b3d1b66a97b5bc8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8d8ca0e98f1f3ae5ced34e559fe774d708e14cf70ac3f7b74f5aeb2304c07ad7"
+    },
+    "msg_1_s_scanned_2_d_files": {
+      "sourceHash": "41e3fa6144c46548472987624ebaf47a020b8d967bd154f86f590c94ba7eb7c5",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "21f453aedea009604984c90df61b833e290a79dbfdc763e149c6babf59f9c561"
+    },
+    "msg_all_phone_audio_deleted": {
+      "sourceHash": "c0fedcd5af6d823fe5b2e4e5757cfacf818794499300af0102e0de4e47faca18",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1340f4fbefd7d7d0e970f57eb502965cdcdb9d2319162ea958ed645c3a6c4b07"
+    },
+    "msg_books_added_and_verified_phone_cleanup_needed": {
+      "sourceHash": "c1b8cd3c2071984802847ee367c837ee444c2b1b27cf1ad45cccab9860cdfe23",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "600848be6058ccf00b5e8008972e938b9943fe706b1d492edf9cd64e7651bf52"
+    },
+    "msg_catalog_loaded_from_this_phone": {
+      "sourceHash": "9481533ad7213f35885c6758a7d1743e8e60bf8f316c8fc3c8a0562d05ef7de9",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "286fba4d51f25ab0bcd7126833dbd5310e53ac71d75e6befafc29aacff675d82"
+    },
+    "msg_catalog_refreshed_1_d_content_files_including_companion_files": {
+      "sourceHash": "244b214eb11f1c660abc2a55328e586a1e303f4abfd48523220426cfde6f4f53",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "12d0731867b8a28199c138bdced46330250599740ad3ca1765fbe550f1ba4747"
+    },
+    "msg_checking_backup": {
+      "sourceHash": "b421d1d29af34b77314be298d7e9924c6adb4241b992d7007f950fd1a5ef3d6b",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "b963179cf4f7d5f5e24f143addc49303dbe7e7e152b1037ac31a50dc0275f778"
+    },
+    "msg_checking_cached_file": {
+      "sourceHash": "aba192ddcd9bbc1149b0c7fafe072a7129f89ba8230157a2afe20cb67f62c635",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "058f080a3c8f65241020ea2614719a7f0ab4fc9def21a9c4d1ba8bd3b250705e"
+    },
+    "msg_checking_download": {
+      "sourceHash": "d54cbedea1bdd12857117ed8e5915641fbf0a457e7330cba04876c1f24944a02",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "9336fc7b6c7d05122d0ff2c2cc6b365caee32a01a8259c473ef6e0b5ae0ed99a"
+    },
+    "msg_checking_phone_backup": {
+      "sourceHash": "3c43fd70db82b4b8da391059942008dbb88a2cc5569c26a5792d686b989b837b",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "8f44176a92486f5dbecf41a15be704c54fc40e7964732ae5025d52f5ddaf6d00"
+    },
+    "msg_connect_a_pen_to_get_started": {
+      "sourceHash": "a1ec71c9e41f612e03536b0fbd492577975e7e86055f2233b54e4ebaa95c5f0f",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "22232e3796d6bc70b9c624b8e9985ff8c3fc349ab126165922e1826e06e6d6b1"
+    },
+    "msg_copying_to_pen": {
+      "sourceHash": "80a955c8ba402109e138a4c887f052a9eb60ceae94e7b7d9c3dac78a28d28a5a",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "dabbea1d35c027673710b61c354129f8a5dbe966e06774aa03f18259e3737792"
+    },
+    "msg_downloading": {
+      "sourceHash": "305df695e94dd709cdea9f28ccf16b8352d97b47ee7c882cb878f79a4caa2ff1",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "8272e905ca40a04c294a1ebb936497e29a06cde7c1abba21b59d95decc5863b8"
+    },
+    "msg_downloading_temporary_copy": {
+      "sourceHash": "1d808e778780b8449f505ff8bd75e74f30ae500db96f750b0e266f1b8b95d350",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "d047acd50af46efca8f4226501af05724256dbaef1abf09888023978f6b04ee9"
+    },
+    "msg_installed_and_read_back_verified_1_s_unplug_and_tap_the_book_to_chec": {
+      "sourceHash": "f1c7bc21092aaa6ce0ce8d55f082f710ecf131fb5e53045f7bc535e85be2fbf6",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "580707e6461097c3c99e3ec2958a1d80eda6ba09bea4f07f2c692ef4c4f21bd5"
+    },
+    "msg_installed_and_verified_1_s_temporary_phone_copy_deleted": {
+      "sourceHash": "309413c532d4da43c442499f6c73f348cd648449a2b43dd62b704a8ba132be84",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "013bf2b3d698c6a447f22425aa1203c943b35ad4250b53b6ea6f9c5c6b938577"
+    },
+    "msg_installed_and_verified_phone_cleanup_failed_use_phone_storage": {
+      "sourceHash": "25c05ae6a17c25134583d8da23904dfac5d4e1d160c2ba19f5b69b6f6df88422",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "a92381e464c425df747c758814c677800f2c8804ee3d1052348a77e4b4941f74"
+    },
+    "msg_installed_and_verified_phone_download_deleted": {
+      "sourceHash": "d1ce61c0df839b0a75a997ef6eee954cbd96027edbc7bf85492aed8285424731",
+      "terminologyHash": "ffbdd725604ab7b5cb3e600e5f8ade54b6bc65786937ed167e6f3a4f0e5a98e0",
+      "translationHash": "7874d14b15d428403743c61edc5289dd695ed97648289d39329dcbfdf786f9a3"
+    },
+    "msg_installed_and_verified_temporary_phone_copy_deleted": {
+      "sourceHash": "27fae9104ce05c10fd94603f2a73b25b9c6a7ae451d4de939a6f997154341a81",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "fe46bc28554c0edc97286810ea1b90dfbcf59f492881859acd1a3a19fe2a6c3f"
+    },
+    "msg_operation_failed_reconnect_and_try_again": {
+      "sourceHash": "5fc4a3ec0ae956def9d5844ea6720bb509e7b8c14f5d6f0c9747506eecb9550d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "0b13eebf1edebcbfb282d2c4a80c060d9ff1621507dff04d291a8538f7a30178"
+    },
+    "msg_other_inventory_changes_were_observed_the_phone_backup_is_safe_scan": {
+      "sourceHash": "224ec60e77b9f70fa44c4fdac9538074e18400cfed695d5f35b89ed60dbb08e7",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "788d3ee3ac272c4d33a821d11f453566b3406bdcc15c3cb9cb7b511d1cb2a434"
+    },
+    "msg_phone_backups_deleted": {
+      "sourceHash": "09e2bcec0abbce8a54b66662a5497bd0295c6e21d38cfd03f291d0f0bf80e721",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "d73571ff4a4bebd0eecaead97d53c74ad5071f703a486150471659d2b60920fb"
+    },
+    "msg_phone_download_deleted": {
+      "sourceHash": "08353e53ada25e2c3573e045c0337ebbdd6b7ec1f41544672737a9e2009c7f6c",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "401729d772802872044cd54e4f3f6a37616734c4cae109bd8f2c8db900451649"
+    },
+    "msg_phone_downloads_deleted_pen_backups_kept": {
+      "sourceHash": "0207b412a956c9ad7b0be7814600468504c44fe92c54f11d15ceb217f43aa968",
+      "terminologyHash": "0f353f452ef0e45d47b90c40a59416454bfd13a6c47bf48c330f3c23d005fefa",
+      "translationHash": "635792532a2dfd573895890741123ad731aec145f0edc82c185f0cd874f05e84"
+    },
+    "msg_preparing": {
+      "sourceHash": "984385f70b0d46ea07e0a67382d4a85031f05c8be7012faa39e12fa0f4b24995",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "249f679f3625cbf840b497fde071219fb220771ab57c5f4733d5351150899dc9"
+    },
+    "msg_read_back_verified": {
+      "sourceHash": "df57248de06a8a8105e10a5701308e6bd24d7fad47319d0b14645fda71634c13",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "b778d1e5242659706630f72d71d9b7246ab689e34563f6b91f1549bfd73a98d1"
+    },
+    "msg_reading_back_from_pen": {
+      "sourceHash": "65383a76156ec843a3dff5c51e946ca3f373df4209df9cccc7847afab2f3f86b",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "67d2f4cc2aff7647bd40901239709fc438465ed5cb8b01e908528f1b5b78f440"
+    },
+    "msg_rechecking_pen_file": {
+      "sourceHash": "6f46955e41e43710a8a1976f1ab8e019b4782c86c46e08ff150e246337ce6637",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "a1f2679612d843b238d4cab8313d4bd863f30ea92d475d498c72276c78f574c6"
+    },
+    "msg_refresh_the_catalog_to_browse_books": {
+      "sourceHash": "31ae64efc4a1e50ebd879369cf5c088d8065c1725c12e2a102bf1abbd6ba3696",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5012e4704a590686aa379bbb26954bb26f18d5569a64b8736033d9810014b449"
+    },
+    "msg_removal_could_not_be_confirmed_the_phone_backup_is_safe_scan_again": {
+      "sourceHash": "b6924bb7e6f46aacc28328f19c8f529c2bb8d0d5da4a462be1af38c937a68e41",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "cd3cff409ab8624822ccbb5d055836c4d0ec5d345a910ab4501f6e9f85fa72e9"
+    },
+    "msg_removed_from_pen_a_verified_backup_is_saved_on_this_phone": {
+      "sourceHash": "38530c1d324a888b1a2b0e5b3392c07e8d06266c2c72541f7614e0228d1f8bd9",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "47aff79738f4bc955ef861eb4beffa110ef1b2b3d8a79de6f9f2a207e6d75fcb"
+    },
+    "msg_removed_from_pen_phone_backup_kept": {
+      "sourceHash": "8d218a42240032faa4b2550c5a5be49b57faa48c57503525caba28d49a372a79",
+      "terminologyHash": "ec3de48f068108a715334f938776378b97abf3a6fb5167e9c2200c99ab4906fc",
+      "translationHash": "cd0c4036c408710afb0d89e76afc4864283d4d8f2b57a10f998c4c57144b560c"
+    },
+    "msg_removing_from_pen": {
+      "sourceHash": "ce5c7d576623941163a0b88aaa53b48f651c9d9135880176b428a2dc9853471c",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "8d6471db5e0c154e849e239b231f96a6da7983a6c33214a54e0a179133cb58d8"
+    },
+    "msg_restored_and_read_back_verified_phone_backup_retained": {
+      "sourceHash": "6c29cddde7c3b65d8923e1e143d11995de32b809ac180402015db560ef84bae6",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "7b66d867f4b81f8e7b68a3502b44efc93a95881d9bf4ba7c49f7980298c83330"
+    },
+    "msg_saved_offline": {
+      "sourceHash": "f85a323a96c05bba5db87c0eee7337a07ee039d728062e6604889b2ace2f9bf6",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "fcc9e20ac05dce70a101fb7ded687555d1132c678216bf494516cbd0153c9a8b"
+    },
+    "msg_saved_offline_1_s_size_product_id_and_checksum_verified": {
+      "sourceHash": "e235fc9bc447c3f3c27497d7f6ea3d2bd2baccb6f08c0919ee08b9717fe11bd8",
+      "terminologyHash": "23b999b7ce24abbd673f4266358db3f5fbbd9c997746bd59d202a51ee44eac22",
+      "translationHash": "e5eeab14313cdb9b2f8d2cce43cbae06260a65613b74bdaa594afdc7d0047a2e"
+    },
+    "msg_saving_phone_backup": {
+      "sourceHash": "cae7672b30a99f6e93b42c67ef00bf55a341eaf89e39cf32e2f3df2eac2088d3",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "6d6f69bcb39f452b89fe1c54318af5df910ac8be4d2f3180ffe7c5e232ed1093"
+    },
+    "msg_selected_books": {
+      "sourceHash": "1be9744bd466aa30734e0f5ff723af08023b303cc731c8f11b3b036cd290d5be",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "286817ec3bfa0ad09a6a15d0f538bb04066530f3f0af53ee25af672a234332c4"
+    },
+    "msg_the_destination_pen_changed_review_this_pen_s_selection_again": {
+      "sourceHash": "52f6b63b4e01ca18ae7478c0c9c7fa015440faf0e1708cee4cabc06bcec1098e",
+      "terminologyHash": "5d8980dd43d9d46d7ae56d372c58046bf26bb12361771871092adde21df20c58",
+      "translationHash": "cd8ec558b1d47aa4780654a340dc297f036278f7dff6d196b2de8a80f90e6250"
+    },
+    "msg_the_pen_or_file_changed_the_backup_is_safe_the_file_was_not_removed": {
+      "sourceHash": "8c0a259821741fa328124dcc6e10b93ad791f37833bd77d09dded41cfa4b72a3",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "3a908879c005a1563484bc504912397417f3bbb41329d8a31473831d592e6c26"
+    },
+    "msg_the_phone_needs_more_space_for_a_backup_nothing_was_removed_from_the": {
+      "sourceHash": "73a783cfb3040b9807525addcbeb5eb7d28bede8354e6c7e08a98041b3246f42",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "467cb7eeb5d3aee1ed68e58be2b83696669e3d359bd18c497ba2667bb9c668be"
+    },
+    "msg_unreadable_header": {
+      "sourceHash": "1b0e6e22e32ac1f11427249b1723716b90bd7873b5da17d99d75deb66fedb5da",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "195ad23fd745ddf8b1e735be1025d41ef8c75958e3ae8a593f4a1b7548280db1"
+    },
+    "msg_usb_disconnected_saved_inventories_are_still_available": {
+      "sourceHash": "7bbd01ce62719e8eacbc9ee826788b8103572499be01d8e909474add039554c9",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "c5dfdaf172b952f95bf3114611a111a1e2165938dcedfd15a98b1c55c98058a9"
+    },
+    "saved_files": {
+      "sourceHash": "ae824beca578e50a7733d53308e0f171545c5c314e1de0b07b0ffcbfc3e02c5f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "951c31d8a929134d8346e2d09bebc4983f854b0ee934bc51210f6bc59f27c0c8"
+    },
+    "task_clearing_phone_audio": {
+      "sourceHash": "b84477cbf15bef3e745cbb40a0a0342b913ef92c56b36cbbff17166a5533f85e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "b7f915d3e98ca4b73b121bd2f558876375f63f4e07588d03b04849c0e1083cbc"
+    },
+    "task_deleting_phone_backups": {
+      "sourceHash": "1cb1b7cdfea1b69a6d3c8f952467fae397bc415ebb37425f064f2c64b6335ba7",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "741f728683ac0c73289c3370866bb9dda70b807d42765998c5eade7ba094a81b"
+    },
+    "task_deleting_phone_download": {
+      "sourceHash": "de99cbb152b59cab51ec7c2b52c1e6799c7a27f8a9cdee35776c127a908f1ba9",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "93644bfb1c02dcfddf683110d1abc0950c1cce18733e432c559c5925cac3f84e"
+    },
+    "task_download": {
+      "sourceHash": "1d39e263e13737c8473382387feaee3e0cf2246ae5ebe07d168251d75241d297",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "b72fe75449699481bdc28c395219d9c4192fccccec4809b3d014bb9e9a8f899f"
+    },
+    "task_downloading_catalog": {
+      "sourceHash": "ddff461c86ea50cb7679fd9c2889e02d9d6d9d97c98e29cef97fbcad575cb7ea",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "215546c3adce66c07b44b7ccf14849b268e13af8c3d82d10a562f20ebbf1afef"
+    },
+    "task_forgetting_pen": {
+      "sourceHash": "0c55a79f256554e6cd9b6ec3bc59da73166537a838f9991568e65c50c4d08e44",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "30b988f3444031c38b60016b21ccb23f05fe7afdbdf6d3226d9748d3f7d1dbaf"
+    },
+    "task_install": {
+      "sourceHash": "9852334e6fb2dcc1b40c89f5144cc0ea77ce8a9532ed68ebfb9b26db50b9dd74",
+      "terminologyHash": "7b9be1b42290dbf2c647df2989bf50a9ffe14b0b9d8682974e9a4f7d4de73ec3",
+      "translationHash": "9c3bb1b0b126d473b7a63f606c80664ffb622b8c0eaad75f330010e2fa32dab1"
+    },
+    "task_loading_local_library": {
+      "sourceHash": "84a0d1af8bfd8262d8dca55a5b1472b44c3cb5390d26bb1d362858cbc6c18a9b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d7745b9ca7ae0634f78ed31a8d2666c7c8515e9f809f1009ce164f0f4ccb8f7f"
+    },
+    "task_naming_pen": {
+      "sourceHash": "d7bc5701d9fb386a65da2b82dfdaf91f9647d0064b4e26e8e1618404c167ebfa",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "2d45f6a115bb64fd9740ec3be62c5082b3e2df2c3ca2d72ba1ff52ea58e60440"
+    },
+    "task_reading_pen": {
+      "sourceHash": "b93064c11064f4eedb4bffc9d4aca2091842784caabec55b315309840444bd02",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "7088602be11602a3c747a1f76f164e96ca0b948cc2ee99c9d06703fba9a55cc7"
+    },
+    "task_remove": {
+      "sourceHash": "926565f926d1bed2c7e20065d01d6be8ef363e4abd67b66191071d7b48dfd4a8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6821ba0d5c8656bddf9f43109dfa27136cb1edc6744be0f53c2c1115697cc5a0"
+    },
+    "task_restore": {
+      "sourceHash": "daa6e8dcfe4d6b14af313f94946ba16cd5b46c1579e65287634b4c012b8e5f54",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "d1fe45fafad1182d3a2f585c49e8ea6ffe1ebe8692c6f8bf2d784b3be11b7c3c"
+    },
+    "task_saving_book_selection": {
+      "sourceHash": "d1d912ad6a1b445b573553e79d5e5d0da5cdd52754b7c24383f86011914cc95c",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "aadf19971b53e705d6b816433adaa452699e0f4aea34256132eb454c792cb27d"
+    },
+    "task_saving_pen_selection": {
+      "sourceHash": "cf565a20b3c5b2ef8ddeea64978da2bb466e3be5f26d8e046b1befc18f2e003c",
+      "terminologyHash": "5d8980dd43d9d46d7ae56d372c58046bf26bb12361771871092adde21df20c58",
+      "translationHash": "742bf090570abf1e398c8ab8571c36e9b2e23e7ebb47365f2e430031265fb3a5"
+    },
+    "task_sync": {
+      "sourceHash": "3998684e69f021a1ed42182c901aeb978fbb8970b53cc7cb6198c67c0e2adac9",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "69b23a9ebc29d6afc0d665f83ad01d227dc983c588be955c0cce29b40b677cbc"
+    },
+    "ui_1_connect_your_pen": {
+      "sourceHash": "af04b1d6bf0be8f0adb07ea6e9e79da80d69290661626cdcb0b6e5af5cb7c745",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "133d8c4e0fbcb4acdbfbb9994a4d61f6372aba2f550b8a29665958c7510678d5"
+    },
+    "ui_1_d_audio_files": {
+      "sourceHash": "bf52073d09d71ab40237bc792b082f4e7f1511890224f23ca5d5d6e41b6a1087",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ca6b8810954107cbf72997e9ac9a88ad1a782b44c17060b34f43c5fa984d8310"
+    },
+    "ui_1_d_audio_files_review_changes": {
+      "sourceHash": "0ee3c86c794dddc25913ed1c243c1dbbbbc007770653bc911d7825011fb479e8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5482437148bc8025cca090023938ccd76a3ad2945ac9255bee1b60e8a6cf028f"
+    },
+    "ui_1_d_copies_2_s": {
+      "sourceHash": "12a77a1bc12e94cae4cf5732dbbad0b9ef70be73454a09299cf6c5b9b92c9018",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "ae00f7edc2ac92d377e86a56db14fef44cde4104320d443a873fd9b1d91cce87"
+    },
+    "ui_1_d_files_2_s": {
+      "sourceHash": "05d5e68aab0b6526cf9f635a5e2d956795afa88d37312d4a52597ee22d7651cd",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "e57f0e82e6d12ea99a99dc610e8a5410e12908865b278c77fd22d57d38b3a7d2"
+    },
+    "ui_1_d_files_2_s_3_d_downloads_needed_existing_pen_files_stay_in_place": {
+      "sourceHash": "c15c2410417793de0df0676837c0b1fea64db5877fab36195b94053eaca24419",
+      "terminologyHash": "d007e0a384e796ab1bee19a428fa685518a0974835b92d116d3dbe67a1238dba",
+      "translationHash": "a431d9d76bad9dd31ee8ab7cefdf609b87cdccb27883e0125c118f992299c822"
+    },
+    "ui_1_d_publisher_products_share_this_audio_the_pen_does_not_identify_yo": {
+      "sourceHash": "48fca10fc226cdd6dfcb142cc15ec18bb4e575492d4d2c23f5edbb2542b39bc2",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "2e852897ac0f0dbc3b07edc8dd0a70e2115d78420ac736be1cec2b022698c272"
+    },
+    "ui_1_s_2_d_backups_3_s_these_backups_cannot_be_restored_after_deletion": {
+      "sourceHash": "a04489f3340091e25aeaaf29f1d60d98df9296b2440fa7b109d1c8bf6f2438bb",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "f21e70f03c1c93c646c7e4c03adfa4e3e755ab5c69298566b2318a71bf638bf0"
+    },
+    "ui_1_s_2_s": {
+      "sourceHash": "668f7ba5b96987f1f8152a8435dc650d58a817e39c5731e737b5c34d1bc3fabd",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "cfba8a8ae9bc009534dca4b245dc8b9eb44cb8b870d831da1e5ce99feb8e967a"
+    },
+    "ui_1_s_2_s_existing_files_stay_untouched_3_s": {
+      "sourceHash": "e8090584b7a7586057688e9b46ce7d2badc4bebe6adbed34158e7dac6e67916d",
+      "terminologyHash": "7b9be1b42290dbf2c647df2989bf50a9ffe14b0b9d8682974e9a4f7d4de73ec3",
+      "translationHash": "b479032893af17d1d57b350a6d1d0e9ea3ad7bd69767ab3b6546faeea57d4fa6"
+    },
+    "ui_1_s_2_s_from_this_phone_s_backup_existing_filenames_are_preserved": {
+      "sourceHash": "0041de18b5e1da51d0454c0254dc401246e3193c335eb1a5433f9f34f864ba1b",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "cffafc922c74b2f7ad4af5accce34b355999d0fb9ded742816fe1386aada4664"
+    },
+    "ui_1_s_2_s_on_this_phone_the_pen_and_pen_backups_are_unchanged": {
+      "sourceHash": "9cec2c9418871c370155e30a6bddbd41690008eb81e947f1de6090c8862394bc",
+      "terminologyHash": "0f353f452ef0e45d47b90c40a59416454bfd13a6c47bf48c330f3c23d005fefa",
+      "translationHash": "f32668fe7d23ad16267f62e740ad97c3558a15fe2f39ed95a1da69645635323a"
+    },
+    "ui_1_s_2_s_saved_on_this_phone_for_offline_installation": {
+      "sourceHash": "aede344a2ce897a496eafac780e441fa4387e6ea278681b6f221596ff84cfab5",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "4a7ece858eaf8e68dc9cc6820c5ba72d5fdf3251f7829592f91a7d1bf8a9a449"
+    },
+    "ui_1_s_free": {
+      "sourceHash": "d457a09603e5311e9af9fd13f6c626035c34993d75a6b0fa45d05bb94bb6b46a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "f91b1c73cf87bddd995da0688d77fbfad4f83ad0be2a332138161d4ddb83d083"
+    },
+    "ui_1_s_free_last_observed": {
+      "sourceHash": "8d4722809c0cbc9a83090823b872df9e02e3185e775d66a79f87fd514f624d74",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c30d7330f840408861f1b8bb732aa923229622f8656940d775e2a64c338bbacd"
+    },
+    "ui_1_s_free_up_2_s_on_the_pen_a_verified_backup_will_be_kept_on_this_ph": {
+      "sourceHash": "2f51fbfeb9d205154c74c5d015e8789c6f78a1280cd63d577876d7f916215652",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "f78feee31cd76cc0d686cc1784bd1e97ebb3fcfe40446365267e81b86442fec1"
+    },
+    "ui_1_s_in_progress": {
+      "sourceHash": "c623081c99122a13710a870e8d2feceeb7ab69f9db775d76f03001195cdfeba1",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "33c4662803621662e37717b02a63547aa17cfcefa4c8961107ecdc5506230803"
+    },
+    "ui_1_s_individual_selection": {
+      "sourceHash": "a3c8f65892836e1ef0869720ab3767b3c982b0579bebbf1aa39f14ec5216eb00",
+      "terminologyHash": "deeca0e1cb9f88aed4bae6e3f26ac4f00d0ff27354d2b14cc0bb85a841e064f3",
+      "translationHash": "5d286894283b2eef1d7b68ee76fa4ea44ec06216e1cc0c156e32b66a47c03d15"
+    },
+    "ui_1_s_to_add_existing_files_are_kept": {
+      "sourceHash": "c72831da66f49b628974e8fe8c6425bf7872f5e1a9e7fa21efa9b7985c2b8661",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "89d0ced58a03959d1ea5151839c5663204617fdc2234a6c9d703edc134a0cc87"
+    },
+    "ui_2_find_a_book": {
+      "sourceHash": "a55d270da42456b931a8f6dc0ddc31b904985935afc382dfec355e78ec57e4c0",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "8534645f529cbdeb3e2b52f403644dff0cea21834ba3e729c317b45ff959938c"
+    },
+    "ui_3_download_install": {
+      "sourceHash": "b80aa37f3632c38fd6997db472b530a908076f7e2fc3bdaacc621cd5d06a43c5",
+      "terminologyHash": "23b999b7ce24abbd673f4266358db3f5fbbd9c997746bd59d202a51ee44eac22",
+      "translationHash": "2ed907659b0c7498d5377824d55b265089fa8dbf94879a01f9e42c1b63e8860f"
+    },
+    "ui_about_this_book": {
+      "sourceHash": "cb136a26fea23824e5b273cbbe14e11c01f81ccaaa79b2128457b37d736b7006",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "58b78b410fa24115f6c509c637e2c9b7f62a5678329a934f893f073819eed87e"
+    },
+    "ui_access_was_not_granted": {
+      "sourceHash": "7bbe1dbcbbb2d11d3eb58bc4d248080349bcfcb7c191decea779681149069717",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "159f1e69c841d558de5a9d14726cc81e5af6c523d265ac1c957643c6032a6c8d"
+    },
+    "ui_action_failed_view_details": {
+      "sourceHash": "f06bebdd506aac2d78498befab652fa3ab0bcba6d3ab0fe01e2d71268e44db3c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "7812fb089b7a466f2ba85114d02e6fe992182b9b9bfe37334180e95bc197dc5d"
+    },
+    "ui_activity": {
+      "sourceHash": "90c6c2dfff148031d891f06a7cb85de1522bb61e229ee44e1f245c8629078b2e",
+      "terminologyHash": "7ef9a5e3283a4dcbb4def3dee0d46848f23ab9cdad4137a4a266d3e0556deb28",
+      "translationHash": "ae4536628e348c5091da67a62333eda83d57b6a132dbce1d1c946912c944f9ca"
+    },
+    "ui_add_books": {
+      "sourceHash": "34da01d0f8918746b8bbc42336c6a89572ad43cf7cfeaecfb12ddadb16a24394",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "963e95d38e74dacf0fa0c49f6d965ba50d906aaaf02ffcd1d4b7fc16fcc1b807"
+    },
+    "ui_add_books_to_1_s": {
+      "sourceHash": "64f4fb25dc66dc7a8f6483b867950194df61a2b8b29b76813655b7be91bf915d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "16171ba019b447ed76ca5abab25816ae48ecdc1a64bba730079b5b39ceffb740"
+    },
+    "ui_add_selected_books": {
+      "sourceHash": "a0fac09146bc1530c403fc47f67eb5d90c758edffbe5e4f4f884547340b27aa6",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "3c1ca8f01f2465ce95c0899a2dc460717872d1c893c7c90cb439060f250cb770"
+    },
+    "ui_add_your_first_pen": {
+      "sourceHash": "894734df04ad98873eff1a71b5cb51eaccd0bd57a48269bfe84f8575aa080aac",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "53356eac2039c86f62eab367ee31298d71655b31e001b5a6e1f2a33f4d5dc53d"
+    },
+    "ui_age_min": {
+      "sourceHash": "8895aed7b8a8b92afdec664bf35e3d7739f5d2b47e5725a9b3c9fc1fa58b662e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "9eeeb3c32cfad248b17161920778d0387433b993105a988e44c21951509d73ee"
+    },
+    "ui_age_range": {
+      "sourceHash": "41cd44877461ed84af31bed5e0a4f0e848acf33f95c67133be5c9c842e5af97b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "bbfd32a6ed44a21ba291610a05c7209ec73858ec233037f4633eedaaf2ab03a7"
+    },
+    "ui_all_selected_books_are_present": {
+      "sourceHash": "cc3d9b830a8cc0b908f0abbc547adac4468c4ed68095b5b207e9e660b2e719e7",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "0fba8b7d0311b46c5d4463a14f3f42a4e577a9f5eb7702be909d63df3a6776b3"
+    },
+    "ui_already_present_filename_size_and_audio_id_match": {
+      "sourceHash": "b0f6952c59d1e9b75e0cf53c14c483d5488fdfed697d6a3ae205a9426614d90b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ab34aa89e2751068736229382d8c5ae443986cd2bf2bfb2434db0ea056188972"
+    },
+    "ui_article": {
+      "sourceHash": "ec210b6fb4cd4107978423777989d8f930c5ddf6a7716beae208f65b22fcb1e3",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "2afaca697cfc8e4e3e25dec23185c7816bf61529c193882d940a259931714304"
+    },
+    "ui_audio_files": {
+      "sourceHash": "b47cace09537654a8fc62348e705794029a59d1f8a9474e784674d5c1616886b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "a1ef66d1869d208df52440fb33d26b74a886c0fa020abcdc1ff1e2ef2f8e7256"
+    },
+    "ui_audio_files_1_d": {
+      "sourceHash": "fc2cc9b035ac9294863283ff7d597922e32941b9982351464af4046cf5d101bb",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "688888fa267dbd2977e306aa47828c81886d6cebfea65a4b97da4c156b09c469"
+    },
+    "ui_audio_id_1_s": {
+      "sourceHash": "416a4b3027ca97f44ebbed8311762265cfd842fb754faa0a0a293f1ecade8d53",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "20b939e92f131126d38fe58ebff94cbd498f73e37f003daa50bfcad1a168e9ef"
+    },
+    "ui_audio_on_this_phone": {
+      "sourceHash": "af45ed9f3fabdd23dcbae6c7e15969242daf964fe4ae123fa17ef6e32d2a2a44",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "08a9b13e129c99875404ce3bfa816f58dcb1e3dc02419a08e7f34012eae71983"
+    },
+    "ui_audio_version_1_s": {
+      "sourceHash": "bcc4645ed7758cb44c579f30c7359ef8f9b1422ea7751a79bb2a6f814b62d808",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "487d04575eeb7657139bc8746bd2064afdba9a21aedba7785446395508859a29"
+    },
+    "ui_back": {
+      "sourceHash": "866b52b6c7bd0e541128f041287da38e2f9faad9fc88a966fe76c6767ac86dde",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "59c7298bba2942f9ba70713f4ece750cd9fdb3e1637b0b2baab6f8328c709447"
+    },
+    "ui_book_details_unavailable_refresh_to_retry": {
+      "sourceHash": "a7ab27eed4a8aa53cb354de17f71a2f48e71e70f0d93c77fee9eb4732a4348c8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8437063da10c7fc331866967901ac0eb3649278e577911885e74ffc981ae84a4"
+    },
+    "ui_book_file_details": {
+      "sourceHash": "3117f2834313a2273ccb83b055d538c128bc46f49c0baeacbbc8f29120f61944",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "4436a7ac8dbb3ae7bbcf648d162c32ff1a47a3e8f4c7063e400586a5669521e5"
+    },
+    "ui_browse_books": {
+      "sourceHash": "1bd4ea2406f28057bfd85dbef08256126087ecf90050cc297a5be97115215303",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "c282aa47b11812c96f084c4887df78d1875df0eaec70793c5beeae0caf3a9c8e"
+    },
+    "ui_browse_or_search_the_catalog": {
+      "sourceHash": "01e2c488461fa2c1a8db525f191358974a3c20b28c5d02ecbf6a269f9b00122b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5d095d1b702100e1c17013e830e753b9bee745766d374ab318ab855d41aff0d3"
+    },
+    "ui_cancel": {
+      "sourceHash": "ad6db72eab8696887974c724160e28d8f55d397f1fc3710affe669177af60e3e",
+      "terminologyHash": "d5fecb87cb743f3a8a4de006c27318fca8c39cf75546017077f474e9feaeab5b",
+      "translationHash": "118e80ed55bf7c9c40078e1be4c5b4100fce6d7fa6b66cafef792c4d02f73c63"
+    },
+    "ui_catalog_language": {
+      "sourceHash": "46a00d6c1497c7aafd82028e1126fba126804885dd52125c754518b6be4a3139",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "dfc5f4f453aea3c47dfb99b5160cd3ea1973a2e981fc1be21c2a3b8ee30d373e"
+    },
+    "ui_choose_a_pen_profile": {
+      "sourceHash": "4833a969a9faf1f986e968f2e544a9c331def3a0158c27fa0f0f248f8fb24485",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "df8daf5224417698b5e2128e80f9fb6b72efd4a57fef5d0a995ab4a23b5a68f2"
+    },
+    "ui_choose_keep_downloads_for_offline_reuse_or_transfer_only_to_discard": {
+      "sourceHash": "1954cff015bd927f70c4996f7d5e916bd91f814d9c7559905aba897c4f2bf1ff",
+      "terminologyHash": "0f353f452ef0e45d47b90c40a59416454bfd13a6c47bf48c330f3c23d005fefa",
+      "translationHash": "3ec4cb18312782627c0b156439d1351f9e3803b9786382c468af17c588f9795b"
+    },
+    "ui_choose_pens": {
+      "sourceHash": "70c8673dea22e03caf495abf7e5c6b89064992c589a69d8a1b202f2d9ec0e3a3",
+      "terminologyHash": "3b4eef092b1f7618cdd58971f7507e48354eae1182ab5c5ec177fa8ab02e32ae",
+      "translationHash": "122b10dd03798966864dc83a2d8549d9231f72c8cf272b47338785734b5ec18d"
+    },
+    "ui_choose_pens_on_a_book_to_add_it_here": {
+      "sourceHash": "a979cf66a6f2e468bee5be8dac5a919dfbf598e28a1f80c7694b43833ad54114",
+      "terminologyHash": "b159a70a56714d69d87ccf248ba5fca94e9ebd042606e34f1df294e820b48e99",
+      "translationHash": "4b75d893dd824cd0e153cf64aac987b77aff700e53d3a3e961637fde685b7525"
+    },
+    "ui_choose_usb_folder": {
+      "sourceHash": "c516729f41b4465122b9b352b30264f3e0b9655636712315d52f4753f4fb18da",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "ca81a84ee5b2c4f4cf4f56375cf8b4a68ae4e552d4dfdb19fc83786c39b8286a"
+    },
+    "ui_clear_downloads": {
+      "sourceHash": "23838f9b190b902f84ef738956f8e128fc956b7bb51d1480aae708f8d6827004",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "f4ccb9e5d0a4370a04965819070baee5923d3485db3e9699cc3ee10919449f02"
+    },
+    "ui_clear_downloads_e81a1d": {
+      "sourceHash": "2bde221a5088e338d6d05eac2cc9b873cc2eb275e595401d50f2b8c36f96fc44",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "1e71efe7bae4735a0d42291850514c30563f7bf8299cd1f82f7360c8a899faa1"
+    },
+    "ui_collection_sync_needs_a_recognized_pen_serial": {
+      "sourceHash": "ee4a63331307f7a6d7fa07ea9e2cb2f820b4d26dd8ce286d22ffd9a03cc8a4dc",
+      "terminologyHash": "c5e263ce865b9e17db3a6bc8a40e6ffe9fb2b7ddfd22df82d5ad9dbde3d2c600",
+      "translationHash": "043f20f2417557bebba03fad927691437e37ba79c8e4481f904e2000311a2f53"
+    },
+    "ui_conflicting_filenames_need_review_no_existing_file_will_be_overwritt": {
+      "sourceHash": "c3914287851e60eeae55bb61addc8bbd0a50660207f4c3f6d839f8ff85717e72",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d5162049a61b388511f729413e616d1a79a9291fa3b1190178f9b14bb4ec345e"
+    },
+    "ui_connect_1_s": {
+      "sourceHash": "75ca5eeba68f34e5f8855a19e097f492d2b9d51324f23dad909b5ddfb0edd935",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d82e0ca0dff07780070d05a18d3a01b5d652a0100d7867748884acda9a4ffcca"
+    },
+    "ui_connect_a_pen": {
+      "sourceHash": "a288fc4a985b076d94272893f34dd5883f0f54cf7b3ed7f783d23e822d45d11a",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "4f0cac1da55b3c79bd02df337c8ecb9483deff91ad5ee5327312e500d12ed6d8"
+    },
+    "ui_connect_another_pen": {
+      "sourceHash": "1d62921a61b32089a75a3828c4710388957a5e4484131dd5e565914b21689da0",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "27b9c2c31c998e3aa754f323d7e7f5ba56fd96df611a3fc191fd4d28fd38e671"
+    },
+    "ui_connect_by_usb_and_choose_its_folder": {
+      "sourceHash": "3cf87c2c904b1b3f875250aaf98c67235aee3e1ebe01f243b35f292fbf691b7b",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "06a615d88de80ac7ed2fe17a3a62a36f0be3fa96e190f43fa8e7b2ff774ba79b"
+    },
+    "ui_connect_this_pen": {
+      "sourceHash": "7ac3cf385eb199d6a6c61b6dc0042e9eb6c0c086c8999ee515d61a4f6ee24773",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "6c35e12b5199fcae933d0011f7c4ffbdf9aeb81240a3256e493495c3756ca7c3"
+    },
+    "ui_connect_your_pen": {
+      "sourceHash": "39fc653a6137df18a720e5f434dd73b9e15831594a51088720a49fed9b0114e5",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "32b519767aa0d42c06356b9985b1054e7c3a3b26e72bcc217918bd88bea66088"
+    },
+    "ui_connected_1_d_audio_files": {
+      "sourceHash": "3ed869b5b70012360423c956f62c343245574e4436390c1a1a95f6a405aa71ca",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "9b967a2cd1f4e05aebc1e43df2a334a71b62435219ffbed3d03883d0bbe6e664"
+    },
+    "ui_connected_by_usb": {
+      "sourceHash": "26d1fba37edc86ddd9ac4fe7c9194e4f3183167a27e9f720f9ecc1bf64983643",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "e74bcc3872c1fe1f281fc5c03fea12cd34d2e6387548962783bcf1f493b59d60"
+    },
+    "ui_connected_name": {
+      "sourceHash": "0f4ead72b2327c2281e15544032312c65cd5cd14466420ab6b35014694fb596e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "17aeab73d7ca86d7ca7b10b554321836a5927ea8c3bbfd0d32a34037a2d9695f"
+    },
+    "ui_connected_sentence": {
+      "sourceHash": "c2db395d3ca65e7d9e2d7372450bcbc58965d7aa600a3071a24c4770f6c60696",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "fe0d06455da553d6e452936f517cb9674cc8e26ca27bf3db028f93180ed1db0a"
+    },
+    "ui_connection_help": {
+      "sourceHash": "dfecb8716078b5f548ba17dfa13f8ad19b67638f9397eac0344f218c2ec49664",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "76e4556db998d1d47a6c35fd23193cff643583399720bfd06969ac8f2d6cbe60"
+    },
+    "ui_couldn_t_complete_the_action": {
+      "sourceHash": "0a7f6173bb2c7f899de034e9a7859d6e784617c885a974110497f54240cc1a8f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "98e59121c4c89c7bb78781290ca6699d0e28b2431b15e2c81b1064c88b1dd984"
+    },
+    "ui_cover_of_1_s": {
+      "sourceHash": "d8b724faa3cbc6dfc18e4bb4dacaca6e5ebca4cbd2e7502fa40adb409e3d803c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "2eeef7a140bd9176537b48f9710ea7b0e6335f446440046116fc19419efe10c2"
+    },
+    "ui_date_unavailable": {
+      "sourceHash": "34fee3aff788996b5cc5c38677945e207e696b8bc2ac4c963b69371c67eea37c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "f6d6e27dcdc56147780a180dbccd30871bd8dc09c42c586c415a200f4c4ae511"
+    },
+    "ui_delete": {
+      "sourceHash": "d0323169f989e7e70d6b95a068b5cefe15edae25a914265dbce05668b6924afc",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6821ba0d5c8656bddf9f43109dfa27136cb1edc6744be0f53c2c1115697cc5a0"
+    },
+    "ui_delete_all_phone_audio": {
+      "sourceHash": "6b4ff7e67f20acb5278f2cd0388ca2f24f79546b3a0e6ff12b7db2f6277b6930",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "d5d0229f8702c8f2b6a1a23371958e51eed7a7250c542900c80ad47f08530841"
+    },
+    "ui_delete_all_phone_audio_1e6a6f": {
+      "sourceHash": "2191e20f5fa532b06a783094aa461bb6a4e854c205b752b0030b09784914348d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "506d3baffeede47e870529f826b8437f1e683bd41ce9383e7c4737bb0823060e"
+    },
+    "ui_delete_pen_backups": {
+      "sourceHash": "07ca45da4f79086bcbb7046f20d34d4555cab21a077711535b1dcb08c9995bf9",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "e2da2e296e4953b8a0eb0225d8dc55f66942c66e9483538e0345c84be7735115"
+    },
+    "ui_delete_phone_backups": {
+      "sourceHash": "262442b7f79a972062e0b24684c891177538a7e380dce70d533da54a4adb7bc4",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "d2502ea3ad5f53d08e3fb1e8c0e7e6aa2120a41e95e24428e5538802f248bb62"
+    },
+    "ui_delete_phone_download": {
+      "sourceHash": "ffc865bd3286abac887e581037f278d6efa7abef4d318a769ba04a04b11b2d15",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "1c28c23f5ab9f0d6cb352e7a2dd51d7d519eef1d56b6d942320b7ed49aad2a3e"
+    },
+    "ui_delete_phone_download_a3aa92": {
+      "sourceHash": "b3b4db8f08605ad770852623fbf31b3c11e586720afe7d8ce58577c659a1bce6",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "89127eddd0966a1e937e05922f64b231e7d3dc2494472d53da2325a70457b726"
+    },
+    "ui_deletes_all_downloaded_audio_temporary_files_and_all_pen_backups_on": {
+      "sourceHash": "1ad4828d7c646e7988c8e8b38d66d2e1d117d2eec7d2c66d3c448a820d8ecc47",
+      "terminologyHash": "ec3de48f068108a715334f938776378b97abf3a6fb5167e9c2200c99ab4906fc",
+      "translationHash": "60a531e3a51c68ae8490d1ba0163b48c6b10a43758e83781978b3d418a203a72"
+    },
+    "ui_deletes_downloaded_and_temporary_audio_on_this_phone_pen_removal_bac": {
+      "sourceHash": "8a4ed1129639dcc7023a72f798096499df6d923a91058e99d3b3f7e57ffc42dc",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "ef12cbf0335b26d3876d11fbd22c1f4694492eda242fe40b7499259b8eea41ee"
+    },
+    "ui_demo": {
+      "sourceHash": "c7ba0cab20762919259e36173e3b425aac65555ed67acba1382f8657010c079e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8367b5c0fb3c7e959137be1f7076de7a74917ead172db5094a4e2c0e8338d20a"
+    },
+    "ui_demo_banner": {
+      "sourceHash": "8f2044abe9fbee40b2bcbc3392521204ad80114dd2a83daece52e0a273ef8704",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5100151a4479dc0b270f39533182281e3851da221133c82f33b67ea410ca7879"
+    },
+    "ui_demo_readonly": {
+      "sourceHash": "15bacec60e8646b2e120b204edc6df41847d8670f3dd5880f91e9e0c2c675a3a",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "c5802a87b2cd648f4c4476e286cb15c69acb4f8b8d7057cbba3782515d1b1cb8"
+    },
+    "ui_device": {
+      "sourceHash": "e4b32a42a20e568dd408eba0415e161b2be06e1240aece84f89f5248ea50fbbe",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "4e2de326046e71f0607c0a2aa85ac6c91d87754a70d7184570af4906adb4b8c1"
+    },
+    "ui_device_language": {
+      "sourceHash": "90c0c21e71a43037c3fadb83674dceab6d29dbc6f316f43fe665eeb7a164a889",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8b956b3d4de0ffa4dd48977d721c255b35e71093a3c4b62a07758a66c9628c14"
+    },
+    "ui_done": {
+      "sourceHash": "e45ad73f817f150d38f0e1fe930e7d36b46ab78de5015c6f0830dc21888f555c",
+      "terminologyHash": "d007e0a384e796ab1bee19a428fa685518a0974835b92d116d3dbe67a1238dba",
+      "translationHash": "57d556170bf5371b86b86becec5c440c5c0b8b64fedea1eb2e2a29842030e600"
+    },
+    "ui_download": {
+      "sourceHash": "6445f2c6bdbc454534345ab48e7e66d34c96ae62baa45e87a27423795af46820",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "b72fe75449699481bdc28c395219d9c4192fccccec4809b3d014bb9e9a8f899f"
+    },
+    "ui_download_install": {
+      "sourceHash": "7c580e7b8477f27d5034f25a8b1b3b96aa50c23727d1ec65c1888f1399651b4f",
+      "terminologyHash": "23b999b7ce24abbd673f4266358db3f5fbbd9c997746bd59d202a51ee44eac22",
+      "translationHash": "6b4586abae58c6a87e2ace6be70c3620ee072c4f86576f56702109987c7780ba"
+    },
+    "ui_download_needed": {
+      "sourceHash": "48061d52f5457697e62829d4754eaec8a7b80f809f3e4319c5719bcfcf856027",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "7531fa880a46d374b0570c4a2c5823d1c5d4349d2cb5a90b960109556b66d4a1"
+    },
+    "ui_download_phone_copy": {
+      "sourceHash": "7db455dd912209fd33cb26c8c154462ebb25d59caf43f09f7a1875e6e8435d09",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "5e74d4715e634032a66012984bbd996d18f839ec90cf18dd49e564e142e3779f"
+    },
+    "ui_download_phone_copy_9fea6b": {
+      "sourceHash": "7182d94f83db71c6e38bd66f3ec9edd027e044f190056ec1e67547b711b507af",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "bc51eb7bf7175b3452c76b7f724b7307719f6da044931fb402dc1d5afb1859de"
+    },
+    "ui_download_storage": {
+      "sourceHash": "558850cfe432ef4647df247c77a76c9c299272aaa44a9bdb916a08851cddd98d",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "e1bbfccad76b213e535a5bf9ab9b8eab6720e3fa9827c14a5b07b0ed8cbf9e90"
+    },
+    "ui_download_to_phone": {
+      "sourceHash": "2e735ab578ddaf17df7bbe7234636feb7d65dd9c453e9196ef1a0b68a2e4e943",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "2eaac5baeaecd26b7d18e7ddeb2189b572110ddee17f945c673e6b8c6274c48e"
+    },
+    "ui_downloaded": {
+      "sourceHash": "b52cf1524f4f8da59252cc331fac4ccbe4b1bb89db724ff11ddbd1ca66b857d8",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "3ce74b5ac7364afd27f9e0026667c3c06ff02ef1979729019344897443d3c93c"
+    },
+    "ui_downloaded_audio": {
+      "sourceHash": "8f1890a7538fed59b65aa4430f5090bf8fb543c3e2eb2673f5c7089c3d44ce93",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "d268c8ce0ab46a1e416503a9b82531a9e57940341f957da0e41a4d1d99e1dd26"
+    },
+    "ui_downloads_and_installs_appear_here": {
+      "sourceHash": "ac97569cb4a5eb80388caca0eae1a261685aca6886fc5561a615b1f5d4a8f211",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "ca456954ba975e4ba1a2e53c2566616cb779b5f319c5309c88adef2699e1baa4"
+    },
+    "ui_downloads_stay_on_this_phone_for_your_other_pens": {
+      "sourceHash": "ef9671820a2fffdca635c56fd99d20742aaf00854d637292c65a7bd40bb1ce82",
+      "terminologyHash": "5c9398b5ed34c97d0bf199b59cab7758e4a21f72d08815d91972dab1699bc89a",
+      "translationHash": "8dbcdf3db486a79978c8ef4fb9952b5b9495132f0f6c86b4cfd3612cb85bc694"
+    },
+    "ui_downloads_temporarily_verifies_the_pen_copy_then_discards_the_phone": {
+      "sourceHash": "9b6263dab4c9713c99d23e9521e3849ba7a5ec71de6609fa1d5b78b54606ff91",
+      "terminologyHash": "d007e0a384e796ab1bee19a428fa685518a0974835b92d116d3dbe67a1238dba",
+      "translationHash": "3037523eb645c059d6fdd3d11a00dfdc384b88c51ff2ecafafb7afcd7407ce4e"
+    },
+    "ui_exit_demo": {
+      "sourceHash": "ba5983f47754b077ec5936ab3815278ef0e931893594675293f22a7c1df89df4",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ec75b488f34ac87a85a1a24cfbaf1eacbdfe2c20df42e670d6986d99fa514c73"
+    },
+    "ui_family_collection": {
+      "sourceHash": "6a297b3ecd0271f9a4b2bfb1c91b1ea1ddd6c29c026bd3b2e751c56cf91cb18c",
+      "terminologyHash": "b159a70a56714d69d87ccf248ba5fca94e9ebd042606e34f1df294e820b48e99",
+      "translationHash": "dfc7e13495f4ca1e6efdb2f4b98a28a364fc332d81830d6d5d2c99dfc2f39deb"
+    },
+    "ui_family_selection": {
+      "sourceHash": "83c099d4507321523951a1b78420efa86f5909ae5959a2b390d1e6df7ae0f111",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "dfc7e13495f4ca1e6efdb2f4b98a28a364fc332d81830d6d5d2c99dfc2f39deb"
+    },
+    "ui_file_dates_are_reported_by_storage_they_may_reflect_a_copy_or_publis": {
+      "sourceHash": "6f9bb2d86eca7a4ed0f685d09e6157d9c384012d5dfbefa4462a6af049b05b6c",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "09b605e2b1ebeef496ab6a4460bf3d8cf4bac793888d79da15471085749cc2f1"
+    },
+    "ui_file_details": {
+      "sourceHash": "397f6f621cbf1986abf258cdb29358b03a8cf14665f3aee1b2e4d4e3a3b8995c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "52d736c326c660a2ad327476fa3f182d0f82bed0fabeddf5322bf60d2cc85396"
+    },
+    "ui_file_modified_date_not_last_played": {
+      "sourceHash": "f3a5e2b43f44605d9c438271b16ef309b4cb7bafa08e744b448dd61ce52ca0b2",
+      "terminologyHash": "aaa0ea95de4b0f1e16d7294df3b7e9c392730671bf120aa7b6172857ecedb14b",
+      "translationHash": "f2cab9ebca3f1b40df4435afadc48b4b927bc9b350a5ea86ed21a7bfe4d508d4"
+    },
+    "ui_filename_conflict": {
+      "sourceHash": "b15c283bb29b9cccf2bd9d849309f62d6af1cf743758c3174f81db6f55bc2b9a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "505d152d710568c844c4c12a9a9c6c650df55f24bd3faeb9d7149d260579eeac"
+    },
+    "ui_firmware": {
+      "sourceHash": "d85eba8aa2332e6e19d385c742a738b2ede74bde5edb034b396ebd4840146e08",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8a520a1c5fbeca36c1a725a210267931a814b1e3a13e210b75cf68352f39070e"
+    },
+    "ui_folder_access": {
+      "sourceHash": "6ca3ed21e98b17ea8b5e012c922ca821313f95774ffb16efdaa7c2e2bbff5932",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "14288e9fcc9fd51c47d12b2e3db22756b2d107fa6c506494ec909a954ff4e07c"
+    },
+    "ui_forget": {
+      "sourceHash": "de0b669c62517b1df150dd65675bbb3ec32837edbca738b2f566c56ecba97f27",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "421951a22e346a80261f568ad9df189746f2cabae795c15d5482466f35ba7421"
+    },
+    "ui_forget_1_s": {
+      "sourceHash": "fcb37aa5658b573cd711d52fce59b36a396b76346625a15186fb80feb0f6d653",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5b563f11888d1d4d2928f1af34df2f5cdd2e3ba3130263eef21e333c3c9f5c70"
+    },
+    "ui_forget_profile": {
+      "sourceHash": "c8bc0f6c50e1bbd4119ee4a75d36517148f7adb2fd3c201a6b223a53c789ab7a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "bce688fc7d58466114257ca71bab96951048bbdcd562d363440c273f35ae72ce"
+    },
+    "ui_free_space_1_s": {
+      "sourceHash": "3a8d2b89b7bdd1cc01a50ff1b3af89f2c76de847cf2ab3f16c099d27caeff76d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "b3883a3b3d472e68c01dd84b57ca6454632dee07843be4aeb4e2e2c5e74eca4c"
+    },
+    "ui_free_space_is_unavailable": {
+      "sourceHash": "aa9a99bdd99d1015d0dbdc6c6b479d4cf9b0ae4d769a370f219ed4927c7f4584",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "f1eb1097aec798b5a97ae3c1e4373fac733ddd57e8603931e87e40655ccf96fc"
+    },
+    "ui_gb": {
+      "sourceHash": "b775143c61f8c9d6a25326f7321c538720e30ff7d0693c8460915f2b4cbd3ba0",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "aba396e99e2998a828a1318199bed688c6452092e2723a925d92085d3eaef60a"
+    },
+    "ui_getting_started": {
+      "sourceHash": "9240d4628584e6249d9b7f33c2c5ebe75853343815a9e22c0eb6cd28ab73c501",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "1b68e7c146e48a020be30e3fea89dbf76bb4a09796ffd00db7a3a1db3f0e9964"
+    },
+    "ui_in_saved_inventory": {
+      "sourceHash": "5cd0cf0063b49692ae7b474c41f5760701a781e0700ae67281d599a27a3d3ff4",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "a4c27b64e330d83bb005ce54002aacb8c80120fcce54a1ecb4ca1f8dfcd0eb10"
+    },
+    "ui_included": {
+      "sourceHash": "3a59bcf8fe9b102bad5db1ba32e6924269d0755b5cc526e75a18ca331e575c68",
+      "terminologyHash": "7ef9a5e3283a4dcbb4def3dee0d46848f23ab9cdad4137a4a266d3e0556deb28",
+      "translationHash": "1ebe48c4d74b0c98afec5587474d40d67c77f585cfa0f14a80b81a7de7d7eb99"
+    },
+    "ui_independent": {
+      "sourceHash": "e4ddcb0bc70647baccb0914c739e921650664e22d85a0f1b0b49a7077006a049",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "64c550c47d8047617723cae70fef201c8d78c7b672da1ec7a4f7ec5104a11f80"
+    },
+    "ui_independent_open_source_usb_manager_no_account_your_library_stays_on": {
+      "sourceHash": "32dda47b3e167c91e9606f5ff8698d4f5cc3ebeec65bd9cb0e4fca9b06240489",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "cb2caa4cf1e6e5197fbbeadd1c4a53f485e1d97425db625f3c40e3c23de0d2b2"
+    },
+    "ui_individual_selection": {
+      "sourceHash": "44ba3851d75011b154eae5fc8dde1cdc9d1a95b70f37c5b1501b0e3ee954e172",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "d6bc17f44b0de7179393f2d423cc1a14797e206982f33b1af5d738f8fd9d1072"
+    },
+    "ui_install": {
+      "sourceHash": "5a5bfceb629701f703f87cd149f51cdc87bbac345beedabc8f8ba49a6dd059ce",
+      "terminologyHash": "7b9be1b42290dbf2c647df2989bf50a9ffe14b0b9d8682974e9a4f7d4de73ec3",
+      "translationHash": "9c3bb1b0b126d473b7a63f606c80664ffb622b8c0eaad75f330010e2fa32dab1"
+    },
+    "ui_install_on_1_s": {
+      "sourceHash": "5fa885e75107d22da9743a8f307e49271cd53480509c8384c9a1c9022df22068",
+      "terminologyHash": "7b9be1b42290dbf2c647df2989bf50a9ffe14b0b9d8682974e9a4f7d4de73ec3",
+      "translationHash": "41002c7e66bef4c140534e5c80286190c611a2c3a7b242bee1a8dbf615001e21"
+    },
+    "ui_install_on_pen": {
+      "sourceHash": "3076188cd5fd13979d01531fe236e180e378dde0050b02073215228209e33aa9",
+      "terminologyHash": "e094207aeb4d34071d465242b493f1a22800ead55f7ff854594cd5d3863bce8d",
+      "translationHash": "f2365d0cf3d4ec82d387f372e16871f99e75db597235882bc5c0b55fa040e183"
+    },
+    "ui_installed_books": {
+      "sourceHash": "9b3ba9bc15de0c46b5bfc8c6cd2d16bb4e38662a131ec4123481bdfcf2d38fe9",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "8c1702282192a20329f173b23b3593e00c6ee0092e28d61b2bc615a5008ace9e"
+    },
+    "ui_isbn": {
+      "sourceHash": "5ffcf2fa2bd9f21ce133008cb94958baee42038e8f47491c757325a59c2e3d65",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "305629d938be4369fd50fffaaf6a88f43b70681a6e21ec954b95917ec512285c"
+    },
+    "ui_isbn_not_available": {
+      "sourceHash": "7cea95344925a7ca05fa9297ae04e22118200c39ba8cf767169b00d888dd7ad7",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "2a8ce00edae9aee6166c754b9e3757b59bfb0e905e321863b842f7f60f7694f5"
+    },
+    "ui_keep_downloads_reuse_audio_offline": {
+      "sourceHash": "8636673ae08300485d049bf1875a8f08ca22e47012a734a833e67c6de2f2e89c",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "7caae31dbcb8af356b9bf6cff33a6f5a67ac29bc9a2a6766a8f6aecafdac6ea0"
+    },
+    "ui_keep_the_app_open_and_the_pen_connected": {
+      "sourceHash": "098f8ee3f6455180e91aaa689e381205953ef63c098ec89794923e4571fcf6eb",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "b29965bfa185e6e9a58c85520b189cbb2d9b0492a5c9f332e2b8c40542a90621"
+    },
+    "ui_keep_the_pen_connected_until_done": {
+      "sourceHash": "c1d83005086103739996fbf47e77a838b4c2e4cba6d95430d731cb9a90f45c3f",
+      "terminologyHash": "55a9e789b68e8b7f52565e91551bbc8ab493d80a057ab991ad917b60eb930e51",
+      "translationHash": "563c2007639dca511da981e3c55304ba43e1f478eb85d8fbd185193c0d55bb9e"
+    },
+    "ui_language": {
+      "sourceHash": "b99d43fef475e389e30c0b491b552226e5f2356333346711a97ec5895067cba2",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5fb152344aab2706cad133c242e53b85ea93ce04d971598945c9c3f8d7cf1cb3"
+    },
+    "ui_last_observed_audio_files_1_d": {
+      "sourceHash": "e34cf747f955a13d5a97e2f9653369bd6979d668a31651d26afbb0e5540bee25",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5beeafba7fe794e825056e3c8abd3fff010b97f98703b1ae27fbe0c22a6f8c4c"
+    },
+    "ui_last_observed_free_space_1_s": {
+      "sourceHash": "dbdda6f5e18b8345696a00a344a4c0190e4ce5c7b90b7afcbe5adbbc7271179d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "708fd797b93f0351d9858cf301b6ace4a4942ea4050d1bb92f1eaaea55f94d4b"
+    },
+    "ui_last_seen_1_s_2_d_files": {
+      "sourceHash": "620e16b4942b3e5e4e29b173c8c608faed8d32d9b37632ed5f1e77a3cea9f094",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "00d8f24f680410046fddc02a4c40edf252cf9d63bdc13846828cf8416b509943"
+    },
+    "ui_last_seen_on_1_s": {
+      "sourceHash": "1a3a63ce88a9f63b8a1ab79bb6ea1e01c94ca180a8309df6401b9587ec9b823e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "b6937580e05e5acfe1dd61e43492b494342af741666e0d7124eb9c47b00808ee"
+    },
+    "ui_library": {
+      "sourceHash": "5c774b89fbf4ed7f8efa0b6bcef497418f188d64a190cf9079b0dee545a6c3e1",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "651612400d271c60be86a5b1b6ad3e007a4bbeceb95570418da0832e7978f667"
+    },
+    "ui_load_catalog": {
+      "sourceHash": "5e801d2a2a64fe6106799b698ac283b90638b2ac5b33a4a55eafd9aa3281a406",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "e4366b8f33e9aee863054d5f887e3b68d7cd582dbccf981695708231657ab051"
+    },
+    "ui_load_your_library": {
+      "sourceHash": "0bcc44457c7571badfc1a3458a00b3ece13d12759d5500510644ee2e014e8cf6",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c70f7e816c9e0c1b5b13627680a8375f4e9b1e32896ef0ea4264cacf4664d08f"
+    },
+    "ui_loading_isbn": {
+      "sourceHash": "24efa6069b61f196cfcf0f2e901758dc3361be453ff8b19fc1d644e2cd7b13b9",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "9da51a9c20ece98908b655c58a9b993cf9573f05266ecfcac842de9968b22c30"
+    },
+    "ui_make_space_on_pen": {
+      "sourceHash": "bf2d17adb2c95f9ef1b75c2244b61ca490b188341a4adf2f22f8d94209a37a34",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "753b444408eaaca9f10dcf28011bef221bfee4605ca4018c57faed343d218bae"
+    },
+    "ui_manage_phone_copies": {
+      "sourceHash": "a03854120601a41b98415fbeb3ebb88ac90a874fb2f99b70b2c2ec50ac38c5a8",
+      "terminologyHash": "c7b40d1c23d15af626d440a38cfe1679477806379b78d81546c972c528d41100",
+      "translationHash": "b45c5129d4eb62d48f70748f73a5521f62d0393eb2c1341de526d5d8a215abb0"
+    },
+    "ui_manage_selections": {
+      "sourceHash": "e364821e29ec232053290328720b5035c5a1e25b7bb7ec5414195aec1099da93",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c6eae40d8a544b5bd289b419b3e0fb8a681b332c63ae3a03751ace934cfd7d99"
+    },
+    "ui_mb": {
+      "sourceHash": "8979b177911702ebe832e5afe1daa0f9530c969d8b9db67a62e01b1976e4ddab",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "3478f8f3da03a0bc245f15f7fa9b33919f22504ee42abdf0a714007b43d9072f"
+    },
+    "ui_more_book_actions": {
+      "sourceHash": "2c9307a436fe57e9a526ede783eb9d8f66b2524c6bc1b4cb90e80280c8bdda5c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ef5067648c7f2d38882d239b37b38280d2e98ddeff6c91f0f5973e0d9f05734c"
+    },
+    "ui_new_downloads_are_temporary_existing_downloads_stay_until_installed": {
+      "sourceHash": "e83c6bee0cada6c5c3a57a6f03d69b500df3fdc502ea5455703870d7d1a037a1",
+      "terminologyHash": "ffbdd725604ab7b5cb3e600e5f8ade54b6bc65786937ed167e6f3a4f0e5a98e0",
+      "translationHash": "e59fa5c78a1def236d1ad4502d76f90797ae62d8d9185e3e9c880e75e5066c21"
+    },
+    "ui_no_active_transfers": {
+      "sourceHash": "9f7ff9f2a7f9edc495cc3592243138e0cf991b81a7f5dd4436b6506ef78a6743",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "bf4d86cb0bdad6e2a69cbc7338470acf87de5e0127a344813f8c4744ead6de08"
+    },
+    "ui_no_downloads_yet": {
+      "sourceHash": "cb077fec2c98b176c6da6718da8f7ccd6ad54dab06e66895e778dc9dba9df2e6",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "c78ff560ba8cd26eb6fff5f008d4975c77ab6d0eea90fb321c0f0029025ac370"
+    },
+    "ui_no_matches": {
+      "sourceHash": "071c127db43534c693a1b21b804ed849499ef4e4873619c92905fc71f1b2050f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "e2b9ea674a8af11582e0049b356e5e6eecaf756e7b3efbaad30cde77f7429418"
+    },
+    "ui_no_pen_connected": {
+      "sourceHash": "91b7037c741635924b83d576c95226b66dfd4aeb173a59b768853f77ae722c56",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "a9ab05ad76af2fadd1575c93507a979dbb7fd8b7933b152e6315ec86d70d821e"
+    },
+    "ui_no_selected_books": {
+      "sourceHash": "6d74530bd6538aaaef8c6ded5a05c7903ab0f34904a2f31eb996a1af5bb0700b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "824f7ba7d1ae82c5702040caca3d7d58f0d8dd5d532fb68668a23468058bdc75"
+    },
+    "ui_not_included": {
+      "sourceHash": "56096650b4aa651a5422027fafe0cfc8a0fc46d8afa9042895a0b51165a226b5",
+      "terminologyHash": "7ef9a5e3283a4dcbb4def3dee0d46848f23ab9cdad4137a4a266d3e0556deb28",
+      "translationHash": "a27eadcedca889b5561e87a2fbf11da3a397378785978c55f47446e35fe18a18"
+    },
+    "ui_older_download_1_s": {
+      "sourceHash": "586a7f76adcd4cff51b6eca1135d558f8495665c8e3f8a4bbaf346aab74eb2b0",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "7021cc4121582b98db01c807cc65cfe387804ae9239dd7822e11f4d8f0dab0dc"
+    },
+    "ui_on_named_pen": {
+      "sourceHash": "df5c9cbd14714cddc3ad6f6a3631100896df8e63066f6dc2adc0d522cdb4d144",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "be31c1a784458897d08fbecf4056a6290abcf1c4a56c8eb0ebf8413ab5d75cd2"
+    },
+    "ui_on_your_pen": {
+      "sourceHash": "34c9ddb35c1e9b7f74c0cfe501fb09e4f0386133a58e897fbc38717c437efe7c",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "3c9c05e51f2b68d04d9b76aecfe9067e985364fcfbaeb07f42906efb37066b53"
+    },
+    "ui_open_navigation_menu": {
+      "sourceHash": "1ad806e20d6fa24a4afd2d6f5bf589d7c392d30031a034c9b3467fb5087db83a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "0757cefb6f522ad92effa6ecc0c2610eb5766721cfe7ddb5a9e28fed2ffe6716"
+    },
+    "ui_open_source_licenses": {
+      "sourceHash": "679c11eb5fe270838a97bfb4ded81512467e9b89da1e85c86411b9a6fcace5f1",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "4d358d38700d9e63853dc23b5bb192244b2c4ecc90f5a547a9c5d4da8d427a34"
+    },
+    "ui_other_files_share_this_audio_id_and_will_stay_on_the_pen_related_con": {
+      "sourceHash": "1ae07caeddc470caa8ff24f03e0a05cc490908b636f7a65971922cbca0625258",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "bc8e46836351c001430d332322cf91a274ca9d97e0f62a840f4e85003aa9eea1"
+    },
+    "ui_pages": {
+      "sourceHash": "c41a3421c9f337bfe97d3a29f52649d34b86475bcc0cf8af5c6484fd1c742d77",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "35a0dae03c5bff33f5224d447126731e7604bb31c95fba7def467f2655aa81c7"
+    },
+    "ui_pen_1_s": {
+      "sourceHash": "aeaf693f3627aa9d08f647a00ed3129640c4019450800fb3a4a14c482c917e8b",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "5bae2d333d36f59584e30be63c9f59802882aff28e4622010a5617b88ebafb39"
+    },
+    "ui_pen_backup": {
+      "sourceHash": "6b02d699f9af26f06f4bb425200d70deb02d511ba2ae2859e65949ddfbea02e8",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "564f6765d0b39e3863a0c2205b563931d42de4797c83225490051ef965b6b833"
+    },
+    "ui_pen_backup_1_s": {
+      "sourceHash": "2589fb712a04e3a8980fc82908a1f95d6ffc8525845afc3b344480ddb49aa3a6",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "a286d3e9c56c931756fc6b6a1321fa0b8d3cf37c978a2aed7b447133e279a0c1"
+    },
+    "ui_pen_backup_on_this_phone": {
+      "sourceHash": "b8b365c13ef26262155417205e524dc5d9f2e3ca2dea7f3b832235d2a201b4bd",
+      "terminologyHash": "d8632350b5968438977e29140e825b4447e6ed3e2e61f64c16d55c2b2f31d085",
+      "translationHash": "b93abdcdfb87a230924f826aae53b2dd4ebb57129a23d5dda2a96e5ce177f1c0"
+    },
+    "ui_pen_backups": {
+      "sourceHash": "339abd07d410a0ae5c24ccf77ee74c931748b6578f785dae4718553f6ad447d3",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "09fd29a550269660cc5d4e781219a88dbb3380d176fd8d30fd08c020b8e38f9e"
+    },
+    "ui_pen_backups_on_phone": {
+      "sourceHash": "37c4bd6795e65522a2ee6ec43fb96bce7bcd57f0a3d843760f619a7c44427fa3",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "dc1811a738ac26a5bb563c574cea76e17a92b169af4b973343106e9ab37a3c11"
+    },
+    "ui_pen_backups_stay_until_you_delete_them_catalog_details_and_artwork_a": {
+      "sourceHash": "5fd755fcab8160bb419917083e3c1cb4d137114e13c0241b1d584efa68ff8e7d",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "c509c4d08505678fccf8815124a3e63db76641886fe10b02be2f8738806f61b3"
+    },
+    "ui_pen_file_modified_1_s": {
+      "sourceHash": "dca269c5d9e18f3e70f8010fdc1746a38771beda8870060c180a545d3fc7b7fd",
+      "terminologyHash": "86c0209e10dfdf1e4d5e10660bebec5ae9eead62962a4095eb346d4f88ee8218",
+      "translationHash": "41476592661731e97e5e25e4815919db2920035d30d37c1ac56ba5197e75539e"
+    },
+    "ui_pen_information": {
+      "sourceHash": "012b8aadd659e9740a177c15bfacf59c759d07b5d1a267ef292e8055e447810c",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "cad4947c012cf4c594cfd4ac988c67b3d6a0c337e16b09f340c234adc5e520fb"
+    },
+    "ui_pen_name": {
+      "sourceHash": "631fea5ff174e2f774d86fa9b4dabba3838c7e03f6b627b60bbef95db1633c25",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "333bf04a49daf4c35126f81bdcb1fe33617eb19d38bd08969a11f7258dce3991"
+    },
+    "ui_phone_backup_saved_1_s_original_pen_file_modified_2_s": {
+      "sourceHash": "0937cb2121e3c4f17a8f7c10551995c11293178bb4b0e631d9d4a99f098c3027",
+      "terminologyHash": "4da933156f3ae8f3a5755c4c2df5453e24cc36ad57b5dea7a950c68d41d8f85e",
+      "translationHash": "0e02d1edac5ba4d1ef05ae9d342f099280a44690327ff371de0491c749457ede"
+    },
+    "ui_phone_copies": {
+      "sourceHash": "f7a86600fcb846608a1b697dbb4db8c8ec3f6894f51b0d2216436093ffdad05e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5b978555c69d441ae9290003b8f6f5ab8d4d00a0d1953fb8292c0b9d3002032c"
+    },
+    "ui_phone_copies_backups": {
+      "sourceHash": "fac33e7740cf41e927702d462fe33440119788d1e04dd3a76574150c8ee284de",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "fc0c4f7cc967d9d6f4303209664f3f07d965b2826c8846e07111dabf6b1ddca6"
+    },
+    "ui_phone_download_deleted_after_a_verified_install": {
+      "sourceHash": "6066d6bd4c3975a2740265095e818830d005905c232dcac40e4eafee6f513ae8",
+      "terminologyHash": "23b999b7ce24abbd673f4266358db3f5fbbd9c997746bd59d202a51ee44eac22",
+      "translationHash": "06e2ca740cd281127a5969728a0b9349e51e476aac8ea88798169aa7e66fdbda"
+    },
+    "ui_phone_downloads": {
+      "sourceHash": "4cc1a51bf763cf1971588b9b10f8e11cabf080aea902e68f1d9f97d0b2420015",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "60ddcdc3230e8333fd3e6229ba2572462984c6c427edfc770f2ff45b30ccb1fc"
+    },
+    "ui_phone_storage": {
+      "sourceHash": "a19bd16fa303c91d2ce31970d35ba218180fbb2133aee11e03289ec658b1e916",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "76dae88f34a9ba52422af15f1273a6827d6f63ec7f47cbac807277b74dfe13bb"
+    },
+    "ui_plug_this_pen_into_your_phone_its_saved_profile_will_be_recognized_a": {
+      "sourceHash": "f66d9c14f54f3db38aa0891c80baa1fbf773718ea88739a1bb376d1da02b5ddb",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "83c56fdc93548109b66812e93b9d1efc1c5d3c33480dbddad1edd3a7a101e18a"
+    },
+    "ui_privacy": {
+      "sourceHash": "4a8473dab42d6ea2fb5fe37ff75f19932bf4b87f9fc2c7e4103104ad7826543f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "fafe0355b63c4c8af899d4167c14227d629ee6602904bf7ab9bc687c53b44937"
+    },
+    "ui_publisher_page": {
+      "sourceHash": "2f3b53fcf45b0c72972b23eea2de5e925e717d1f45a971dd6ca436fb46da1024",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "779ff1291842c93b7c52c4b3544c9078aa9dfb7fe261b909992a32d90e5249ea"
+    },
+    "ui_re_download_phone_copy": {
+      "sourceHash": "f693b76eee2ed82463314c4285e959ece57f1bcdbba0364dbaca189a08f7fe10",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "2c6b3c5ee680ef9d64f5f12352c968c7681237a91d7731edc75fecbc987c2da6"
+    },
+    "ui_re_download_phone_copy_773303": {
+      "sourceHash": "d9d3a86167d70be48e06f8d93032d1d4a7f211075e2af408eee5b74434dab6f5",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "465517779f2834efd24a4b685045a911a8b1a786a96d521d72d1ef0da1428032"
+    },
+    "ui_read_and_write_access_are_needed": {
+      "sourceHash": "0196d9611120ac6c36ffb3911a829e8d6e36fa6f57ebc7a0b1aa581481a283c0",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "ba2f77ab59c2a3fac388d77da4e723df9df1665d2c91b23241e60350187bffd4"
+    },
+    "ui_read_more": {
+      "sourceHash": "24426e595baf7f5f3348899d06069b60fb7987f2df00354105d952f7e38118f8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "34a37f34e72462fd3c8c3d7b49ab3dd5c021112c81e47afd1f2ee3a0e1f4f01e"
+    },
+    "ui_ready_offline": {
+      "sourceHash": "ca1476035a36c2fa8f19f09a69f4790ace93eb7294905eaf458b13145c09eba1",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "02be345049e38848376ee1457f3f0ef79003d627df5afcd7a4150746f6172cea"
+    },
+    "ui_refresh_catalog": {
+      "sourceHash": "183d8b07336a64f3cc64423b95358dbc4204420c55c32db422b90f7745702e87",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c72895637071da14db1a64f56570702460e71dfc1ebe13601af26d9e56aef228"
+    },
+    "ui_refresh_pen": {
+      "sourceHash": "ccc525ddd9954948eb52debc513ee3ae81e259a4c9740f7b2a8137fc550dfddb",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "d4f96c5e4a296c45ab3ce70523b31846776aff3dc6e0162700567233dcbb4fbd"
+    },
+    "ui_remove": {
+      "sourceHash": "03c768fe31466dda434d10c566277c3cbe734a704f0fefdb3482373f882a143d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6821ba0d5c8656bddf9f43109dfa27136cb1edc6744be0f53c2c1115697cc5a0"
+    },
+    "ui_remove_from_1_s": {
+      "sourceHash": "9a9604c34ce256cbec59a0fc0411c5583162600bda312b34b40e21fe19a6c4ef",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "3d7a14c62d0ef3af05044fa818ce28321676c38a00bbd6ca9cdecf0736dfbc89"
+    },
+    "ui_remove_from_pen": {
+      "sourceHash": "407988b9cfbea139f27c651c1609a2ae85e4f118c3320a8b0618916a58cee14a",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "61d02ff5387afb9ff900547ecba711825fda895a6a9394b9eec4f0393df36857"
+    },
+    "ui_remove_from_selection": {
+      "sourceHash": "4e9fc910b644a80ca615523612efad9df8be5267e5aec3e59309a4464f679aff",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "ae16b3b5c0f249bbf9bff4340c23400f903681beb38200d3a2edbba98aa97e5c"
+    },
+    "ui_removes_this_phone_s_name_saved_inventory_and_individual_selection_b": {
+      "sourceHash": "32e7e8d933cce89acbfbc3791489ea97ed272430f619c76e13291cf2c355c764",
+      "terminologyHash": "b7f306c5b7940ce0cf817644f6c654dcc2e87ab6bb8669405cfc6c44c866beb0",
+      "translationHash": "05b73924e5e6c3dddb2bcb947edb5578f8e3f489744312f5200a69cfebc47853"
+    },
+    "ui_rename_pen": {
+      "sourceHash": "031d577d8fd1e6bae78c48bd51e2c1523a9800bdd5f4e06d72e91ea982677851",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "8cff5684edfa42453f811c3130ea11a523f10e53e0d4c9498f7c1b6219fe45f6"
+    },
+    "ui_restore": {
+      "sourceHash": "333ec60bcc252300c0b01a8090124cefe65a27e4e016dc640bd3d39546ef64f4",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "d1fe45fafad1182d3a2f585c49e8ea6ffe1ebe8692c6f8bf2d784b3be11b7c3c"
+    },
+    "ui_restore_to_1_s": {
+      "sourceHash": "3e30d2ad6befee4a9408aadfa4912496137bdf083a0f5c654efacf6b2ee1b3c9",
+      "terminologyHash": "4752ec071032b4854a903ec1263810778f84b165c33efbe91e98218c5efc6c7a",
+      "translationHash": "e1947702e96a5ce4e91090bc1c25da621384fb6e1e1f2aa2f73f2395cb066ad5"
+    },
+    "ui_restore_to_pen": {
+      "sourceHash": "e8ce77db5c90e49138fc822252d6e8ab347bc5d83fca6b781a43bb9988c3d10d",
+      "terminologyHash": "0ee7041180e529a45d0c8f5749675474de13866b729bd7d185ce2f44dc6e6ae0",
+      "translationHash": "885af2cf2a58aaa4305e3f5760967492a100eecb756eaa02ed7a112025af1b76"
+    },
+    "ui_review_for_1_s": {
+      "sourceHash": "160e8651b4aede8bf3ac82ec189b7ea46e1c8bb67a7ba79bb6d87dadd3aaaa78",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "a7c0053387333ac9bb134f84987a89bde65b865b1f78c0df9340da3de190a212"
+    },
+    "ui_review_oldest_files": {
+      "sourceHash": "17d1eb2c704157cdb0312f647017f1359846a47fd0a4a056d8074c4bf4e748c6",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "a289859515f6123b39ccb8b0f8857e633028a76a64dfa5c30f737725f5271788"
+    },
+    "ui_review_selection": {
+      "sourceHash": "042cdd4ec22eaeeb4dfa7d0f1d17f9e82019eb08977f83e1f3d57c6cae75d0a1",
+      "terminologyHash": "62054ae8a360f4f76b89d603071bedbca3757abe67968af28be738dab7193ca4",
+      "translationHash": "2fdfd8c690e1ea55d48d8ccf04ea5ed75380e9850395c59baa4e021177da2d7f"
+    },
+    "ui_save": {
+      "sourceHash": "5f0d09e36e29e55d8361a4fcbe826fecb2c8973aabca4caa6e5aa203bceaa320",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "595dc5da5fd480f395c62e402d70d996d62c40063b131167e0d5cbf69953d083"
+    },
+    "ui_save_books_for_offline_installation": {
+      "sourceHash": "237be4a071821a441d3860b65c0fd78f3e465525b5528f63ccea76d466bd8ebd",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "6d9c387226efcf42a378a264a3fc114e608435437e7ca6c7a19e510cbacad361"
+    },
+    "ui_saved_inventory_1_s": {
+      "sourceHash": "7a131c8583dc55c2f46e0289597d115f4b895b8e90a496637e25fb27e9df2a3d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "2ffa7bd1a44f170be527a61b59d71940dac65990b627b569e7218c5be1661082"
+    },
+    "ui_saved_on_this_phone": {
+      "sourceHash": "2dae902868413d64106af021aec521c407f9875654fbdf08ce8d7090877be00b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "620a3e0920a2c15de2620ca6c58b265043e7df69771e026bb9a36fad574e46a2"
+    },
+    "ui_scan_connected_pen": {
+      "sourceHash": "c6f93cd05023a56d0a895738714e05b91498e27bef1d446fa00248a7cd8b9247",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "8ce544cefed2a8472eda3c433985921abb565e826e8922e0e72b71395ddb1fc1"
+    },
+    "ui_search_books": {
+      "sourceHash": "6f3915ea99d1bf439232ed25609b636da5f81ac9b7d6caede7b3675a1d47e602",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "2ab57acc3e3b7b033e6b4c0f308b652e33983b8a61c2cc7d4a5e116339729c64"
+    },
+    "ui_search_titles_or_ids": {
+      "sourceHash": "71872f54aaa7cb550d397a0b04303c506b33f12785fb897ad2f0900f38142f5e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5156f30d3f691056c38e1c63a2e96df7de82b108e04595a8959dd4eccafe6fab"
+    },
+    "ui_search_to_see_more_titles": {
+      "sourceHash": "ac07cbc4f76909887dba645180b2cd4f057066bc70dec7f6f292807947873886",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "6516886e790e251fdbd0e57cd1c04e28b36986f13147dc7afe8481d7004d1b64"
+    },
+    "ui_selected_books": {
+      "sourceHash": "ef5169e5aab9d2dba9743a37b8316d8e29c0bba262ab41283194a317821fbe19",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "286817ec3bfa0ad09a6a15d0f538bb04066530f3f0af53ee25af672a234332c4"
+    },
+    "ui_selected_pen": {
+      "sourceHash": "e0354385b491f9b265809b48e0b66c0db3acc7af7fd455fcb976acf9a6a42cef",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "5b2706a4dcdc7671acb62fd613037c2b70e4c374e5eece6be20c06f150cb88da"
+    },
+    "ui_serial_ending_1_s": {
+      "sourceHash": "6fd8ab9afe33ae8259cc21c40fcc6cd398d7099b3e020ce9a4765ddb986db75c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "c6535d0028b02a9c8aba21c8302f00039cac1f3947d5cd706d7b6bd6129521ec"
+    },
+    "ui_serial_unavailable_identity_unverified": {
+      "sourceHash": "fa7ada15a26e275b6d04fe9363cbed7715ce8987e512bec301701f390f4ecb93",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "594cf14c27b5ccfed06fe490afc80582fa0c4a9189f03e411eb100aa6aacab93"
+    },
+    "ui_serial_unavailable_this_profile_uses_an_unverified_metadata_fingerpr": {
+      "sourceHash": "ff575272802873dfce795dfa2c843a19e343188345f3a3962c247b441e2c6d7e",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5f0f3f93bc9c964aaeab93a37b3df92cedcb31e96846b21120a0129c83ef1aef"
+    },
+    "ui_shared_selections_connect_each_pen_to_review_and_apply": {
+      "sourceHash": "a4bf1cf82775d92a38d5167c59c0ade67a20a8cd3d8d4c953c5526b9268fc7c1",
+      "terminologyHash": "c5e263ce865b9e17db3a6bc8a40e6ffe9fb2b7ddfd22df82d5ad9dbde3d2c600",
+      "translationHash": "58459cf67dd94236b1bf0cae171355ef060121fa199ddf6b81d9ca5ea064110a"
+    },
+    "ui_shared_support_file": {
+      "sourceHash": "b31277d9d6733d42d7dbf223039bdba703c703c078bb6881a7e419ece043f2fc",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "bcf8c57aea4ef92d7e7fb94e0f42093867b9a3e39537c5479686545db8540cab"
+    },
+    "ui_some_audio_shares_an_id_with_other_files_select_any_required_compani": {
+      "sourceHash": "f2a6a06f61ce6992bd7eeebac229df7e480aaff1eee934a997ca86b75586b4e1",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "59b93f5c0e24af0669cba3b9f1475dba8d9d0b06ec326ed0a5ec848ae86133ce"
+    },
+    "ui_sort_1_s": {
+      "sourceHash": "0180115c858ad630489f9bed59b1f39c90b724e2db654378fb2b4e86ebb50d5f",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "09726829541bbab8ef90e07cda8e25de582caf73853cf56e70f6f900def0baf8"
+    },
+    "ui_sort_installed_files": {
+      "sourceHash": "c71bd0f10a526560cb679d5a60a1e94a4a23b21260619e0392e61d7679563084",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "d5c93b1c3a7125303826c072cb93adfad545672aefec600b6e7fa6613e995887"
+    },
+    "ui_source_support": {
+      "sourceHash": "e39d7e7daea925d6125b8f0329f52b369c44deb0d3812070809e7c3f3d0e4c37",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "5efd20b000ad34c9ae6ee6d49689236fcccc7434313b3fd88d0a7ecfbd163e9d"
+    },
+    "ui_storage": {
+      "sourceHash": "fe6139dd32f352d1410c9aa979b5e9d163ba0fd7bba25e2271de53c15d894417",
+      "terminologyHash": "3c1c440ac2f10e7c6e8a2e1edb08cfb98927792a05d9c8df8319fbbec819beb0",
+      "translationHash": "1496d7408122102b1f9ccd46b5291db85de9677b5dc34394ed9461ee4cc66b37"
+    },
+    "ui_support": {
+      "sourceHash": "be2d6e9a6493fa2011478da7983ca1aa23c287be65b3d4730bd86565e961b674",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "70ab528a313bff93ad6d14f0ac042910545766e10938c6fef4f2867b1351796b"
+    },
+    "ui_task_complete": {
+      "sourceHash": "51b7f4d12b802bbe5876add4a859bafbbd9055bd3758605d340109344aa85f2f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "94203c6fa270314a3e0b1b6abaf5e6ede3adcf716e01f6a12ec60bb4d6acf2c8"
+    },
+    "ui_task_failed": {
+      "sourceHash": "72866d6c2a9c87c72c9cf3e528dfaaaf45925c8dc0415a5ff36e43ac000c981b",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "fe505a3e7bf76091bba37c6abddb625e2865868aad9e735383b19fdef94dc16d"
+    },
+    "ui_temporary_audio_1_s": {
+      "sourceHash": "26730bc7e4b7077a496a5efd91ed458b83c55be22b678cbd944f228f25882a3f",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "4abf6092d9b61592de84e50472e2591128171a14f9634ff530a07b65f56f0445"
+    },
+    "ui_to_1_s": {
+      "sourceHash": "46a961e0be1a1c37927b279c9bb24de47bdbbaba89caa6993e3532dad46a72e4",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "4c4bb5e8d6701d773284e95549866072408633b473f7a0878b11aa531bf3e8e2"
+    },
+    "ui_to_add_1_d_already_present_2_d": {
+      "sourceHash": "1c54e02cc5853e15b50ba46768adacf1b82bfe4e67c617b10cd90f661602a3d8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "b884f7d8eaf59217fae14c18089a44013f804ccb88363707449edf40ba4d6090"
+    },
+    "ui_transfer_in_progress": {
+      "sourceHash": "a5bd4051b90846337fd54d264e48aa79912f36bd7bef1b05cfeb9aa9431e9171",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "8ec8bc215afa47d44e67fc060d766992699817f27e9a5417f6ed92f8625ed5a8"
+    },
+    "ui_transfer_only_audio_is_discarded_after_each_transfer": {
+      "sourceHash": "41f336b386e64c11115e57ac2a299c90c01dc9df9911be1c2c41ef40ecfcd830",
+      "terminologyHash": "5c9398b5ed34c97d0bf199b59cab7758e4a21f72d08815d91972dab1699bc89a",
+      "translationHash": "22b5f7e126cea4462cac51f35feeef733a92d0961ab036e98862f11bfe4273e1"
+    },
+    "ui_transfer_only_temporary_audio_deleted_after_transfer": {
+      "sourceHash": "55c13bfc4d49fa7deed9e781a887330d39cc1fee6f439cd884c728e1ef2ee8f7",
+      "terminologyHash": "2d94d0ac9245e1eb2ada2e3fe721aebf4f3bfd05b9a0202b11d16e77bde69254",
+      "translationHash": "b5d5dc5f00691877ccceb51162f02f3ef085bcf15f470fed0697bb29cacc6c26"
+    },
+    "ui_unknown": {
+      "sourceHash": "00afffdd76d5858ef166594b53d53a991ce74db4d809a14b4442b03a8da34633",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "56b9f8cda1d89ff1e82429547eb2957f414242a0e0177467b775875bbded7a85"
+    },
+    "ui_use_a_usb_data_cable_or_adapter": {
+      "sourceHash": "4d2581fac64c84ea1c7dc988921a6c0f71b3f4dc3fe15bcf811e9e89962d08e6",
+      "terminologyHash": "428b821a720560d8d0a665ed8930a3133cbb9bffa2baec7a2e7be838d09fae28",
+      "translationHash": "136e94bb013e6fe0e220b8b2fdbc5df86e6e365bb99faa558cb5ad29610d5d82"
+    },
+    "ui_version_1_s": {
+      "sourceHash": "606947cd89f3315da8755f649d9172e2ede60e02f0efa958aa245b828e8eee8d",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "eb4e35c083802205cf9f4b70d593daf5710f2e06474e19dce116b9f78c8e0c86"
+    },
+    "ui_view_book": {
+      "sourceHash": "88336bbdbbb0199b2fc8649bef5656d184f5e15c197b41e29abd7970d909491a",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "3c6e2e8b4f3434d9742437811f2f36c83be8ccb7b81f3a5a3a144602294b1ea0"
+    },
+    "ui_view_storage": {
+      "sourceHash": "7b7c565c749d025ff8c7543e620535f00166c6c2fb13e649896980682e3983e8",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "931e99d958b8eadcd1784cd2dfb498dca6a2e741470f8c03c263c214b875ec3f"
+    },
+    "ui_working": {
+      "sourceHash": "43e04f1eb7f6905139f44be838759dfa431f6bfd3c804e5c14cf87a725d04a5c",
+      "terminologyHash": "0bcaa115961e01531a2c149d14a0335d91d4a2b0e75a78906a7b2882fb75e63b",
+      "translationHash": "81adbbf82a084bf4e28d8a932d84e6aa6615e9985e26a375efc9b9585b8895ac"
+    }
+  },
+  "reviewMode": "single-session",
+  "schemaVersion": 1
+}

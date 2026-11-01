@@ -23,7 +23,7 @@ class PenStorage(private val resolver: ContentResolver) {
         val columns = arrayOf(Documents.Document.COLUMN_DOCUMENT_ID, Documents.Document.COLUMN_DISPLAY_NAME,
             Documents.Document.COLUMN_SIZE, Documents.Document.COLUMN_FLAGS, Documents.Document.COLUMN_LAST_MODIFIED)
         val result = mutableListOf<Document>()
-        val cursor = resolver.query(children, columns, null, null, null) ?: error("Could not read this folder.")
+        val cursor = resolver.query(children, columns, null, null, null) ?: error(t(R.string.error_could_not_read_this_folder))
         cursor.use {
             while (it.moveToNext()) result.add(Document(
                 Documents.buildDocumentUriUsingTree(tree, it.getString(0)), it.getString(1), it.getLong(2), it.getInt(3),
@@ -34,10 +34,10 @@ class PenStorage(private val resolver: ContentResolver) {
 
     private fun metadata(entries: List<Document>): ByteArray {
         val metadata = entries.find { it.name == ".tiptoi.log" }
-            ?: error("Choose the pen's top-level folder. Its .tiptoi.log identity file is missing.")
+            ?: error(t(R.string.error_choose_the_pen_s_top_level_folder_its_tiptoi_log_identity_file_is_mi))
         val bytes = resolver.openInputStream(metadata.uri)?.use { it.readBytesBounded(4096) }
-            ?: error("Could not read the pen identity.")
-        require(bytes.size == 64) { "This pen's identity format is not supported by the spike." }
+            ?: error(t(R.string.error_could_not_read_the_pen_identity))
+        require(bytes.size == 64) { t(R.string.error_this_pen_s_identity_format_is_not_supported_by_the_spike) }
         return bytes
     }
 
@@ -54,13 +54,13 @@ class PenStorage(private val resolver: ContentResolver) {
             try {
                 val header = ByteArray(24)
                 resolver.openInputStream(entry.uri)?.use { DataInputStream(it).readFully(header) }
-                    ?: error("File cannot be opened.")
+                    ?: error(t(R.string.error_file_cannot_be_opened))
                 id = Gme.productId(header)
-            } catch (e: Exception) { problem = e.message ?: "Unreadable header" }
+            } catch (e: Exception) { problem = "unreadable_header" }
             PenFile(entry.uri, entry.name, entry.size, id, problem, entry.modifiedAt)
         }.sortedBy { it.name.lowercase() }
         val free = runCatching {
-            val file = entries.firstOrNull { it.name == ".tiptoi.log" } ?: error("No file descriptor available.")
+            val file = entries.firstOrNull { it.name == ".tiptoi.log" } ?: error(t(R.string.error_no_file_descriptor_available))
             resolver.openFileDescriptor(file.uri, "r")!!.use {
                 val stat = Os.fstatvfs(it.fileDescriptor)
                 (stat.f_bavail * stat.f_frsize).takeIf { bytes -> bytes >= 0 }
@@ -79,73 +79,73 @@ class PenStorage(private val resolver: ContentResolver) {
     }
 
     fun install(snapshot: PenSnapshot, entry: CatalogEntry, cached: File, progress: (String, Long) -> Unit) {
-        progress("Checking cached file", 0)
+        progress(t(R.string.msg_checking_cached_file), 0)
         val source = cached.inputStream().buffered().use { Gme.inspect(it, entry.size, entry.id) }
         copyVerified(snapshot, entry.filename, cached, source.size, source.sha256, progress)
     }
 
     fun restore(snapshot: PenSnapshot, backup: RemovalBackup, progress: (String, Long) -> Unit) {
-        progress("Checking backup", 0)
+        progress(t(R.string.msg_checking_backup), 0)
         val source = backup.file.inputStream().buffered().use { RawIntegrity.inspect(it, backup.size) }
-        check(source.sha256 == backup.sha256) { "The phone backup changed. It was not restored." }
+        check(source.sha256 == backup.sha256) { t(R.string.error_the_phone_backup_changed_it_was_not_restored) }
         copyVerified(snapshot, backup.filename, backup.file, backup.size, backup.sha256, progress)
     }
 
     /** A verified, durably saved phone copy is required before the delete call. */
     fun remove(snapshot: PenSnapshot, selected: PenFile, backupRoot: File,
                progress: (String, Long) -> Unit): RemovalBackup {
-        check(BookActions.removable(selected.name, selected.id)) { "Shared support files cannot be removed here." }
-        check(snapshot.files.any { sameFile(it, selected) }) { "Select a file from the scanned pen first." }
+        check(BookActions.removable(selected.name, selected.id)) { t(R.string.error_shared_support_files_cannot_be_removed_here) }
+        check(snapshot.files.any { sameFile(it, selected) }) { t(R.string.error_select_a_file_from_the_scanned_pen_first) }
         val fresh = scan(snapshot.tree)
-        check(fresh.fingerprint == snapshot.fingerprint) { "The connected pen changed. Scan again." }
+        check(fresh.fingerprint == snapshot.fingerprint) { t(R.string.error_the_connected_pen_changed_scan_again) }
         val target = fresh.files.singleOrNull { sameFile(it, selected) }
-            ?: error("This file changed since the scan. Scan again before removing it.")
+            ?: error(t(R.string.error_this_file_changed_since_the_scan_scan_again_before_removing_it))
         backupRoot.mkdirs()
         check(target.size <= Long.MAX_VALUE - 1_048_576 &&
             android.os.StatFs(backupRoot.path).availableBytes >= target.size + 1_048_576) {
-            "The phone needs more space for a backup. Nothing was removed from the pen."
+            t(R.string.msg_the_phone_needs_more_space_for_a_backup_nothing_was_removed_from_the)
         }
-        val folder = File(backupRoot, UUID.randomUUID().toString()).apply { check(mkdir()) { "Could not create a backup folder." } }
+        val folder = File(backupRoot, UUID.randomUUID().toString()).apply { check(mkdir()) { t(R.string.error_could_not_create_a_backup_folder) } }
         var verified = false
         try {
             val partial = File(folder, "content.part")
-            progress("Saving phone backup", 0)
+            progress(t(R.string.msg_saving_phone_backup), 0)
             val copied = partial.outputStream().use { output ->
                 val result = resolver.openInputStream(target.uri)?.buffered()?.use {
-                    RawIntegrity.copy(it, output, target.size) { bytes -> progress("Saving phone backup", bytes) }
-                } ?: error("Could not read the selected file. Nothing was removed.")
+                    RawIntegrity.copy(it, output, target.size) { bytes -> progress(t(R.string.msg_saving_phone_backup), bytes) }
+                } ?: error(t(R.string.error_could_not_read_the_selected_file_nothing_was_removed))
                 output.fd.sync()
                 result
             }
-            progress("Checking phone backup", 0)
+            progress(t(R.string.msg_checking_phone_backup), 0)
             val checked = partial.inputStream().buffered().use { RawIntegrity.inspect(it, target.size) }
-            check(checked.sha256 == copied.sha256) { "Backup verification failed. Nothing was removed." }
+            check(checked.sha256 == copied.sha256) { t(R.string.error_backup_verification_failed_nothing_was_removed) }
             val savedFile = File(folder, "content.gme")
-            check(partial.renameTo(savedFile)) { "Could not finalize the backup. Nothing was removed." }
+            check(partial.renameTo(savedFile)) { t(R.string.error_could_not_finalize_the_backup_nothing_was_removed) }
             val backup = RemovalBackup(folder, target.name, target.size, target.id, target.modifiedAt,
                 snapshot.fingerprint, checked.sha256, System.currentTimeMillis(), snapshot.identity.key)
             backup.saveManifest()
             syncDirectory(folder); syncDirectory(backupRoot)
             verified = true // From here, retain the backup even when delete or confirmation fails.
-            progress("Rechecking pen file", 0)
+            progress(t(R.string.msg_rechecking_pen_file), 0)
             val current = scan(snapshot.tree)
             check(current.fingerprint == snapshot.fingerprint && current.files.any { sameFile(it, target) }) {
-                "The pen or file changed. The backup is safe; the file was not removed."
+                t(R.string.msg_the_pen_or_file_changed_the_backup_is_safe_the_file_was_not_removed)
             }
             val original = resolver.openInputStream(target.uri)?.buffered()?.use {
-                RawIntegrity.inspect(it, target.size) { bytes -> progress("Rechecking pen file", bytes) }
-            } ?: error("Could not recheck the file. The backup is safe.")
-            check(original.sha256 == checked.sha256) { "The pen file changed during backup. It was not removed." }
-            check(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) { "The pen changed. The backup is safe." }
-            progress("Removing from pen", target.size)
-            check(Documents.deleteDocument(resolver, target.uri)) { "Removal was not confirmed. The phone backup is safe; scan again." }
+                RawIntegrity.inspect(it, target.size) { bytes -> progress(t(R.string.msg_rechecking_pen_file), bytes) }
+            } ?: error(t(R.string.error_could_not_recheck_the_file_the_backup_is_safe))
+            check(original.sha256 == checked.sha256) { t(R.string.error_the_pen_file_changed_during_backup_it_was_not_removed) }
+            check(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) { t(R.string.error_the_pen_changed_the_backup_is_safe) }
+            progress(t(R.string.msg_removing_from_pen), target.size)
+            check(Documents.deleteDocument(resolver, target.uri)) { t(R.string.error_removal_was_not_confirmed_the_phone_backup_is_safe_scan_again) }
             val after = scan(snapshot.tree)
             check(after.fingerprint == snapshot.fingerprint && after.files.none { it.name.equals(target.name, true) }) {
-                "Removal could not be confirmed. The phone backup is safe; scan again."
+                t(R.string.msg_removal_could_not_be_confirmed_the_phone_backup_is_safe_scan_again)
             }
             check(after.files.map { Triple(it.name, it.size, it.id) }.toSet() ==
                 current.files.filterNot { it.uri == target.uri }.map { Triple(it.name, it.size, it.id) }.toSet()) {
-                "Other inventory changes were observed. The phone backup is safe; scan again."
+                t(R.string.msg_other_inventory_changes_were_observed_the_phone_backup_is_safe_scan)
             }
             return backup
         } finally {
@@ -165,38 +165,38 @@ class PenStorage(private val resolver: ContentResolver) {
                              sha256: String, progress: (String, Long) -> Unit) {
         require(Catalog.safeFilename(filename))
         val fresh = scan(snapshot.tree)
-        check(fresh.fingerprint == snapshot.fingerprint) { "The connected pen changed. Scan it again." }
-        check(fresh.files.none { it.name.equals(filename, true) }) { "This filename is already on the pen. Existing files are preserved." }
-        check(fresh.free == null || fresh.free >= size + 1_048_576) { "The pen does not have enough free space." }
+        check(fresh.fingerprint == snapshot.fingerprint) { t(R.string.error_the_connected_pen_changed_scan_it_again) }
+        check(fresh.files.none { it.name.equals(filename, true) }) { t(R.string.error_this_filename_is_already_on_the_pen_existing_files_are_preserved) }
+        check(fresh.free == null || fresh.free >= size + 1_048_576) { t(R.string.error_the_pen_does_not_have_enough_free_space) }
         val stageName = ".tiptoi-manager-${UUID.randomUUID()}.part"
         var staging: Uri? = null
         try {
             staging = Documents.createDocument(resolver, root(snapshot.tree), "application/octet-stream", stageName)
-                ?: error("The storage provider could not create a file.")
-            check(documentName(staging) == stageName) { "The provider changed the temporary filename." }
+                ?: error(t(R.string.error_the_storage_provider_could_not_create_a_file))
+            check(documentName(staging) == stageName) { t(R.string.error_the_provider_changed_the_temporary_filename) }
             val flags = resolver.query(staging, arrayOf(Documents.Document.COLUMN_FLAGS), null, null, null)?.use {
                 if (it.moveToFirst()) it.getInt(0) else 0
             } ?: 0
-            check(flags and Documents.Document.FLAG_SUPPORTS_RENAME != 0) { "This storage provider cannot safely finalize an install." }
+            check(flags and Documents.Document.FLAG_SUPPORTS_RENAME != 0) { t(R.string.error_this_storage_provider_cannot_safely_finalize_an_install) }
             val target = staging
-            val descriptor = resolver.openFileDescriptor(target, "wt") ?: error("Could not open the temporary file.")
+            val descriptor = resolver.openFileDescriptor(target, "wt") ?: error(t(R.string.error_could_not_open_the_temporary_file))
             android.os.ParcelFileDescriptor.AutoCloseOutputStream(descriptor).use { output ->
                 cached.inputStream().buffered().use { input ->
-                    RawIntegrity.copy(input, output, size) { bytes -> progress("Copying to pen", bytes) }
+                    RawIntegrity.copy(input, output, size) { bytes -> progress(t(R.string.msg_copying_to_pen), bytes) }
                 }
                 output.flush(); descriptor.fileDescriptor.sync()
             }
-            progress("Reading back from pen", 0)
+            progress(t(R.string.msg_reading_back_from_pen), 0)
             val checked = resolver.openInputStream(target)?.buffered()?.use {
-                RawIntegrity.inspect(it, size) { bytes -> progress("Reading back from pen", bytes) }
-            } ?: error("Could not verify the transferred file.")
-            check(checked.sha256 == sha256) { "Read-back hash differs from the phone copy." }
-            check(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) { "The pen changed during installation." }
-            check(documents(snapshot.tree).none { it.name.equals(filename, true) }) { "The destination appeared during transfer; preserving it." }
+                RawIntegrity.inspect(it, size) { bytes -> progress(t(R.string.msg_reading_back_from_pen), bytes) }
+            } ?: error(t(R.string.error_could_not_verify_the_transferred_file))
+            check(checked.sha256 == sha256) { t(R.string.error_read_back_hash_differs_from_the_phone_copy) }
+            check(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) { t(R.string.error_the_pen_changed_during_installation) }
+            check(documents(snapshot.tree).none { it.name.equals(filename, true) }) { t(R.string.error_the_destination_appeared_during_transfer_preserving_it) }
             val final = Documents.renameDocument(resolver, target, filename)
-                ?: error("Could not finalize the verified file.")
+                ?: error(t(R.string.error_could_not_finalize_the_verified_file))
             staging = null
-            check(documentName(final) == filename) { "The provider changed the final filename; inspect the pen." }
+            check(documentName(final) == filename) { t(R.string.error_the_provider_changed_the_final_filename_inspect_the_pen) }
         } finally {
             staging?.let { runCatching { Documents.deleteDocument(resolver, it) } }
         }
@@ -214,7 +214,7 @@ private fun java.io.InputStream.readBytesBounded(limit: Int): ByteArray {
     while (true) {
         val n = read(buffer)
         if (n < 0) break
-        require(output.size() + n <= limit) { "Unexpectedly large pen metadata." }
+        require(output.size() + n <= limit) { t(R.string.error_unexpectedly_large_pen_metadata) }
         output.write(buffer, 0, n)
     }
     return output.toByteArray()
