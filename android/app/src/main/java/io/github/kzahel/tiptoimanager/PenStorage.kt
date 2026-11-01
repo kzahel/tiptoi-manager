@@ -9,7 +9,7 @@ import java.io.File
 import java.util.UUID
 
 data class PenFile(val uri: Uri, val name: String, val size: Long, val id: Int?, val problem: String?, val modifiedAt: Long? = null)
-data class PenSnapshot(val tree: Uri, val fingerprint: String, val files: List<PenFile>, val free: Long?) {
+data class PenSnapshot(val tree: Uri, val fingerprint: String, val files: List<PenFile>, val free: Long?, val identity: PenIdentity) {
     val ids: Int get() = files.mapNotNull { it.id }.distinct().size
     val bytes: Long get() = files.sumOf { it.size }
 }
@@ -32,18 +32,22 @@ class PenStorage(private val resolver: ContentResolver) {
         return result
     }
 
-    private fun fingerprint(entries: List<Document>): String {
+    private fun metadata(entries: List<Document>): ByteArray {
         val metadata = entries.find { it.name == ".tiptoi.log" }
             ?: error("Choose the pen's top-level folder. Its .tiptoi.log identity file is missing.")
         val bytes = resolver.openInputStream(metadata.uri)?.use { it.readBytesBounded(4096) }
             ?: error("Could not read the pen identity.")
         require(bytes.size == 64) { "This pen's identity format is not supported by the spike." }
-        return sha256(bytes)
+        return bytes
     }
+
+    private fun fingerprint(entries: List<Document>) = sha256(metadata(entries))
+    fun identify(tree: Uri): Pair<String, PenIdentity> = metadata(documents(tree)).let { sha256(it) to PenIdentity.parse(it) }
 
     fun scan(tree: Uri): PenSnapshot {
         val entries = documents(tree)
-        val identity = fingerprint(entries)
+        val raw = metadata(entries)
+        val identity = PenIdentity.parse(raw)
         val files = entries.filter { it.name.endsWith(".gme", true) }.map { entry ->
             var id: Int? = null
             var problem: String? = null
@@ -71,7 +75,7 @@ class PenStorage(private val resolver: ContentResolver) {
             }
             available
         }.getOrNull()
-        return PenSnapshot(tree, identity, files, free)
+        return PenSnapshot(tree, sha256(raw), files, free, identity)
     }
 
     fun install(snapshot: PenSnapshot, entry: CatalogEntry, cached: File, progress: (String, Long) -> Unit) {
@@ -119,7 +123,7 @@ class PenStorage(private val resolver: ContentResolver) {
             val savedFile = File(folder, "content.gme")
             check(partial.renameTo(savedFile)) { "Could not finalize the backup. Nothing was removed." }
             val backup = RemovalBackup(folder, target.name, target.size, target.id, target.modifiedAt,
-                snapshot.fingerprint, checked.sha256, System.currentTimeMillis())
+                snapshot.fingerprint, checked.sha256, System.currentTimeMillis(), snapshot.identity.key)
             backup.saveManifest()
             syncDirectory(folder); syncDirectory(backupRoot)
             verified = true // From here, retain the backup even when delete or confirmation fails.

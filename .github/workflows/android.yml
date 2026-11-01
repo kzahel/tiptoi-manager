@@ -119,6 +119,6 @@ jobs:
           python3 - <<'PY'
           import os
           from pathlib import Path
-          Path('notes.md').write_text('Experimental Android USB spike. Not a stable release.\n\nSource: ' + os.environ['SOURCE_SHA'] + '\n\nIncludes pen inventory, publisher book details and covers, downloads, non-overwriting installs, manual removal with verified phone backups, offline restoration, file date/size sorting, phone-audio cleanup and transfer-only downloads. Keep the app open during transfers. Physical playback and additional pen compatibility require separate acceptance.\n')
+          Path('notes.md').write_text('Experimental Android USB spike. Not a stable release.\n\nSource: ' + os.environ['SOURCE_SHA'] + '\n\nIncludes pen inventory, publisher book details and covers, downloads, non-overwriting installs, manual removal with verified phone backups, offline restoration, file date/size sorting, phone-audio cleanup, transfer-only downloads, named pen profiles and reviewed shared/per-pen selections. Keep the app open during transfers. Physical playback and additional pen compatibility require separate acceptance.\n')
           PY
           gh release create "preview-${RUN_NUMBER}" preview/* --repo "$GH_REPO" --target "$SOURCE_SHA" --prerelease --title "Android preview ${RUN_NUMBER}" --notes-file notes.md

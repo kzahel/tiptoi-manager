@@ -70,4 +70,17 @@ class FileManagementTest {
         store.load()
         assertEquals(listOf(older.directory), store.all.map { it.directory })
     }
+
+    @Test fun backupProvenanceUsesStableIdentityAndRetainsLegacyFingerprintMatching() {
+        val root = temporary.newFolder()
+        fun save(folder: String, identity: String?, fingerprint: String, time: Long): RemovalBackup {
+            val dir = File(root, folder).apply { mkdir() }; File(dir, "content.gme").writeBytes(byteArrayOf(1))
+            return RemovalBackup(dir, "Book.gme", 1, 248, null, fingerprint, "b".repeat(64), time, identity).also { it.saveManifest() }
+        }
+        val older = save("older", "serial:" + "a".repeat(64), "a".repeat(64), 100)
+        save("newer", "serial:" + "c".repeat(64), "c".repeat(64), 200)
+        val store = RemovalBackups(root).apply { load() }
+        assertEquals(older.directory, store.latest("Book.gme", "d".repeat(64), older.identityKey)?.directory)
+        assertEquals(older.directory, store.latest("Book.gme", "d".repeat(64), null, setOf(older.fingerprint))?.directory)
+    }
 }

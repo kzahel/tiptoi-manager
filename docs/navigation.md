@@ -4,16 +4,19 @@ The owner's UI direction is focused screens, clear headers and navigation in
 place of repeated explanatory text. Top-level destinations use a hamburger
 drawer, grouped into Device, Library, Activity and Support. Child screens use
 a Back arrow. System Back closes the drawer, returns through child screens,
-then returns to My pen before leaving the app.
+then returns to My pens before leaving the app.
 
 | Screen | Open from | Responsibility |
 | --- | --- | --- |
-| My pen | Startup / Device | Connection overview and entry points |
-| Installed books | My pen | Search and sort the connected pen's actual files |
-| Storage | My pen | Free space, audio-file usage and oldest-file review |
+| My pens | Startup / Device | Known pens, connection state and last-seen inventories |
+| Pen details | My pens / recognized connection | Name, identity information, inventory, storage and selected books |
+| Installed books | Pen details | Search/sort a connected or explicitly labeled saved inventory |
+| Storage | Pen details | Free space, audio-file usage and oldest-file review |
 | Browse books | Library | Search the cached catalog; explicit refresh |
 | Downloads | Library | Downloads and removal backups saved on this phone |
 | Phone storage | Library / Downloads | Audio usage, individual/bulk deletion and download retention |
+| Book selections | Library | Family collection, individual additions and membership |
+| Review selection | Pen details / Book selections | Additions, existing matches and conflicts for the selected pen |
 | Book details | Any title row | Status, pen actions and management of phone copies |
 | Transfers | Activity / starting an operation | Current progress or the latest transfer in this session |
 | Help & about | Support | Setup steps, local-data explanation and licenses |

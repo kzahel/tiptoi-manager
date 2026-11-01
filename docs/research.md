@@ -57,8 +57,10 @@ book. Companion-file relationships need explicit handling.
 
 The community documents `.tiptoi.log` as a small binary metadata file containing
 the pen serial, firmware version, language and processor identifier. A 64-byte
-file with that name was observed. Its exact interpretation and uniqueness
-across the two target pens still need verification. Do not log or publish raw
+file with that name was observed. The current parser recognized the connected
+pen's serial field; repeated scanning and local profile reload passed. Synthetic
+checks cover firmware/language changes. A comparison of both physical pens and
+recognition across a real firmware update remain unverified. Do not log or publish raw
 serials, rewrite that file, or copy it to another pen.
 
 ### Missing-book requests

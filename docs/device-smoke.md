@@ -63,3 +63,15 @@ Phone deletion/clear scopes are exercised in separate fixture directories.
 It restores the prior retention preference and compares original phone/pen
 inventories; real originals are not selected for cleanup. This mode makes a
 publisher audio request. Download-only smoke mode requires Keep downloads.
+
+`-e profilesReadOnly true` checks that the connected pen's serial parses, rescan
+recognizes the same local UUID, and a fresh profile-store instance reloads the
+saved inventory. It writes profile state on the phone, not the pen.
+
+`-e profilesFixtureProductId ID` requires an already-cached unambiguous source
+and an empty selection for the connected pen. It creates a synthetic offline
+profile sharing the same tree URI, checks that install/sync cannot write through
+that profile, then syncs a uniquely named disposable copy through a reviewed
+plan for the actual pen. It verifies read-back and shared-cache retention,
+cleans up only its own file/profile/selection and restores retention. Existing
+family selections and original audio are not selected for cleanup.

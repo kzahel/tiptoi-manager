@@ -1,6 +1,6 @@
 # Manual cleanup and restoration
 
-Open My pen → Installed books, choose a title, then **Remove from pen**.
+Open My pens → a pen profile → Installed books, choose a title, then **Remove from pen**.
 The confirmation names the title and the space it occupies. The operation:
 
 1. Rechecks the selected pen identity and file metadata.

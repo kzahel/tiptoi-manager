@@ -49,9 +49,10 @@ cached-only device run passed without metadata requests. The UI exercised the
 cover list, larger artwork, ISBN info dialog, description and Back/query
 restoration. Broader title/edition coverage remains upstream-dependent.
 
-The current pen fingerprint hashes the 64-byte metadata file. It is an
-installation-session safeguard, not a proven stable identity across firmware
-updates or both pens. Inventory scans check GME headers, not every installed
+The transfer-session fingerprint hashes the 64-byte metadata file. Persistent
+profiles now separately hash its parsed serial field; the fingerprint remains
+a stricter write guard. Recognition of both physical pens and a real firmware
+update remain separate acceptance. Inventory scans check GME headers, not every installed
 file's full checksum. Downloads check size, header product ID and the trailing
 additive checksum. Transfers additionally compare a full read-back SHA-256
 before renaming the temporary file to its final GME filename.
@@ -60,7 +61,8 @@ Existing destination filenames are refused. Provider rename support is required.
 On a caught transfer error, the app attempts to remove only its own temporary
 file. Power loss, process death or disconnect can leave a `.tiptoi-manager-*.part`
 file; automatic recovery is not implemented. Keep the app open during transfers.
-No overwrite, firmware operation or multi-pen sync is implemented. Manual
+No overwrite or firmware operation is implemented. Reviewed additive multi-pen
+selections are covered separately below. Manual
 removal and restoration are covered separately below.
 
 The storage route follows Android's [document access API](https://developer.android.com/training/data-storage/shared/documents-files).
@@ -115,3 +117,32 @@ or backup was selected for deletion. Bulk deletion of real family data,
 process-kill/power-loss staging recovery, and network/USB interruption on the
 physical device remain untested. Temporary failure cleanup is covered by JVM
 checks, not a deliberate cable pull.
+
+## Named profiles and reviewed selections
+
+All 26 JVM tests and Android lint pass. New tests cover serial identity across
+synthetic firmware/language/padding changes, independent inventories on the same
+tree URI, persistent names/selections/family membership, corrupt-store protection,
+shared audio IDs, additive plans, filename conflicts, wrong/stale destination
+rejection and stable/legacy backup attribution.
+
+On the connected physical pen, the parser recognized a serial. Repeated scans
+retained its local profile UUID, and a fresh store reloaded its actual inventory.
+An opt-in fixture created a synthetic offline profile with the same document-tree
+URI; install and selection sync through that profile were refused. A reviewed
+plan then added one uniquely named disposable copy to the real pen, verified its
+full read-back SHA-256 and retained the phone source for another pen. Cleanup
+removed only the generated file/profile/selection. Original filenames, sizes and
+header IDs matched afterward.
+
+Pixel UI checks exercised rename, My pens, a synthetic second profile, saved
+inventory/last-observed presentation, absence of a removal action for an offline
+book, family selection, a review showing an already-installed title, removal
+from the selection and forgetting the synthetic profile. The test nickname and
+selections were restored afterward. No original book was selected for deletion.
+
+Only one physical pen was exercised during these checks. Recognition of the
+owner's second physical pen, physical cable-swap timing, recognition across a
+real firmware/language update, cold-start while disconnected, batch interruption
+recovery and simultaneous USB connections remain separate acceptance. Synthetic
+profiles are not evidence of compatibility with a second physical pen model.

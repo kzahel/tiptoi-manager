@@ -35,7 +35,7 @@ import java.text.DateFormat
 import java.util.Date
 
 private enum class Screen(val title: String) {
-    PEN("My pen"), INSTALLED("Installed books"), STORAGE("Storage"),
+    PENS("My pens"), PEN("Pen details"), COLLECTION("Book selections"), PLAN("Review selection"), INSTALLED("Installed books"), STORAGE("Storage"),
     BROWSE("Browse books"), DOWNLOADS("Downloads"), BOOK("Book details"),
     PHONE_STORAGE("Phone storage"), TRANSFERS("Transfers"), HELP("Help & about")
 }
@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
     private val navItems = mutableMapOf<Screen, LinearLayout>()
     private val backStack = mutableListOf<Screen>()
     private val queries = mutableMapOf<Screen, String>()
-    private var screen = Screen.PEN
+    private var screen = Screen.PENS
     private var selectedKey: String? = null
     private var selectedFile: String? = null
     private var progressLabel: TextView? = null
@@ -62,12 +62,14 @@ class MainActivity : ComponentActivity() {
     private var busyLabel: TextView? = null
     private var infoDialog: AlertDialog? = null
     private var penSort = PenSort.TITLE
+    private var lastConnectedKey: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         penSort = runCatching { PenSort.valueOf(getPreferences(MODE_PRIVATE).getString("penSort", "TITLE")!!) }.getOrDefault(PenSort.TITLE)
         savedInstanceState?.let { state ->
-            screen = runCatching { Screen.valueOf(state.getString("screen")!!) }.getOrDefault(Screen.PEN)
+            lastConnectedKey = state.getString("lastConnectedKey")
+            screen = runCatching { Screen.valueOf(state.getString("screen")!!) }.getOrDefault(Screen.PENS)
             selectedKey = state.getString("bookKey"); selectedFile = state.getString("bookFile")
             state.getStringArrayList("backStack")?.forEach { name ->
                 runCatching { Screen.valueOf(name) }.getOrNull()?.let { backStack.add(it) }
@@ -99,7 +101,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        app.changed = { if (!isFinishing && !isDestroyed) render() }
+        app.changed = { if (!isFinishing && !isDestroyed) { connectionNavigation(); render() } }
+        app.startConnectionWatch()
         app.progressed = { updateProgress() }
         app.metadataChanged = { article ->
             if (screen == Screen.BOOK && selectedBooks().any { it.article == article }) {
@@ -111,16 +114,27 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        connectionNavigation()
         render()
     }
 
+    private fun connectionNavigation() {
+        val key = app.pen?.identity?.key
+        if (key != null && key != lastConnectedKey && screen == Screen.PENS) {
+            backStack.clear(); backStack.add(Screen.PENS); screen = Screen.PEN
+        }
+        lastConnectedKey = key
+    }
+
     override fun onPause() {
+        app.stopConnectionWatch()
         app.changed = null; app.progressed = null; app.metadataChanged = null
         super.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString("screen", screen.name)
+        outState.putString("lastConnectedKey", lastConnectedKey)
         outState.putString("bookKey", selectedKey); outState.putString("bookFile", selectedFile)
         outState.putStringArrayList("backStack", ArrayList(backStack.map { it.name }))
         queries.forEach { (key, value) -> outState.putString("query_${key.name}", value) }
@@ -131,7 +145,7 @@ class MainActivity : ComponentActivity() {
         when {
             drawer.isDrawerOpen(GravityCompat.START) -> drawer.closeDrawer(GravityCompat.START)
             backStack.isNotEmpty() -> { screen = backStack.removeAt(backStack.lastIndex); render() }
-            screen != Screen.PEN -> navigate(Screen.PEN, false)
+            screen != Screen.PENS -> navigate(Screen.PENS, false)
             else -> finish()
         }
     }
@@ -168,9 +182,9 @@ class MainActivity : ComponentActivity() {
             content.addView(line, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(4) })
             navItems[destination] = line
         }
-        section("DEVICE"); item(Screen.PEN, UiIcon.PEN)
+        section("DEVICE"); item(Screen.PENS, UiIcon.PEN)
         section("LIBRARY"); item(Screen.BROWSE, UiIcon.BOOKS); item(Screen.DOWNLOADS, UiIcon.DOWNLOAD)
-        item(Screen.PHONE_STORAGE, UiIcon.STORAGE)
+        item(Screen.PHONE_STORAGE, UiIcon.STORAGE); item(Screen.COLLECTION, UiIcon.BOOKS)
         section("ACTIVITY"); item(Screen.TRANSFERS, UiIcon.TRANSFER)
         section("SUPPORT"); item(Screen.HELP, UiIcon.INFO)
         drawerConnection = text("", 13, muted).apply { setPadding(dp(16), dp(32), 0, 0) }
@@ -184,12 +198,12 @@ class MainActivity : ComponentActivity() {
         else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         root.removeAllViews()
         progressLabel = null; progressBar = null; busyLabel = null
-        val active = if (screen == Screen.INSTALLED || screen == Screen.STORAGE) Screen.PEN else screen
+        val active = if (screen in listOf(Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.PLAN)) Screen.PENS else screen
         navItems.forEach { (destination, view) ->
             view.isSelected = destination == active
             view.background = rounded(if (destination == active) soft else Color.WHITE, 14)
         }
-        drawerConnection.text = if (app.pen != null) "Pen connected" else "No pen connected"
+        drawerConnection.text = app.connectedName?.let { "$it connected" } ?: "No pen connected"
         toolbar()
         if (app.busy && screen != Screen.TRANSFERS) {
             val strip = row().apply {
@@ -214,7 +228,10 @@ class MainActivity : ComponentActivity() {
             else -> {
                 scrollBody()
                 when (screen) {
+                    Screen.PENS -> pensScreen()
                     Screen.PEN -> penScreen()
+                    Screen.COLLECTION -> collectionScreen()
+                    Screen.PLAN -> planScreen()
                     Screen.STORAGE -> storageScreen()
                     Screen.PHONE_STORAGE -> phoneStorageScreen()
                     Screen.BOOK -> bookScreen()
@@ -228,13 +245,13 @@ class MainActivity : ComponentActivity() {
 
     private fun toolbar() {
         val header = row().apply { setPadding(dp(8), dp(4), dp(8), dp(4)); setBackgroundColor(Color.WHITE) }
-        val child = screen in listOf(Screen.INSTALLED, Screen.STORAGE, Screen.BOOK)
+        val child = screen in listOf(Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.BOOK, Screen.PLAN)
         header.addView(iconButton(if (child) UiIcon.BACK else UiIcon.MENU, if (child) "Back" else "Open navigation menu") {
             if (child) goBack() else { hideKeyboard(); drawer.openDrawer(GravityCompat.START) }
         })
-        header.addView(text(screen.title, 22, ink, true), LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(8) })
+        header.addView(text(if (screen == Screen.PEN) app.viewedProfile?.name ?: screen.title else screen.title, 22, ink, true).apply { maxLines = 1; ellipsize = TextUtils.TruncateAt.END }, LinearLayout.LayoutParams(0, -2, 1f).apply { marginStart = dp(8) })
         when (screen) {
-            Screen.PEN, Screen.INSTALLED, Screen.STORAGE -> if (app.tree != null) header.addView(iconButton(UiIcon.REFRESH, "Refresh pen") { app.refreshPen() }.apply { isEnabled = !app.busy })
+            Screen.PENS, Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.PLAN -> if (app.tree != null) header.addView(iconButton(UiIcon.REFRESH, "Refresh pen") { app.refreshPen() }.apply { isEnabled = !app.busy })
             Screen.BROWSE -> header.addView(iconButton(UiIcon.REFRESH, "Refresh catalog") { app.refreshCatalog() }.apply { isEnabled = !app.busy })
             Screen.BOOK -> {
                 header.addView(iconButton(UiIcon.INFO, "File details") { fileDetails() })
@@ -257,45 +274,163 @@ class MainActivity : ComponentActivity() {
         root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
     }
 
-    private fun penScreen() {
-        val pen = app.pen
-        if (pen == null) {
-            emptyState(UiIcon.PEN, if (app.busy) "Looking for your pen…" else "Connect your pen", "Use a USB data cable or adapter.")
-            body.addView(action("Choose USB folder") { chooseFolder() })
-            if (app.tree != null) body.addView(action("Scan again", false) { app.refreshPen() })
-            return
+    private fun pensScreen() {
+        if (app.profiles.all.isEmpty()) emptyState(UiIcon.PEN, "Add your first pen", "Connect by USB and choose its folder.")
+        app.profiles.all.sortedByDescending { it.identity.key == app.pen?.identity?.key }.forEach { profile ->
+            val connected = profile.identity.key == app.pen?.identity?.key
+            body.addView(navRow(UiIcon.PEN, profile.name, if (connected) "Connected · ${profile.files.size} audio files"
+                else "Last seen ${dateTime(profile.lastSeen)} · ${profile.files.size} files") {
+                app.selectProfile(profile.id); navigate(Screen.PEN)
+            })
         }
-        val hero = card(green)
-        hero.addView(icon(UiIcon.PEN, Color.WHITE, 48))
-        gap(hero, 16)
-        hero.addView(text("tiptoi", 30, Color.WHITE, true))
-        hero.addView(text("Connected by USB", 14, 0xFFD0EEE4.toInt()))
-        body.addView(hero)
-        gap(body, 24)
-        body.addView(text("ON YOUR PEN", 11, muted, true).apply { letterSpacing = .1f })
-        gap(body, 10)
-        body.addView(navRow(UiIcon.BOOKS, "Installed books", "${pen.files.size} audio files") { navigate(Screen.INSTALLED) })
-        body.addView(navRow(UiIcon.STORAGE, "Storage", pen.free?.let { "${size(it)} free" } ?: "View storage") { navigate(Screen.STORAGE) })
-        gap(body, 24)
-        body.addView(action("Browse books") { navigate(Screen.BROWSE, false) })
-        body.addView(action("Connection settings", false) {
-            AlertDialog.Builder(this).setTitle("Connection settings")
-                .setItems(arrayOf("Scan again", "Choose another USB folder")) { _, which ->
-                    if (which == 0) app.refreshPen() else chooseFolder()
-                }.setNegativeButton("Cancel", null).show()
+        gap(body, 16)
+        body.addView(action(if (app.profiles.all.isEmpty()) "Choose USB folder" else "Connect another pen") { chooseFolder() })
+        if (app.tree != null) body.addView(action("Scan connected pen", false) { app.refreshPen() })
+    }
+
+    private fun penScreen() {
+        val profile = app.viewedProfile
+        if (profile == null) { emptyState(UiIcon.PEN, "Connect your pen"); body.addView(action("Choose USB folder") { chooseFolder() }); return }
+        val connected = app.viewedPen != null
+        val hero = card(if (connected) green else Color.WHITE)
+        val color = if (connected) Color.WHITE else ink
+        hero.addView(icon(UiIcon.PEN, if (connected) Color.WHITE else green, 44)); gap(hero, 16)
+        hero.addView(text(profile.name, 28, color, true)); gap(hero, 8)
+        hero.addView(text(if (connected) "Connected by USB" else "Saved inventory · ${dateTime(profile.lastSeen)}", 14,
+            if (connected) 0xFFD0EEE4.toInt() else muted))
+        body.addView(hero); gap(body, 20)
+        if (!profile.identity.hasSerial) { body.addView(text("Serial unavailable · identity unverified", 14, muted)); gap(body, 12) }
+        body.addView(navRow(UiIcon.BOOKS, "Installed books", "${profile.files.size} audio files${if (connected) "" else " · last observed"}") { navigate(Screen.INSTALLED) })
+        body.addView(navRow(UiIcon.STORAGE, "Storage", profile.free?.let { "${size(it)} free${if (connected) "" else " · last observed"}" } ?: "View storage") { navigate(Screen.STORAGE) })
+        body.addView(navRow(UiIcon.BOOKS, "Selected books", "${app.profiles.targets(profile).size} audio files · review changes") { navigate(Screen.PLAN) })
+        body.addView(action("Rename pen", false) { renamePen(profile) })
+        body.addView(action("Pen information", false) { showMessage(profile.name, listOfNotNull(
+            profile.identity.serialSuffix?.let { "Serial ending $it" }, profile.identity.firmware?.let { "Firmware $it" },
+            profile.identity.language, profile.identity.processor,
+            if (!profile.identity.hasSerial) "Serial unavailable. This profile uses an unverified metadata fingerprint; firmware changes may create a new profile." else null
+        ).joinToString("\n")) })
+        if (!connected) body.addView(action("Connect this pen") { connectionHelp(profile) })
+        body.addView(action("Choose USB folder", false) { chooseFolder() })
+        if (!connected) body.addView(action("Forget profile", false) {
+            AlertDialog.Builder(this).setTitle("Forget ${profile.name}?")
+                .setMessage("Removes this phone's name, saved inventory and individual selection. Books, downloads and backups stay in place.")
+                .setNegativeButton("Cancel", null).setPositiveButton("Forget") { _, _ -> app.forgetProfile(profile.id); navigate(Screen.PENS, false) }.show()
         })
     }
 
     private fun storageScreen() {
-        val pen = app.pen
-        if (pen == null) { emptyState(UiIcon.STORAGE, "No pen connected"); return }
+        val profile = app.viewedProfile ?: return
         val summary = card()
         summary.addView(icon(UiIcon.STORAGE, green, 36)); gap(summary, 16)
-        summary.addView(text(pen.free?.let(::size) ?: "Unknown", 36, ink, true))
-        summary.addView(text("Free space", 15, muted))
+        summary.addView(text(profile.free?.let(::size) ?: "Unknown", 36, ink, true))
+        summary.addView(text(if (app.viewedPen != null) "Free space · ${profile.name}" else "Last observed free space · ${dateTime(profile.lastSeen)}", 15, muted))
         body.addView(summary); gap(body, 20)
-        body.addView(navRow(UiIcon.BOOKS, "Audio files", "${pen.files.size} files · ${size(pen.bytes)}") { navigate(Screen.INSTALLED) })
+        body.addView(navRow(UiIcon.BOOKS, "Audio files", "${profile.files.size} files · ${size(profile.bytes)}") { navigate(Screen.INSTALLED) })
         body.addView(action("Review oldest files", false) { reviewOldest() })
+    }
+
+    private fun renamePen(profile: PenProfile) {
+        val input = EditText(this).apply { setSingleLine(true); setText(profile.name); selectAll(); contentDescription = "Pen name" }
+        val dialog = AlertDialog.Builder(this).setTitle("Rename pen").setView(input)
+            .setNegativeButton("Cancel", null).setPositiveButton("Save", null).create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val name = runCatching { PenProfiles.validName(input.text.toString()) }.getOrElse { input.error = it.message; return@setOnClickListener }
+                app.renameProfile(profile.id, name); dialog.dismiss()
+            }
+        }
+        dialog.show()
+    }
+
+    private fun connectionHelp(profile: PenProfile) {
+        AlertDialog.Builder(this).setTitle("Connect ${profile.name}")
+            .setMessage("Plug this pen into your phone. Its saved profile will be recognized automatically. If Android needs access, choose the pen's USB folder.")
+            .setNegativeButton("Done", null).setPositiveButton("Choose USB folder") { _, _ -> chooseFolder() }.show()
+    }
+
+    private fun chooseBookPens(entry: CatalogEntry) {
+        val pens = app.profiles.all.toList()
+        val labels = listOf("Family collection") + pens.map { "${it.name} · individual selection" }
+        fun contains(entries: List<CatalogEntry>) = entries.any { it.cacheKey == entry.cacheKey && it.filename.equals(entry.filename, true) }
+        val checked = (listOf(contains(app.profiles.family)) + pens.map { contains(it.additions) }).toBooleanArray()
+        AlertDialog.Builder(this).setTitle("Choose pens")
+            .setMultiChoiceItems(labels.toTypedArray(), checked) { _, which, enabled -> checked[which] = enabled }
+            .setNegativeButton("Cancel", null).setPositiveButton("Save") { _, _ ->
+                app.setContentTargets(entry, pens.filterIndexed { index, _ -> checked[index + 1] }.map { it.id }.toSet(), checked[0])
+            }.show()
+    }
+
+    private fun collectionScreen() {
+        body.addView(text("Family collection", 22, ink, true)); gap(body, 8)
+        body.addView(text("Shared selections · connect each pen to review and apply.", 14, muted)); gap(body, 16)
+        if (app.profiles.family.isEmpty()) body.addView(text("Choose pens on a book to add it here.", 14, muted))
+        app.profiles.family.forEach { entry -> selectionRow(entry, null) }
+        gap(body, 24)
+        app.profiles.all.forEach { profile ->
+            body.addView(text(profile.name, 20, ink, true)); gap(body, 10)
+            body.addView(navRow(UiIcon.BOOKS, "Family collection", if (profile.useFamily) "Included" else "Not included") {
+                app.setFamilyEnabled(profile.id, !profile.useFamily)
+            })
+            profile.additions.forEach { entry -> selectionRow(entry, profile.id) }
+            body.addView(action("Review for ${profile.name}", false) { app.selectProfile(profile.id); navigate(Screen.PLAN) })
+            gap(body, 20)
+        }
+        body.addView(action("Browse books") { navigate(Screen.BROWSE, false) })
+    }
+
+    private fun selectionRow(entry: CatalogEntry, profileId: String?) {
+        body.addView(bookRow(app.title(entry), if (profileId == null) "Family selection" else "Individual selection", onPen(entry.filename), app.book(entry.filename, entry.id)) {
+            AlertDialog.Builder(this).setTitle(app.title(entry)).setItems(arrayOf("View book", "Remove from selection")) { _, which ->
+                if (which == 0) openBook(entry, entry.filename) else app.selectContent(entry, profileId, false)
+            }.setNegativeButton("Cancel", null).show()
+        })
+    }
+
+    private fun planScreen() {
+        val profile = app.viewedProfile ?: return
+        val plan = app.plan() ?: return
+        val connected = app.viewedPen != null
+        body.addView(text(profile.name, 25, ink, true)); gap(body, 8)
+        body.addView(text(if (connected) "Connected by USB" else "Saved inventory · ${dateTime(profile.lastSeen)}", 14, muted)); gap(body, 20)
+        if (plan.items.isEmpty()) {
+            emptyState(UiIcon.BOOKS, "No selected books")
+            body.addView(action("Browse books") { navigate(Screen.BROWSE, false) })
+        } else {
+            body.addView(text("${plan.additions.size} to add · ${plan.items.count { it.state == PlanState.PRESENT }} already present", 19, ink, true)); gap(body, 8)
+            body.addView(text("${size(plan.bytes)} to add · existing files are kept", 14, muted)); gap(body, 16)
+            if (plan.conflicts > 0) { body.addView(text("Conflicting filenames need review. No existing file will be overwritten.", 14, 0xFF9B2A22.toInt())); gap(body, 12) }
+            plan.items.forEach { item ->
+                val status = when (item.state) {
+                    PlanState.PRESENT -> "Already present · filename, size and audio ID match"
+                    PlanState.CONFLICT -> "Filename conflict"
+                    PlanState.ADD -> if (app.cached(item.entry)) "Ready offline" else "Download needed"
+                }
+                body.addView(bookRow(app.title(item.entry), status, item.state == PlanState.PRESENT, app.book(item.entry.filename, item.entry.id)) { openBook(item.entry, item.entry.filename) })
+            }
+            if (plan.items.any { item -> app.catalog.any { it.id == item.entry.id && !it.filename.equals(item.entry.filename, true) } }) {
+                gap(body, 12); body.addView(text("Some audio shares an ID with other files. Select any required companion files separately.", 13, muted))
+            }
+            if (!connected) body.addView(action("Connect ${profile.name}") { connectionHelp(profile) })
+            else {
+                val fits = app.viewedPen?.free?.let { it >= plan.bytes + 1_048_576 } ?: true
+                body.addView(action("Add selected books") { confirmSelection(plan, profile) }.apply {
+                    isEnabled = !app.busy && plan.additions.isNotEmpty() && plan.conflicts == 0 && fits && profile.identity.hasSerial
+                })
+                if (!fits) body.addView(action("Make space on pen", false) { reviewOldest() })
+                if (!profile.identity.hasSerial) body.addView(text("Collection sync needs a recognized pen serial.", 14, muted))
+            }
+        }
+        body.addView(action("Manage selections", false) { navigate(Screen.COLLECTION) })
+    }
+
+    private fun confirmSelection(plan: PenPlan, profile: PenProfile) {
+        val missingDownloads = plan.additions.count { !app.cached(it) }
+        AlertDialog.Builder(this).setTitle("Add books to ${profile.name}?")
+            .setMessage("${plan.additions.size} files · ${size(plan.bytes)}\n$missingDownloads downloads needed. Existing pen files stay in place.\n" +
+                if (app.audioRetention == AudioRetention.KEEP) "Downloads stay on this phone for your other pens." else "Transfer-only audio is discarded after each transfer.")
+            .setNegativeButton("Cancel", null).setPositiveButton("Add books") { _, _ ->
+                navigate(Screen.TRANSFERS); app.applySelection(plan)
+            }.show()
     }
 
     private fun listScreen() {
@@ -323,9 +458,10 @@ class MainActivity : ComponentActivity() {
             val query = queries[screen].orEmpty().trim()
             fun matches(title: String, id: Int?) = query.isEmpty() || title.contains(query, true) || id?.toString() == query
             if (screen == Screen.INSTALLED) {
-                val pen = app.pen
-                if (pen == null) { emptyState(UiIcon.PEN, "No pen connected"); return }
-                val files = penSort.order(pen.files.filter { matches(titleFor(it.name), it.id) },
+                val profile = app.viewedProfile
+                if (profile == null) { emptyState(UiIcon.PEN, "Choose a pen profile"); return }
+                if (app.viewedPen == null) { body.addView(text("Saved inventory · ${dateTime(profile.lastSeen)}", 13, muted)); gap(body, 10) }
+                val files = penSort.order(profile.files.filter { matches(titleFor(it.name), it.id) },
                     { titleFor(it.name) }, { it.size }, { it.modifiedAt })
                 body.addView(text("${files.size} audio files", 13, muted)); gap(body, 12)
                 if (penSort == PenSort.OLDEST || penSort == PenSort.NEWEST) {
@@ -372,7 +508,7 @@ class MainActivity : ComponentActivity() {
                 entries.take(80).forEach { entry ->
                     val present = onPen(entry.filename)
                     val info = app.book(entry.filename, entry.id)
-                    val subtitle = listOfNotNull(if (present) "On pen" else if (app.backup(entry.filename) != null) "Pen backup" else if (app.cached(entry)) "Downloaded" else null,
+                    val subtitle = listOfNotNull(if (present) if (app.viewedPen != null) "On ${app.viewedProfile?.name}" else "Last seen on ${app.viewedProfile?.name}" else if (app.backup(entry.filename) != null) "Pen backup" else if (app.cached(entry)) "Downloaded" else null,
                         info?.series ?: size(entry.size)).joinToString(" · ")
                     body.addView(bookRow(app.title(entry), subtitle, present, info) { openBook(entry, entry.filename) })
                 }
@@ -399,7 +535,7 @@ class MainActivity : ComponentActivity() {
 
     private fun selectedBooks(): List<BookInfo> {
         val entry = selectedEntry()
-        val id = entry?.id ?: app.pen?.files?.find { it.name.equals(selectedFile, true) }?.id ?: selectedFile?.let { app.backup(it)?.audioId }
+        val id = entry?.id ?: app.visibleFiles.find { it.name.equals(selectedFile, true) }?.id ?: selectedFile?.let { app.backup(it)?.audioId }
         if (id == 14999) return emptyList()
         return selectedFile?.let { app.metadata.forFile(it, id) }.orEmpty()
     }
@@ -407,10 +543,12 @@ class MainActivity : ComponentActivity() {
     private fun bookScreen() {
         val entry = selectedEntry()
         val filename = entry?.filename ?: selectedFile ?: return
-        val file = app.pen?.files?.find { it.name.equals(filename, true) }
+        val file = app.visibleFiles.find { it.name.equals(filename, true) }
         val backup = app.backup(filename)
         val cached = entry?.let(app::cached) == true
         val present = file != null
+        val connected = app.viewedPen != null
+        val liveFile = app.viewedPen?.files?.find { it.name.equals(filename, true) }
         val book = app.book(filename, entry?.id ?: file?.id ?: backup?.audioId)
         book?.let { app.requestPublisherDetails(it) }
         val page = book?.let { app.metadata.page(it.article) }
@@ -430,14 +568,15 @@ class MainActivity : ComponentActivity() {
         val bytes = file?.size ?: backup?.size ?: entry?.size ?: 0
         body.addView(text(listOfNotNull(age, size(bytes)).joinToString(" · "), 15, muted))
         gap(body, 20)
-        if (present) { body.addView(chip("On your pen", UiIcon.CHECK)); gap(body, 10) }
+        app.viewedProfile?.let { body.addView(text("Pen: ${it.name}", 14, muted)); gap(body, 10) }
+        if (present) { body.addView(chip(if (connected) "On your pen" else "In saved inventory", UiIcon.CHECK)); gap(body, 10) }
         if (cached) { body.addView(chip("Saved on this phone", UiIcon.DOWNLOAD)); gap(body, 10) }
         if (backup != null) { body.addView(chip("Pen backup on this phone", UiIcon.STORAGE)); gap(body, 10) }
         if (file?.problem != null) body.addView(text(file.problem, 14, 0xFF9B2A22.toInt()))
         gap(body, 20)
-        when (BookActions.primary(present, BookActions.removable(filename, file?.id), backup != null,
-            cached, app.pen != null, entry != null, app.pen?.free, bytes, app.audioRetention == AudioRetention.TRANSFER_ONLY)) {
-            BookPrimaryAction.REMOVE -> body.addView(action("Remove from pen", false) { file?.let(::confirmRemove) }.apply {
+        when (if (present && !connected) BookPrimaryAction.CONNECT else BookActions.primary(present, BookActions.removable(filename, file?.id), backup != null,
+            cached, connected, entry != null, app.viewedPen?.free, bytes, app.audioRetention == AudioRetention.TRANSFER_ONLY)) {
+            BookPrimaryAction.REMOVE -> body.addView(action("Remove from pen", false) { liveFile?.let(::confirmRemove) }.apply {
                 setTextColor(0xFF9B2A22.toInt())
             })
             BookPrimaryAction.RESTORE -> body.addView(action("Restore to pen") { backup?.let(::confirmRestore) })
@@ -448,6 +587,7 @@ class MainActivity : ComponentActivity() {
             BookPrimaryAction.MAKE_SPACE -> body.addView(action("Make space on pen") { reviewOldest() })
             BookPrimaryAction.NONE -> if (present) body.addView(text("Shared support file", 14, muted))
         }
+        if (entry != null) body.addView(action("Choose pens", false) { chooseBookPens(entry) })
         if (cached || backup != null) body.addView(action("Manage phone copies", false) { managePhoneCopies() })
         book?.takeIf { it.description.isNotBlank() || it.shortDescription.isNotBlank() }?.let {
             gap(body, 24)
@@ -471,7 +611,7 @@ class MainActivity : ComponentActivity() {
 
     private fun fileInfoMessage(): String {
         val entry = selectedEntry()
-        val file = app.pen?.files?.find { it.name.equals(selectedFile, true) }
+        val file = app.visibleFiles.find { it.name.equals(selectedFile, true) }
         val backup = selectedFile?.let { app.backup(it) }
         val editions = selectedBooks()
         val fields = mutableListOf<String>()
@@ -503,6 +643,7 @@ class MainActivity : ComponentActivity() {
         summary.addView(icon(symbol, if (transfer.failed) 0xFF9B2A22.toInt() else green, 48)); gap(summary, 20)
         summary.addView(text(heading, 25, ink, true)); gap(summary, 12)
         summary.addView(text(entry?.let(app::title) ?: transfer.title, 17, ink))
+        transfer.target?.let { gap(summary, 8); summary.addView(text("To: $it", 15, muted)) }
         progressLabel = text(transfer.stage, 14, muted)
         gap(summary, 16); summary.addView(progressLabel)
         if (transfer.running) {
@@ -511,7 +652,10 @@ class MainActivity : ComponentActivity() {
             gap(summary, 14); summary.addView(text("Keep the app open and the pen connected.", 13, muted))
         }
         body.addView(summary); gap(body, 24)
-        if (!transfer.running) body.addView(action("View book") { openBook(entry, transfer.filename) })
+        if (!transfer.running) {
+            if (transfer.filename == "@selection") body.addView(action("Review selection") { navigate(Screen.PLAN) })
+            else body.addView(action("View book") { openBook(entry, transfer.filename) })
+        }
         if (transfer.failed) body.addView(action("Connection help", false) { navigate(Screen.HELP, false) })
         updateProgress()
     }
@@ -549,15 +693,16 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun confirmInstall(entry: CatalogEntry, downloadFirst: Boolean = false) {
-        val pen = app.pen ?: return
+        val pen = app.viewedPen ?: return
+        val profile = app.viewedProfile ?: return
         val unknown = if (pen.free == null) "\nFree space is unavailable." else ""
-        AlertDialog.Builder(this).setTitle("Install on your pen?")
+        AlertDialog.Builder(this).setTitle("Install on ${profile.name}?")
             .setMessage("${app.title(entry)}\n${size(entry.size)} · Existing files stay untouched.$unknown" +
                 if (downloadFirst) "\nDownloads temporarily, verifies the pen copy, then discards the phone file." else
                     if (app.audioRetention == AudioRetention.TRANSFER_ONLY) "\nPhone download deleted after a verified install." else "")
             .setNegativeButton("Cancel", null).setPositiveButton("Install") { _, _ ->
                 navigate(Screen.TRANSFERS)
-                if (downloadFirst) app.downloadAndInstall(entry) else app.install(entry)
+                if (downloadFirst) app.downloadAndInstall(entry, profile.id) else app.install(entry, profile.id)
             }.show()
     }
 
@@ -658,20 +803,22 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun confirmRemove(file: PenFile) {
-        val shared = app.pen?.files?.any { it.id == file.id && it.name != file.name } == true
+        val profile = app.viewedProfile ?: return
+        val shared = app.visibleFiles.any { it.id == file.id && it.name != file.name } == true
         val warning = if (shared) "\nOther files share this audio ID and will stay on the pen. Related content may depend on this file." else ""
-        AlertDialog.Builder(this).setTitle("Remove from pen?")
+        AlertDialog.Builder(this).setTitle("Remove from ${profile.name}?")
             .setMessage("${titleFor(file.name)}\nFree up ${size(file.size)} on the pen. A verified backup will be kept on this phone for offline restoration.$warning")
             .setNegativeButton("Cancel", null).setPositiveButton("Remove") { _, _ ->
-                navigate(Screen.TRANSFERS); app.remove(file)
+                navigate(Screen.TRANSFERS); app.remove(file, profile.id)
             }.show()
     }
 
     private fun confirmRestore(backup: RemovalBackup) {
-        AlertDialog.Builder(this).setTitle("Restore to pen?")
+        val profile = app.viewedProfile ?: return
+        AlertDialog.Builder(this).setTitle("Restore to ${profile.name}?")
             .setMessage("${titleFor(backup.filename)}\n${size(backup.size)} from this phone's backup. Existing filenames are preserved.")
             .setNegativeButton("Cancel", null).setPositiveButton("Restore") { _, _ ->
-                navigate(Screen.TRANSFERS); app.restore(backup)
+                navigate(Screen.TRANSFERS); app.restore(backup, profile.id)
             }.show()
     }
 
@@ -703,7 +850,7 @@ class MainActivity : ComponentActivity() {
                 val flags = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 check(flags == (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)) { "Read and write access are needed." }
                 contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                screen = Screen.PEN; backStack.clear(); app.selectTree(uri)
+                screen = Screen.PEN; backStack.clear(); backStack.add(Screen.PENS); app.selectTree(uri)
             } catch (e: Exception) { showMessage("Folder access", e.message ?: "Access was not granted.") }
         }
     }
@@ -781,16 +928,17 @@ class MainActivity : ComponentActivity() {
     private fun column() = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
     private fun row() = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
     private fun gap(parent: LinearLayout, height: Int) { parent.addView(View(this), LinearLayout.LayoutParams(1, dp(height))) }
-    private fun onPen(filename: String) = app.pen?.files?.any { it.name.equals(filename, true) } == true
+    private fun onPen(filename: String) = app.visibleFiles.any { it.name.equals(filename, true) }
     private fun titleFor(filename: String): String {
         val entry = app.catalog.find { it.filename.equals(filename, true) }
         if (entry != null) return app.title(entry)
-        val id = app.pen?.files?.find { it.name.equals(filename, true) }?.id ?: app.backup(filename)?.audioId
+        val id = app.visibleFiles.find { it.name.equals(filename, true) }?.id ?: app.backup(filename)?.audioId
         return app.book(filename, id)?.title ?: filename.removeSuffix(".gme").replace('_', ' ')
     }
     private fun hideKeyboard() { (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(root.windowToken, 0); root.clearFocus() }
     private fun showMessage(title: String, message: String) { AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("Done", null).show() }
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
+    private fun dateTime(millis: Long) = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(Date(millis))
     private fun date(millis: Long?) = millis?.let { DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(it)) } ?: "Date unavailable"
     private fun size(bytes: Long) = if (bytes >= 1_000_000_000) String.format(Locale.ROOT, "%.2f GB", bytes / 1e9) else String.format(Locale.ROOT, "%.1f MB", bytes / 1e6)
 }

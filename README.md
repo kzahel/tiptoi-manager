@@ -67,6 +67,7 @@ some official content groups intentionally contain multiple files with one ID.
 - [Navigation and screen responsibilities](docs/navigation.md)
 - [Publisher metadata, covers and offline caching](docs/book-metadata.md)
 - [Phone audio cleanup and retention](docs/phone-storage.md)
+- [Named pen profiles and shared selections](docs/multi-pen.md)
 
 ## Reference checkouts
 
@@ -95,13 +96,20 @@ adb -s YOUR_PHONE install -r app/build/outputs/apk/debug/app-debug.apk
 ```
 
 1. Connect a pen to the phone with a data-capable cable or OTG adapter.
-2. Open My pen, choose the pen's top-level USB folder, and allow access.
+2. Open My pens, choose the pen's top-level USB folder, and allow access.
 3. Use the hamburger menu to open Browse books and load the German catalog.
 4. Search for a title or product ID, open the book, and choose Download to phone.
 5. Open the saved book from Downloads and choose Install on pen. Keep the app
    open until Transfers reports completion. Unplug and check playback with the book.
 
-My pen opens separate Installed books and Storage screens. Book details show
+My pens recognizes previously connected pens and stores local names and inventories.
+Open a profile to rename it, inspect installed books or review storage. Offline
+profiles show last-observed data and cannot authorize a write to another pen.
+Use Choose pens on a book to select the family collection or individual pens,
+then Selected books on each profile to review and add missing files. Extra files
+are kept and conflicting filenames are refused. See [multi-pen profiles](docs/multi-pen.md).
+
+Pen details open separate Installed books and Storage screens. Book details show
 the available action; File details holds filenames and versions. Transfers
 shows the current or most recent transfer in this session.
 
@@ -125,8 +133,8 @@ delete all phone audio including backups. Catalog details and covers stay
 cached separately. See [phone storage](docs/phone-storage.md).
 
 The app never replaces existing filenames in this spike. It does not install
-firmware, automatically select companion files, or claim playback-based cleanup. Transfers require the app to remain open; interruption
-recovery and multi-pen persistence are later work. Publisher covers, titles,
+firmware, automatically select companion files, or claim playback-based cleanup.
+Keep the app open during transfers; interruption recovery remains later work. Publisher covers, titles,
 descriptions and age ranges enrich the catalog. ISBNs and article numbers are
 behind the info button. Viewed artwork and details are cached locally, with
 filename/icon fallbacks when publisher metadata is absent or ambiguous.

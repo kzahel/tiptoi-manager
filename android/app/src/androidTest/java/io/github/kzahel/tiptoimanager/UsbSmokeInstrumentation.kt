@@ -46,6 +46,25 @@ class UsbSmokeInstrumentation : Instrumentation() {
             }
             val tree = app.tree ?: error("Grant the pen's folder through the app before running this check.")
             val original = app.storage.scan(tree)
+            if (arguments.getString("profilesReadOnly") == "true") {
+                check(original.identity.hasSerial) { "The connected pen's serial format was not recognized." }
+                val before = app.profiles.all.single { it.identity.key == original.identity.key }
+                operation(app) { app.refreshPen() }
+                check(app.viewedProfile?.id == before.id)
+                val loaded = PenProfiles(java.io.File(app.filesDir, "pens.json")).apply { load() }
+                check(loaded.all.single { it.id == before.id }.files.map { it.name }.toSet() == original.files.map { it.name }.toSet())
+                results.putBoolean("serialParsed", true)
+                results.putBoolean("profileRecognizedAfterRescan", true)
+                results.putBoolean("savedInventoryReloaded", true)
+                results.putString("stream", "Serial identity, repeated recognition and durable inventory passed; no pen writes.\n")
+                finish(Activity.RESULT_OK, results)
+                return
+            }
+            arguments.getString("profilesFixtureProductId")?.toInt()?.let { id ->
+                profileFixture(app, original, id, results)
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             arguments.getString("cacheFixtureProductId")?.toInt()?.let { id ->
                 cacheFixture(app, original, id, results)
                 finish(Activity.RESULT_OK, results)
@@ -148,6 +167,65 @@ class UsbSmokeInstrumentation : Instrumentation() {
         try { app.storage.restore(app.pen!!, backup) { _, _ -> } }
         catch (e: IllegalStateException) { refused = e.message?.contains("already on the pen") == true }
         check(refused) { "Restoration must refuse an existing destination." }
+    }
+
+    private fun profileFixture(app: ManagerApp, original: PenSnapshot, id: Int, results: Bundle) {
+        operation(app) { app.refreshPen() }
+        val profile = app.viewedProfile ?: error("No connected profile.")
+        check(app.profiles.targets(profile).isEmpty()) { "Use a pen with an empty selection for this disposable test; existing selections are preserved." }
+        check(original.identity.hasSerial)
+        val source = app.catalog.single { it.id == id }
+        check(app.cached(source))
+        val token = java.util.UUID.randomUUID().toString()
+        val entry = source.copy(filename = "Tiptoi manager profile test $token.gme", version = "profile-test-$token")
+        val cached = app.cache(entry)
+        val before = original.files.map { Triple(it.name, it.size, it.id) }.toSet()
+        var otherId: String? = null
+        val previousMode = app.audioRetention
+        try {
+            app.cache(source).copyTo(cached)
+            runOnMainSync { app.updateAudioRetention(AudioRetention.KEEP) }
+            operation(app) { app.selectContent(entry, profile.id, true) }
+            val other = app.profiles.observe(PenIdentity("serial:" + sha256(token.toByteArray()), "TEST", "fixture", "GERMAN", "fixture"),
+                "f".repeat(64), original.tree.toString(), emptyList(), null, System.currentTimeMillis())
+            otherId = other.id
+            runOnMainSync { app.selectProfile(other.id) }
+            check(app.viewedPen == null && app.pen?.identity?.key == original.identity.key)
+            runOnMainSync { app.install(entry, other.id) }
+            waitIdle(app); check(app.failure && app.status.startsWith("Connect"))
+            check(cached.exists())
+            runOnMainSync { app.applySelection(PenPlan.create(other, listOf(entry))) }
+            waitIdle(app); check(app.failure)
+            runOnMainSync { app.selectProfile(profile.id) }
+            operation(app) { app.forgetProfile(other.id) }; otherId = null
+            val plan = app.plan()!!
+            check(plan.additions == listOf(entry))
+            operation(app) { app.applySelection(plan) }
+            val installed = app.pen!!.files.single { it.name == entry.filename }
+            val readBack = targetContext.contentResolver.openInputStream(installed.uri)!!.use { Gme.inspect(it, entry.size, id) }
+            val expected = cached.inputStream().use { Gme.inspect(it, entry.size, id) }
+            check(readBack.sha256 == expected.sha256 && cached.exists())
+            check(app.plan()!!.additions.isEmpty())
+            results.putBoolean("wrongProfileWritesRefused", true)
+            results.putBoolean("selectionSyncReadBackVerified", true)
+            results.putBoolean("sharedDownloadRetained", true)
+        } finally {
+            runOnMainSync { app.selectProfile(profile.id) }
+            if (otherId != null) operation(app) { app.forgetProfile(otherId!!) }
+            operation(app) { app.selectContent(entry, profile.id, false) }
+            val current = app.storage.scan(original.tree)
+            check(current.identity.key == original.identity.key && current.fingerprint == original.fingerprint)
+            current.files.singleOrNull { it.name == entry.filename }?.let {
+                check(android.provider.DocumentsContract.deleteDocument(targetContext.contentResolver, it.uri))
+            }
+            cached.delete()
+            runOnMainSync { app.updateAudioRetention(previousMode) }
+            operation(app) { app.refreshPen() }
+            check(app.pen!!.files.map { Triple(it.name, it.size, it.id) }.toSet() == before)
+            check(app.profiles.targets(app.viewedProfile!!).isEmpty())
+        }
+        results.putBoolean("originalInventoryPreserved", true)
+        results.putString("stream", "Profile fixture: wrong-profile writes refused, reviewed cached sync read-back verified, original inventory preserved.\n")
     }
 
     /** Reuse the selected book's bytes under a unique filename/key; never clean up existing household audio. */

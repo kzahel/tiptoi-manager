@@ -65,11 +65,11 @@ object RawIntegrity {
 }
 
 data class RemovalBackup(val directory: File, val filename: String, val size: Long, val audioId: Int?,
-    val sourceDate: Long?, val fingerprint: String, val sha256: String, val savedAt: Long) {
+    val sourceDate: Long?, val fingerprint: String, val sha256: String, val savedAt: Long, val identityKey: String? = null) {
     val file: File get() = File(directory, "content.gme")
     fun saveManifest() {
         val json = JSONObject().put("filename", filename).put("size", size).put("audioId", audioId)
-            .put("sourceDate", sourceDate).put("fingerprint", fingerprint).put("sha256", sha256).put("savedAt", savedAt)
+            .put("sourceDate", sourceDate).put("fingerprint", fingerprint).put("sha256", sha256).put("savedAt", savedAt).put("identityKey", identityKey)
         atomicWrite(File(directory, "backup.json"), json.toString().toByteArray(Charsets.UTF_8))
     }
 }
@@ -89,13 +89,15 @@ class RemovalBackups(val directory: File) {
                 require(Catalog.safeFilename(name) && size >= 0 && sha.matches(Regex("[0-9a-f]{64}")) && fingerprint.matches(Regex("[0-9a-f]{64}")))
                 require(File(folder, "content.gme").isFile && File(folder, "content.gme").length() == size)
                 RemovalBackup(folder, name, size, if (json.isNull("audioId")) null else json.getInt("audioId"),
-                    if (json.isNull("sourceDate")) null else json.getLong("sourceDate"), fingerprint, sha, json.getLong("savedAt"))
+                    if (json.isNull("sourceDate")) null else json.getLong("sourceDate"), fingerprint, sha, json.getLong("savedAt"),
+                    if (json.isNull("identityKey")) null else json.getString("identityKey"))
             }.getOrNull()
         }?.sortedByDescending { it.savedAt }.orEmpty()
     }
-    fun latest(filename: String, fingerprint: String? = null): RemovalBackup? {
+    fun latest(filename: String, fingerprint: String? = null, identityKey: String? = null, fingerprints: Set<String> = emptySet()): RemovalBackup? {
         val matches = all.filter { it.filename.equals(filename, true) }
-        return matches.firstOrNull { it.fingerprint == fingerprint } ?: matches.firstOrNull()
+        return matches.firstOrNull { identityKey != null && it.identityKey == identityKey }
+            ?: matches.firstOrNull { it.fingerprint == fingerprint || it.fingerprint in fingerprints } ?: matches.firstOrNull()
     }
     fun latestCopies(): List<RemovalBackup> = all.distinctBy { it.filename.lowercase(Locale.ROOT) }
 }

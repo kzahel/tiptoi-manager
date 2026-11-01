@@ -15,7 +15,10 @@ an explicitly created disposable copy. The owner also authorized individual
 and bulk deletion of phone audio (including explicitly confirmed backup deletion),
 and a transfer-only download mode with temporary staging and no retained download.
 Test cleanup with disposable fixtures; keep pen-removal backups separate from
-automatic download eviction. Multi-pen synchronization remains later work.
+automatic download eviction. The owner subsequently authorized named multi-pen
+profiles, serial-based recognition, saved inventories, shared/per-pen book
+selections and explicitly reviewed additive synchronization. Never automatically
+remove extra books or overwrite a conflicting filename during selection sync.
 
 Use `io.github.kzahel.tiptoimanager` for this independent utility, with a
 `.debug` suffix for development previews. No Play listing or production
