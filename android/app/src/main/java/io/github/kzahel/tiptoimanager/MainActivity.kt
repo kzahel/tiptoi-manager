@@ -412,9 +412,11 @@ class MainActivity : ComponentActivity() {
             }
             if (!connected) body.addView(action("Connect ${profile.name}") { connectionHelp(profile) })
             else {
-                val fits = app.viewedPen?.free?.let { it >= plan.bytes + 1_048_576 } ?: true
-                body.addView(action("Add selected books") { confirmSelection(plan, profile) }.apply {
+                val fits = plan.additions.isEmpty() || (app.viewedPen?.free?.let { it >= plan.bytes + 1_048_576 } ?: true)
+                if (plan.additions.isEmpty() && plan.conflicts == 0) body.addView(chip("All selected books are present", UiIcon.CHECK))
+                else body.addView(action("Add selected books") { confirmSelection(plan, profile) }.apply {
                     isEnabled = !app.busy && plan.additions.isNotEmpty() && plan.conflicts == 0 && fits && profile.identity.hasSerial
+                    alpha = if (isEnabled) 1f else .45f
                 })
                 if (!fits) body.addView(action("Make space on pen", false) { reviewOldest() })
                 if (!profile.identity.hasSerial) body.addView(text("Collection sync needs a recognized pen serial.", 14, muted))
