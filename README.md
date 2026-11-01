@@ -66,6 +66,7 @@ some official content groups intentionally contain multiple files with one ID.
 - [Opt-in device smoke runner](docs/device-smoke.md)
 - [Navigation and screen responsibilities](docs/navigation.md)
 - [Publisher metadata, covers and offline caching](docs/book-metadata.md)
+- [Phone audio cleanup and retention](docs/phone-storage.md)
 
 ## Reference checkouts
 
@@ -112,8 +113,16 @@ on the phone after restoration. Uninstalling the app or clearing its storage
 erases them; there is no automatic backup eviction. See [cleanup](docs/cleanup.md).
 
 For installed books, phone downloads are optional actions in the three-dot menu.
-Download saves a phone copy; Install or Restore copies it to the pen and leaves
-the phone copy available.
+With **Keep downloads** (the default), Download saves a phone copy for reuse.
+In **Phone storage**, choose **Transfer only** to download and install in one
+step, using temporary audio that is discarded after the transfer. Existing
+downloads are deleted only after a verified install or explicit cleanup.
+Pen-removal backups remain separate until you delete them.
+
+Use **Manage phone copies** on a book to delete its download or backups.
+**Phone storage** can clear downloads while keeping backups, or explicitly
+delete all phone audio including backups. Catalog details and covers stay
+cached separately. See [phone storage](docs/phone-storage.md).
 
 The app never replaces existing filenames in this spike. It does not install
 firmware, automatically select companion files, or claim playback-based cleanup. Transfers require the app to remain open; interruption

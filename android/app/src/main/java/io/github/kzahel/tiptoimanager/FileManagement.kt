@@ -22,15 +22,18 @@ enum class PenSort(val label: String) {
     }
 }
 
-enum class BookPrimaryAction { NONE, REMOVE, RESTORE, INSTALL, DOWNLOAD, CONNECT, MAKE_SPACE }
+enum class BookPrimaryAction { NONE, REMOVE, RESTORE, INSTALL, DOWNLOAD, DOWNLOAD_INSTALL, CONNECT, MAKE_SPACE }
 object BookActions {
     fun primary(onPen: Boolean, removable: Boolean, backup: Boolean, downloaded: Boolean,
-                connected: Boolean, inCatalog: Boolean, free: Long?, bytes: Long): BookPrimaryAction = when {
+                connected: Boolean, inCatalog: Boolean, free: Long?, bytes: Long, transferOnly: Boolean = false): BookPrimaryAction = when {
         onPen -> if (removable) BookPrimaryAction.REMOVE else BookPrimaryAction.NONE
         (backup || downloaded) && !connected -> BookPrimaryAction.CONNECT
         (backup || downloaded) && free != null && free < bytes + 1_048_576 -> BookPrimaryAction.MAKE_SPACE
         backup -> BookPrimaryAction.RESTORE
         downloaded -> BookPrimaryAction.INSTALL
+        inCatalog && transferOnly && !connected -> BookPrimaryAction.CONNECT
+        inCatalog && transferOnly && free != null && free < bytes + 1_048_576 -> BookPrimaryAction.MAKE_SPACE
+        inCatalog && transferOnly -> BookPrimaryAction.DOWNLOAD_INSTALL
         inCatalog -> BookPrimaryAction.DOWNLOAD
         else -> BookPrimaryAction.NONE
     }

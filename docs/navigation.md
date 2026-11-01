@@ -13,7 +13,8 @@ then returns to My pen before leaving the app.
 | Storage | My pen | Free space, audio-file usage and oldest-file review |
 | Browse books | Library | Search the cached catalog; explicit refresh |
 | Downloads | Library | Downloads and removal backups saved on this phone |
-| Book details | Any title row | Status and the relevant remove/restore/download/install action |
+| Phone storage | Library / Downloads | Audio usage, individual/bulk deletion and download retention |
+| Book details | Any title row | Status, pen actions and management of phone copies |
 | Transfers | Activity / starting an operation | Current progress or the latest transfer in this session |
 | Help & about | Support | Setup steps, local-data explanation and licenses |
 

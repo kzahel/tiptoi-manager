@@ -46,6 +46,11 @@ class UsbSmokeInstrumentation : Instrumentation() {
             }
             val tree = app.tree ?: error("Grant the pen's folder through the app before running this check.")
             val original = app.storage.scan(tree)
+            arguments.getString("cacheFixtureProductId")?.toInt()?.let { id ->
+                cacheFixture(app, original, id, results)
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             arguments.getString("removalFixtureProductId")?.toInt()?.let { id ->
                 removalFixture(app, original, id, results)
                 finish(Activity.RESULT_OK, results)
@@ -143,6 +148,72 @@ class UsbSmokeInstrumentation : Instrumentation() {
         try { app.storage.restore(app.pen!!, backup) { _, _ -> } }
         catch (e: IllegalStateException) { refused = e.message?.contains("already on the pen") == true }
         check(refused) { "Restoration must refuse an existing destination." }
+    }
+
+    /** Reuse the selected book's bytes under a unique filename/key; never clean up existing household audio. */
+    private fun cacheFixture(app: ManagerApp, original: PenSnapshot, id: Int, results: Bundle) {
+        val entry = app.catalog.single { it.id == id }
+        check(app.cached(entry)) { "Cache the selected source book before this test." }
+        val token = java.util.UUID.randomUUID().toString()
+        val fixture = entry.copy(filename = "Tiptoi manager cache test $token.gme", version = "cache-test-$token")
+        val source = app.cache(entry).inputStream().use { Gme.inspect(it, entry.size, id) }
+        val cache = app.cache(fixture)
+        val initialDownloads = app.phoneAudio.downloadFiles().map { it.name }.toSet()
+        val initialBackups = app.backups.all.map { it.directory.name }.toSet()
+        val previousMode = app.audioRetention
+        val inventory = original.files.map { Triple(it.name, it.size, it.id) }.toSet()
+        fun deleteOwnPenCopy() {
+            val pen = app.storage.scan(original.tree)
+            check(pen.fingerprint == original.fingerprint)
+            pen.files.singleOrNull { it.name == fixture.filename }?.let {
+                check(android.provider.DocumentsContract.deleteDocument(targetContext.contentResolver, it.uri))
+            }
+        }
+        fun checkOwnPenCopy() {
+            val installed = app.storage.scan(original.tree).files.single { it.name == fixture.filename }
+            val digest = targetContext.contentResolver.openInputStream(installed.uri)!!.use { Gme.inspect(it, fixture.size, id) }
+            check(digest.sha256 == source.sha256)
+        }
+        try {
+            app.cache(entry).copyTo(cache)
+            runOnMainSync { app.updateAudioRetention(AudioRetention.TRANSFER_ONLY) }
+            operation(app) { app.install(fixture) }
+            check(!cache.exists()) { "Transfer-only install retained its downloaded source." }
+            checkOwnPenCopy()
+            deleteOwnPenCopy()
+            operation(app) { app.refreshPen() }
+            operation(app) { app.downloadAndInstall(fixture) }
+            checkOwnPenCopy()
+            check(!cache.exists() && app.phoneAudio.temporary.listFiles().orEmpty().isEmpty())
+            val local = java.io.File(app.filesDir, "cache-smoke-$token")
+            try {
+                val backups = RemovalBackups(java.io.File(local, "backups"))
+                val store = PhoneAudio(java.io.File(local, "downloads"), java.io.File(local, "temporary"), backups)
+                store.downloads.mkdirs(); store.temporary.mkdirs()
+                val first = java.io.File(store.downloads, "first.gme").apply { writeText("fixture") }
+                val second = java.io.File(store.downloads, "second.gme").apply { writeText("fixture") }
+                val backup = java.io.File(backups.directory, "orphan/content.gme").apply { parentFile!!.mkdirs(); writeText("backup") }
+                store.deleteDownload(first); check(!first.exists() && second.exists())
+                store.clearDownloads(); check(!second.exists() && backup.exists())
+                store.clearAll(); check(!backup.exists() && store.usage().total == 0L)
+            } finally { local.deleteRecursively() }
+            results.putBoolean("transferOnlyInstallDeletedSource", true)
+            results.putBoolean("downloadAndInstallReadBackVerified", true)
+            results.putBoolean("temporaryAudioRemoved", true)
+            results.putBoolean("phoneCleanupFixturesPassed", true)
+        } finally {
+            runOnMainSync { app.updateAudioRetention(previousMode) }
+            deleteOwnPenCopy()
+            cache.delete()
+            operation(app) { app.refreshPen() }
+            val after = app.pen!!
+            check(after.files.map { Triple(it.name, it.size, it.id) }.toSet() == inventory)
+            check(app.phoneAudio.downloadFiles().map { it.name }.toSet() == initialDownloads)
+            check(app.backups.all.map { it.directory.name }.toSet() == initialBackups)
+            check(app.cache(entry).inputStream().use { Gme.inspect(it, entry.size, id) }.sha256 == source.sha256)
+        }
+        results.putBoolean("priorPenAndPhoneFilesPreserved", true)
+        results.putString("stream", "Cache fixture: verified installs, temporary cleanup, phone deletion scopes and original inventories passed.\n")
     }
 
     private fun operation(app: ManagerApp, action: () -> Unit) {

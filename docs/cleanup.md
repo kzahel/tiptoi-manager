@@ -25,8 +25,8 @@ network connection. A restored file normally receives a new filesystem date.
 Backups retain the original filename, size, audio ID, file date, pen fingerprint,
 SHA-256 and backup timestamp locally. They are app-private and remain after
 restoration. Uninstalling the app or clearing its storage erases them. There is
-currently no automatic eviction, export or backup-deletion UI. A publisher
-phone download remains a separate cache file when one already exists.
+no automatic eviction or export. Delete them explicitly from Manage phone copies
+on a book, or from Phone storage. A publisher phone download is a separate file.
 
 ## Dates and sorting
 
@@ -49,6 +49,6 @@ Shared support ID 14999 and `WissenManage.gme` cannot be removed through this UI
 Other companion dependencies are not comprehensively modeled yet.
 
 An installed book's primary action is **Remove from pen**. Downloading another
-phone copy is an optional three-dot menu action, explicitly labeled **Download
+phone copy in Keep downloads mode is an optional three-dot action, labeled **Download
 phone copy** or **Re-download phone copy**. An absent book offers restoration,
 installation, connection or download according to its local and pen state.

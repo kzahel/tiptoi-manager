@@ -54,3 +54,12 @@ uses the app's removal action, reloads the persisted backup, restores and hashes
 the copy, checks refusal to overwrite, and cleans up only that unique fixture.
 It compares the original inventory's filenames, sizes and IDs after removal and
 cleanup. This is an opt-in pen-write test, never automatic cleanup of real books.
+
+`-e cacheFixtureProductId ID` exercises retention using an already-cached,
+unambiguous source product. It temporarily selects Transfer only, installs a
+uniquely named/keyed cached copy and checks source deletion after read-back,
+then downloads and installs a new disposable copy and checks temporary cleanup.
+Phone deletion/clear scopes are exercised in separate fixture directories.
+It restores the prior retention preference and compares original phone/pen
+inventories; real originals are not selected for cleanup. This mode makes a
+publisher audio request. Download-only smoke mode requires Keep downloads.

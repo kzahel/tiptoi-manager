@@ -37,7 +37,7 @@ import java.util.Date
 private enum class Screen(val title: String) {
     PEN("My pen"), INSTALLED("Installed books"), STORAGE("Storage"),
     BROWSE("Browse books"), DOWNLOADS("Downloads"), BOOK("Book details"),
-    TRANSFERS("Transfers"), HELP("Help & about")
+    PHONE_STORAGE("Phone storage"), TRANSFERS("Transfers"), HELP("Help & about")
 }
 
 class MainActivity : ComponentActivity() {
@@ -170,6 +170,7 @@ class MainActivity : ComponentActivity() {
         }
         section("DEVICE"); item(Screen.PEN, UiIcon.PEN)
         section("LIBRARY"); item(Screen.BROWSE, UiIcon.BOOKS); item(Screen.DOWNLOADS, UiIcon.DOWNLOAD)
+        item(Screen.PHONE_STORAGE, UiIcon.STORAGE)
         section("ACTIVITY"); item(Screen.TRANSFERS, UiIcon.TRANSFER)
         section("SUPPORT"); item(Screen.HELP, UiIcon.INFO)
         drawerConnection = text("", 13, muted).apply { setPadding(dp(16), dp(32), 0, 0) }
@@ -215,6 +216,7 @@ class MainActivity : ComponentActivity() {
                 when (screen) {
                     Screen.PEN -> penScreen()
                     Screen.STORAGE -> storageScreen()
+                    Screen.PHONE_STORAGE -> phoneStorageScreen()
                     Screen.BOOK -> bookScreen()
                     Screen.TRANSFERS -> transfersScreen()
                     Screen.HELP -> helpScreen()
@@ -236,7 +238,7 @@ class MainActivity : ComponentActivity() {
             Screen.BROWSE -> header.addView(iconButton(UiIcon.REFRESH, "Refresh catalog") { app.refreshCatalog() }.apply { isEnabled = !app.busy })
             Screen.BOOK -> {
                 header.addView(iconButton(UiIcon.INFO, "File details") { fileDetails() })
-                if (selectedEntry() != null) {
+                if (selectedEntry() != null || selectedFile?.let { app.backup(it) } != null) {
                     val more = iconButton(UiIcon.MORE, "More book actions") {}
                     more.isEnabled = !app.busy
                     more.setOnClickListener { bookMenu(more) }
@@ -337,6 +339,9 @@ class MainActivity : ComponentActivity() {
                     openBook(app.catalog.find { it.filename.equals(file.name, true) }, file.name)
                 }) }
             } else {
+                if (screen == Screen.DOWNLOADS) body.addView(navRow(UiIcon.STORAGE, "Phone storage", size(app.audioUsage.total)) {
+                    navigate(Screen.PHONE_STORAGE)
+                })
                 val entries = app.catalog.filter { entry ->
                     val info = app.book(entry.filename, entry.id)
                     val searchable = listOf(entry.title, info?.title, info?.series).filterNotNull().joinToString(" ")
@@ -431,17 +436,19 @@ class MainActivity : ComponentActivity() {
         if (file?.problem != null) body.addView(text(file.problem, 14, 0xFF9B2A22.toInt()))
         gap(body, 20)
         when (BookActions.primary(present, BookActions.removable(filename, file?.id), backup != null,
-            cached, app.pen != null, entry != null, app.pen?.free, bytes)) {
+            cached, app.pen != null, entry != null, app.pen?.free, bytes, app.audioRetention == AudioRetention.TRANSFER_ONLY)) {
             BookPrimaryAction.REMOVE -> body.addView(action("Remove from pen", false) { file?.let(::confirmRemove) }.apply {
                 setTextColor(0xFF9B2A22.toInt())
             })
             BookPrimaryAction.RESTORE -> body.addView(action("Restore to pen") { backup?.let(::confirmRestore) })
             BookPrimaryAction.INSTALL -> body.addView(action("Install on pen") { entry?.let(::confirmInstall) })
             BookPrimaryAction.DOWNLOAD -> body.addView(action("Download to phone") { entry?.let { navigate(Screen.TRANSFERS); app.download(it) } })
+            BookPrimaryAction.DOWNLOAD_INSTALL -> body.addView(action("Download & install") { entry?.let { confirmInstall(it, true) } })
             BookPrimaryAction.CONNECT -> body.addView(action("Connect a pen") { navigate(Screen.PEN, false) })
             BookPrimaryAction.MAKE_SPACE -> body.addView(action("Make space on pen") { reviewOldest() })
             BookPrimaryAction.NONE -> if (present) body.addView(text("Shared support file", 14, muted))
         }
+        if (cached || backup != null) body.addView(action("Manage phone copies", false) { managePhoneCopies() })
         book?.takeIf { it.description.isNotBlank() || it.shortDescription.isNotBlank() }?.let {
             gap(body, 24)
             body.addView(text("About this book", 19, ink, true)); gap(body, 10)
@@ -527,7 +534,7 @@ class MainActivity : ComponentActivity() {
         about.addView(text("Independent, open-source USB manager.\nNo account. Your library stays on this phone.", 14, muted))
         gap(about, 12)
         about.addView(action("Phone copies & backups", false) {
-            showMessage("Phone copies & backups", "Downloads stay on this phone after installation. Removing a pen file first saves a verified phone backup; restore it from Downloads. Backups remain after restoration. Uninstalling the app or clearing its storage erases all phone copies and backups.")
+            showMessage("Phone copies & backups", "Choose Keep downloads for offline reuse, or Transfer only to discard temporary audio after a transfer. A failed transfer also discards its temporary download. Pen-removal backups are kept separately until you delete them. Manage individual copies on a book, or clear audio in Phone storage. Uninstalling the app or clearing its storage erases all phone copies and backups.")
         })
         gap(about, 12)
         about.addView(text("Experimental preview · 0.1.0", 12, muted))
@@ -541,30 +548,113 @@ class MainActivity : ComponentActivity() {
         body.addView(about)
     }
 
-    private fun confirmInstall(entry: CatalogEntry) {
+    private fun confirmInstall(entry: CatalogEntry, downloadFirst: Boolean = false) {
         val pen = app.pen ?: return
         val unknown = if (pen.free == null) "\nFree space is unavailable." else ""
         AlertDialog.Builder(this).setTitle("Install on your pen?")
-            .setMessage("${app.title(entry)}\n${size(entry.size)} · Existing files stay untouched.$unknown")
+            .setMessage("${app.title(entry)}\n${size(entry.size)} · Existing files stay untouched.$unknown" +
+                if (downloadFirst) "\nDownloads temporarily, verifies the pen copy, then discards the phone file." else
+                    if (app.audioRetention == AudioRetention.TRANSFER_ONLY) "\nPhone download deleted after a verified install." else "")
             .setNegativeButton("Cancel", null).setPositiveButton("Install") { _, _ ->
-                navigate(Screen.TRANSFERS); app.install(entry)
+                navigate(Screen.TRANSFERS)
+                if (downloadFirst) app.downloadAndInstall(entry) else app.install(entry)
             }.show()
     }
 
     private fun bookMenu(anchor: View) {
-        val entry = selectedEntry() ?: return
-        val label = if (app.cached(entry)) "Re-download phone copy" else "Download phone copy"
+        val entry = selectedEntry()
         PopupMenu(this, anchor).apply {
-            menu.add(label).setOnMenuItemClickListener {
-                AlertDialog.Builder(this@MainActivity).setTitle("$label?")
-                    .setMessage("${app.title(entry)}\n${size(entry.size)} saved on this phone for offline installation.")
-                    .setNegativeButton("Cancel", null).setPositiveButton("Download") { _, _ ->
-                        navigate(Screen.TRANSFERS); app.download(entry)
-                    }.show()
-                true
+            if (entry != null && app.audioRetention == AudioRetention.KEEP) {
+                val label = if (app.cached(entry)) "Re-download phone copy" else "Download phone copy"
+                menu.add(label).setOnMenuItemClickListener {
+                    AlertDialog.Builder(this@MainActivity).setTitle("$label?")
+                        .setMessage("${app.title(entry)}\n${size(entry.size)} saved on this phone for offline installation.")
+                        .setNegativeButton("Cancel", null).setPositiveButton("Download") { _, _ ->
+                            navigate(Screen.TRANSFERS); app.download(entry)
+                        }.show()
+                    true
+                }
             }
+            if (entry?.let(app::cached) == true || selectedFile?.let { app.backup(it) } != null) {
+                menu.add("Manage phone copies").setOnMenuItemClickListener { managePhoneCopies(); true }
+            }
+            menu.add("Phone storage").setOnMenuItemClickListener { navigate(Screen.PHONE_STORAGE); true }
             show()
         }
+    }
+
+    private fun managePhoneCopies() {
+        val filename = selectedFile ?: return
+        val entry = selectedEntry()
+        val choices = mutableListOf<Pair<String, () -> Unit>>()
+        if (entry?.let(app::cached) == true) choices.add("Delete phone download" to { confirmDeleteDownload(app.cache(entry)) })
+        if (app.backup(filename) != null) choices.add("Delete pen backups" to { confirmDeleteBackups(filename) })
+        AlertDialog.Builder(this).setTitle("Phone copies").setItems(choices.map { it.first }.toTypedArray()) { _, which ->
+            choices[which].second()
+        }.setNegativeButton("Cancel", null).show()
+    }
+
+    private fun phoneStorageScreen() {
+        val usage = app.audioUsage
+        val summary = card()
+        summary.addView(icon(UiIcon.STORAGE, green, 36)); gap(summary, 16)
+        summary.addView(text(size(usage.total), 36, ink, true))
+        summary.addView(text("Audio on this phone", 15, muted))
+        body.addView(summary); gap(body, 20)
+        body.addView(navRow(UiIcon.DOWNLOAD, "Download storage", app.audioRetention.label) { chooseRetention() })
+        if (app.audioRetention == AudioRetention.TRANSFER_ONLY) {
+            body.addView(text("New downloads are temporary. Existing downloads stay until installed or cleared.", 13, muted)); gap(body, 12)
+        }
+        val downloads = app.phoneAudio.downloadFiles()
+        body.addView(navRow(UiIcon.BOOKS, "Downloaded audio", "${downloads.size} files · ${size(usage.downloads)}") {
+            AlertDialog.Builder(this).setTitle("Phone downloads").setItems(downloads.map { localDownloadTitle(it) }.toTypedArray()) { _, which ->
+                confirmDeleteDownload(downloads[which])
+            }.setNegativeButton("Done", null).show()
+        })
+        body.addView(navRow(UiIcon.STORAGE, "Pen backups", "${app.backups.all.size} copies · ${size(usage.backups)}") {
+            val copies = app.backups.latestCopies()
+            AlertDialog.Builder(this).setTitle("Pen backups on phone").setItems(copies.map { titleFor(it.filename) }.toTypedArray()) { _, which ->
+                confirmDeleteBackups(copies[which].filename)
+            }.setNegativeButton("Done", null).show()
+        })
+        if (usage.temporary > 0) { gap(body, 8); body.addView(text("Temporary audio: ${size(usage.temporary)}", 14, muted)) }
+        gap(body, 16)
+        body.addView(action("Clear downloads", false) { confirmClearPhoneAudio(false) }.apply { isEnabled = !app.busy && usage.downloads + usage.temporary > 0 })
+        body.addView(action("Delete all phone audio", false) { confirmClearPhoneAudio(true) }.apply {
+            setTextColor(0xFF9B2A22.toInt()); isEnabled = !app.busy && usage.total > 0
+        })
+        gap(body, 16)
+        body.addView(text("Pen backups stay until you delete them. Catalog details and artwork are stored separately.", 13, muted))
+    }
+
+    private fun chooseRetention() {
+        AlertDialog.Builder(this).setTitle("Download storage")
+            .setSingleChoiceItems(arrayOf("Keep downloads\nReuse audio offline", "Transfer only\nTemporary audio, deleted after transfer"), app.audioRetention.ordinal) { dialog, which ->
+                app.updateAudioRetention(AudioRetention.entries[which]); dialog.dismiss()
+            }.setNegativeButton("Cancel", null).show()
+    }
+
+    private fun localDownloadTitle(file: java.io.File): String =
+        app.catalog.find { it.cacheKey == file.name }?.let(app::title) ?: "Older download · ${file.name.take(8)}"
+
+    private fun confirmDeleteDownload(file: java.io.File) {
+        AlertDialog.Builder(this).setTitle("Delete phone download?")
+            .setMessage("${localDownloadTitle(file)}\n${size(file.length())} on this phone. The pen and pen backups are unchanged.")
+            .setNegativeButton("Cancel", null).setPositiveButton("Delete") { _, _ -> app.deletePhoneDownload(file) }.show()
+    }
+
+    private fun confirmDeleteBackups(filename: String) {
+        val copies = app.backups.all.filter { it.filename.equals(filename, true) }
+        AlertDialog.Builder(this).setTitle("Delete phone backups?")
+            .setMessage("${titleFor(filename)}\n${copies.size} backups · ${size(copies.sumOf { it.size })}. These backups cannot be restored after deletion. The pen is unchanged.")
+            .setNegativeButton("Cancel", null).setPositiveButton("Delete") { _, _ -> app.deletePhoneBackups(filename) }.show()
+    }
+
+    private fun confirmClearPhoneAudio(includeBackups: Boolean) {
+        AlertDialog.Builder(this).setTitle(if (includeBackups) "Delete all phone audio?" else "Clear downloads?")
+            .setMessage(if (includeBackups) "Deletes all downloaded audio, temporary files and ALL pen backups on this phone. Backup-only books will lose their offline restoration copy. The pen is unchanged."
+                else "Deletes downloaded and temporary audio on this phone. Pen-removal backups are kept. The pen is unchanged.")
+            .setNegativeButton("Cancel", null).setPositiveButton("Delete") { _, _ -> app.clearPhoneAudio(includeBackups) }.show()
     }
 
     private fun confirmRemove(file: PenFile) {

@@ -89,3 +89,29 @@ book's Remove action and cancellation, the optional phone-download menu, the
 file-date info dialog and Back/query restoration. No original book was selected
 for deletion. Physical playback, sudden disconnect/power-loss recovery, and
 other provider/pen compatibility remain separate checks.
+
+## Phone cleanup and transfer-only downloads
+
+All 19 JVM tests and Android lint passed. New checks exercise per-file and bulk
+phone cleanup, preservation of metadata/artwork and other titles' backups,
+backup revision deletion, success/failure temporary cleanup, preservation of
+existing downloads after failed installs, and connection/space gating.
+
+On the physical Pixel and pen, the cache fixture installed a uniquely named
+copy of selected ID 248 from a disposable cached source in Transfer only mode.
+Read-back succeeded and that cached source was deleted. A second test downloaded
+and installed the same uniquely named fixture, verified its complete SHA-256,
+and confirmed the temporary phone directory was empty afterward. Per-file and
+bulk phone cleanup were also exercised in isolated fixture directories.
+The original pen inventory and existing phone download/backup names matched
+after cleanup; the selected original cached source's hash matched too. The
+previous retention preference was restored.
+
+Physical UI checks exercised both retention choices, the clear-downloads and
+clear-all confirmations (canceled on real data), actual deletion of a small
+uniquely keyed phone fixture, preservation of the original offline download,
+and the per-book Manage phone copies/delete confirmation. No original audio
+or backup was selected for deletion. Bulk deletion of real family data,
+process-kill/power-loss staging recovery, and network/USB interruption on the
+physical device remain untested. Temporary failure cleanup is covered by JVM
+checks, not a deliberate cable pull.

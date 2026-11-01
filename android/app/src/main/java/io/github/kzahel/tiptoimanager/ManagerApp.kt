@@ -23,6 +23,12 @@ class ManagerApp : Application() {
     val storage by lazy { PenStorage(contentResolver) }
     val downloads by lazy { File(filesDir, "downloads").apply { mkdirs() } }
     val backups by lazy { RemovalBackups(File(filesDir, "pen-backups")) }
+    val phoneAudio by lazy { PhoneAudio(downloads, File(filesDir, "transfer-audio"), backups) }
+    var audioRetention: AudioRetention
+        get() = runCatching { AudioRetention.valueOf(preferences.getString("audioRetention", "KEEP")!!) }.getOrDefault(AudioRetention.KEEP)
+        private set(value) { preferences.edit().putString("audioRetention", value.name).apply() }
+    var audioUsage = AudioUsage(0, 0, 0)
+        private set
     val metadata by lazy { BookMetadataStore(File(filesDir, "book-metadata"), BuildConfig.CATALOG_CLIENT_ID, BuildConfig.CATALOG_CLIENT_SECRET) }
     val covers by lazy { CoverImages(File(filesDir, "covers")) }
     var metadataChanged: ((String) -> Unit)? = null
@@ -65,6 +71,7 @@ class ManagerApp : Application() {
         // A process interrupted during download never leaves a completed cache file.
         downloads.listFiles()?.filter { it.name.endsWith(".part") }?.forEach { it.delete() }
         work("Loading local library") {
+            phoneAudio.clearTemporary()
             backups.load()
             metadata.loadCached()
             val local = File(filesDir, "catalog.csv")
@@ -124,6 +131,7 @@ class ManagerApp : Application() {
     }
 
     fun download(entry: CatalogEntry) = work("Download", entry) {
+        check(audioRetention == AudioRetention.KEEP) { "Transfer only is selected. Connect a pen and choose Download & install." }
         val partial = File(downloads, entry.cacheKey + ".part")
         try {
             Downloads.fetch(entry.url, partial, entry.size) { progress("Downloading", it, entry.size) }
@@ -136,9 +144,51 @@ class ManagerApp : Application() {
 
     fun install(entry: CatalogEntry) = work("Install", entry) {
         val selected = pen ?: error("Scan the connected pen first.")
-        storage.install(selected, entry, cache(entry)) { stage, bytes -> progress(stage, bytes, entry.size) }
+        val cleaned = AudioTransfers.install(cache(entry), audioRetention) { source ->
+            storage.install(selected, entry, source) { stage, bytes -> progress(stage, bytes, entry.size) }
+        }
         pen = storage.scan(selected.tree)
         status = "Installed and read-back verified: ${entry.title}. Unplug and tap the book to check playback."
+        if (!cleaned) completionNote = "Installed and verified · phone cleanup failed; use Phone storage"
+        else if (audioRetention == AudioRetention.TRANSFER_ONLY) completionNote = "Installed and verified · phone download deleted"
+    }
+
+    fun downloadAndInstall(entry: CatalogEntry) = work("Install", entry) {
+        val selected = pen ?: error("Scan the connected pen first.")
+        val fresh = storage.scan(selected.tree)
+        check(fresh.fingerprint == selected.fingerprint) { "The connected pen changed. Scan again." }
+        check(fresh.files.none { it.name.equals(entry.filename, true) }) { "This filename is already on the pen." }
+        check(fresh.free == null || fresh.free >= entry.size + 1_048_576) { "The pen does not have enough free space." }
+        phoneAudio.temporary.mkdirs()
+        val temporary = File(phoneAudio.temporary, entry.cacheKey)
+        AudioTransfers.temporary(temporary) { source ->
+            Downloads.fetch(entry.url, source, entry.size) { progress("Downloading temporary copy", it, entry.size) }
+            storage.install(fresh, entry, source) { stage, bytes -> progress(stage, bytes, entry.size) }
+        }
+        pen = storage.scan(selected.tree)
+        completionNote = "Installed and verified · temporary phone copy deleted"
+        status = "Installed and verified: ${entry.title}. Temporary phone copy deleted."
+    }
+
+    fun updateAudioRetention(value: AudioRetention) {
+        if (busy) return
+        audioRetention = value
+        changed?.invoke()
+    }
+
+    fun deletePhoneDownload(file: File) = work("Deleting phone download") {
+        phoneAudio.deleteDownload(file)
+        status = "Phone download deleted."
+    }
+
+    fun deletePhoneBackups(filename: String) = work("Deleting phone backups") {
+        phoneAudio.deleteBackups(filename)
+        status = "Phone backups deleted."
+    }
+
+    fun clearPhoneAudio(includeBackups: Boolean) = work("Clearing phone audio") {
+        if (includeBackups) phoneAudio.clearAll() else { phoneAudio.clearDownloads(); phoneAudio.clearTemporary() }
+        status = if (includeBackups) "All phone audio deleted." else "Phone downloads deleted. Pen backups kept."
     }
 
     fun remove(file: PenFile) = work("Remove", filename = file.name,
@@ -174,19 +224,21 @@ class ManagerApp : Application() {
         }
     }
 
+    private var completionNote: String? = null
     private fun work(label: String, book: CatalogEntry? = null, filename: String? = book?.filename,
                      localTitle: String? = book?.let(::title), action: () -> Unit) {
         if (busy) return
-        busy = true; status = label; failure = false
+        busy = true; status = label; failure = false; completionNote = null
         if (filename != null) transfer = TransferInfo(label, book?.cacheKey, filename, localTitle ?: filename)
         changed?.invoke()
         executor.execute {
             var error: String? = null
             try { action() } catch (e: Exception) { error = e.message ?: "Operation failed. Reconnect and try again." }
+            try { audioUsage = phoneAudio.usage() } catch (e: Exception) { if (error == null) error = e.message }
             main.post {
                 if (error != null) { status = error; failure = true }
                 if (filename != null) transfer = transfer?.copy(running = false, failed = error != null,
-                    stage = error ?: when (label) {
+                    stage = error ?: completionNote ?: when (label) {
                         "Download" -> "Saved offline"
                         "Remove" -> "Removed from pen · phone backup kept"
                         else -> "Read-back verified"

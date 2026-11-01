@@ -11,7 +11,11 @@ The owner subsequently authorized individual book removal with a verified local
 backup, offline restoration, and sorting installed files by their reported
 file-modified dates or size. Do not infer permission to automatically evict
 books or choose which real family books to delete. Test deletion/restore with
-an explicitly created disposable copy. Multi-pen synchronization remains later work.
+an explicitly created disposable copy. The owner also authorized individual
+and bulk deletion of phone audio (including explicitly confirmed backup deletion),
+and a transfer-only download mode with temporary staging and no retained download.
+Test cleanup with disposable fixtures; keep pen-removal backups separate from
+automatic download eviction. Multi-pen synchronization remains later work.
 
 Use `io.github.kzahel.tiptoimanager` for this independent utility, with a
 `.debug` suffix for development previews. No Play listing or production

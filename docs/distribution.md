@@ -28,7 +28,7 @@ treated as experimental software.
 
 Local builds normally use the developer's Android debug key. They cannot
 update a CI preview signed by the dedicated key, or vice versa, without an
-uninstall (which clears the app's downloads and folder grant). An authorized
+uninstall (which clears the app's downloads, pen backups and folder grant). An authorized
 maintainer can use the preview key by setting `TIPTOI_PREVIEW_SIGNING_DIR`, or
 the ignored `android/local.properties` entry `previewSigningDir`, to a private
 directory containing `preview.jks` and `password.secret`. The alias is `preview`.
