@@ -3,6 +3,38 @@
 Date: 2026-11-01. Evidence is limited to the operations listed here. Raw
 screenshots, inventories, phone endpoints and pen identity data stay private.
 
+## Guided connection revision — after the initial Play submission
+
+This revision adds the plug-in/access/ready wizard described in
+[USB connection](usb-connection.md). The initially submitted Play candidate
+102 predates this revision; source/preview changes do not update that bundle.
+
+On the physical Pixel, the existing development app was updated in place.
+The waiting screen, real picker cancellation, cable-help dialog and Back
+navigation passed. While disconnected, a fresh app process retained the
+read/write folder grant matching saved pen profiles. After the owner attached
+a pen, a separate process-start diagnostic automatically recognized it and
+freshly read its identity and inventory without opening the picker. The wizard
+showed Ready. Review folder access opened the actual Android picker at the
+pen’s selectable USB root; confirming access returned to Ready and connected
+pen details. No pen files were changed. Physical phone reboot and recognition
+of a previously ungranted second pen remain separate acceptance checks.
+
+A disposable Android 15 emulator used synthetic identity bytes in an ordinary
+shared Documents folder, never a real pen image/audio file. The actual Android
+picker granted that tree; an unrelated empty folder was rejected and recovery
+to the synthetic pen reached Ready. Force-stop/start rediscovered the fixture.
+All three languages passed waiting-screen, picker-cancellation and rotation
+checks (with scrolling in landscape); French also rendered at 130% font size.
+Restoring the fixture’s identity file advanced the waiting wizard to Ready
+without another picker. A full emulator reboot also retained its grant and
+automatically reconnected the synthetic fixture. These are storage-framework/lifecycle checks, not
+proof of USB compatibility or a second physical pen.
+
+All 26 Kotlin unit tests, debug lint, builds, 15 localization-tool regression
+tests and 427-resource German/French localization checks passed. No all-files
+permission or additional runtime storage permission was added.
+
 | Check | Evidence |
 | --- | --- |
 | Local build | Debug APK assembled with JDK 17, AGP 9.4.1 and Gradle 9.8.1 |

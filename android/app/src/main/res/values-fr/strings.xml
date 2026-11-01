@@ -457,4 +457,31 @@
     <string name="demo_series">"Livre d’exemple"</string>
     <string name="demo_description">"Un livre d’exemple original pour découvrir Pen Library. Aucun fichier audio n’est inclus."</string>
     <string name="ui_connected_sentence">"%1$s connecté."</string>
+    <!-- Guided USB connection: plug in, grant a folder, verify the pen. -->
+    <string name="ui_connect_setup">"Configurer la connexion"</string>
+    <string name="connect_step">"Étape %1$d sur 3"</string>
+    <string name="connect_ready">"Votre stylet est prêt"</string>
+    <string name="connect_reading">"Lecture du stylet"</string>
+    <string name="connect_reading_body">"Vérification de l’accès enregistré et lecture de la liste des livres."</string>
+    <string name="connect_try_folder">"Réessayer"</string>
+    <string name="connect_swap">"Connecter un autre stylet"</string>
+    <string name="connect_swap_body">"Débranchez le stylet actuel, puis branchez l’autre avec un câble USB de données."</string>
+    <string name="connect_allow_title">"Autoriser l’accès au stylet"</string>
+    <string name="connect_plug_title">"Brancher le stylet"</string>
+    <string name="connect_plug_body">"Branchez le stylet directement au téléphone avec un câble USB de données et, si nécessaire, un adaptateur."</string>
+    <string name="connect_ready_body">"%1$s est connecté. Vous pouvez maintenant gérer ses livres."</string>
+    <string name="connect_wrong_pen">"%1$s est connecté. Pour reconnecter %2$s, changez de stylet."</string>
+    <string name="connect_allow_body">"Android ouvrira le lecteur USB. Restez dans son dossier principal, puis confirmez l’accès. N’ouvrez ni livre ni sous-dossier."</string>
+    <string name="connect_view_pen">"Voir mon stylet"</string>
+    <string name="connect_use_this_pen">"Utiliser ce stylet"</string>
+    <string name="connect_allow_access">"Autoriser l’accès"</string>
+    <string name="connect_waiting">"En attente du périphérique USB…"</string>
+    <string name="connect_canceled">"L’accès n’a pas été autorisé. Vous pouvez réessayer quand vous le souhaitez."</string>
+    <string name="connect_choose_manually">"Choisir le dossier manuellement"</string>
+    <string name="connect_cable_help">"Le stylet n’apparaît pas ?"</string>
+    <string name="connect_cable_body">"Utilisez un câble permettant le transfert de données, pas seulement la recharge. Branchez le stylet directement, sans station de recharge. Vérifiez les deux prises, attendez quelques secondes et essayez un autre câble ou adaptateur si nécessaire. Si Android affiche déjà le lecteur USB, choisissez son dossier manuellement."</string>
+    <string name="connect_remembered">"L’accès est enregistré sur ce téléphone. La prochaine fois, nous tenterons de reconnecter le stylet automatiquement, même après un redémarrage de l’application."</string>
+    <string name="connect_choose_drive">"Choisir le lecteur USB du stylet"</string>
+    <string name="connect_busy">"Attendez la fin de l’opération en cours, puis autorisez à nouveau l’accès."</string>
+    <string name="connect_review_access">"Vérifier l’accès au dossier"</string>
 </resources>

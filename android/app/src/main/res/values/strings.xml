@@ -843,4 +843,31 @@
     <string name="demo_description">"An original sample book used to explore Pen Library. No audio file is included."</string>
     <!-- App settings, release identity and public sample library. -->
     <string name="ui_connected_sentence">"%1$s connected."</string>
+    <!-- Guided USB connection: plug in, grant a folder, verify the pen. -->
+    <string name="ui_connect_setup">"Connection setup"</string>
+    <string name="connect_step">"Step %1$d of 3"</string>
+    <string name="connect_ready">"Your pen is ready"</string>
+    <string name="connect_reading">"Reading your pen"</string>
+    <string name="connect_reading_body">"Checking saved access and reading the book list."</string>
+    <string name="connect_try_folder">"Let’s try that again"</string>
+    <string name="connect_swap">"Connect another pen"</string>
+    <string name="connect_swap_body">"Unplug the current pen, then connect the other one with a USB data cable."</string>
+    <string name="connect_allow_title">"Allow access to your pen"</string>
+    <string name="connect_plug_title">"Plug in your pen"</string>
+    <string name="connect_plug_body">"Connect the pen directly to your phone with a USB data cable and an adapter if needed."</string>
+    <string name="connect_ready_body">"%1$s is connected. You can now manage its books."</string>
+    <string name="connect_wrong_pen">"%1$s is connected. To reconnect %2$s, swap the pens."</string>
+    <string name="connect_allow_body">"Android will open the USB drive. Stay in its top-level folder, then confirm access. Don’t open a book or subfolder."</string>
+    <string name="connect_view_pen">"View my pen"</string>
+    <string name="connect_use_this_pen">"Use this pen instead"</string>
+    <string name="connect_allow_access">"Allow access"</string>
+    <string name="connect_waiting">"Waiting for USB…"</string>
+    <string name="connect_canceled">"Access wasn’t granted. You can try again whenever you’re ready."</string>
+    <string name="connect_choose_manually">"Choose folder manually"</string>
+    <string name="connect_cable_help">"Pen not showing up?"</string>
+    <string name="connect_cable_body">"Use a cable that transfers data, not just charging. Connect the pen directly, without its charging station. Check both plugs, wait a few seconds, and try another cable or adapter if needed. If Android can already see the USB drive, choose its folder manually."</string>
+    <string name="connect_remembered">"Access is saved on this phone. We’ll try to reconnect automatically next time, including after an app restart."</string>
+    <string name="connect_choose_drive">"Choose the pen’s USB drive"</string>
+    <string name="connect_busy">"Wait for the current task to finish, then allow access again."</string>
+    <string name="connect_review_access">"Review folder access"</string>
 </resources>

@@ -20,6 +20,36 @@ class UsbSmokeInstrumentation : Instrumentation() {
         try {
             val app = targetContext.applicationContext as ManagerApp
             waitIdle(app)
+            if (arguments.getString("connectionReadOnly") == "true") {
+                val grants = targetContext.contentResolver.persistedUriPermissions
+                    .filter { it.isReadPermission && it.isWritePermission }
+                results.putInt("savedReadWriteGrants", grants.size)
+                results.putBoolean("savedProfileHasGrant", app.profiles.all.any { profile -> grants.any { it.uri.toString() == profile.tree } })
+                results.putBoolean("automaticallyReconnected", app.pen != null)
+                results.putInt("mountedRemovableDrives", UsbConnection.observe(targetContext).drives.size)
+                if (arguments.getString("requireConnected") == "true") {
+                    check(app.pen != null) { "Saved access did not reconnect to a pen on process startup." }
+                    check(grants.any { it.uri == app.pen!!.tree }) { "The reconnected pen has no persisted read/write grant." }
+                    val fresh = app.storage.scan(app.pen!!.tree)
+                    check(fresh.identity.key == app.pen!!.identity.key)
+                    results.putBoolean("identityAndInventoryReadable", true)
+                }
+                UsbConnection.observe(targetContext).drives.forEach { drive ->
+                    val intent = UsbConnection.folderIntent(drive, null)
+                    check(intent.action == android.content.Intent.ACTION_OPEN_DOCUMENT_TREE)
+                    val flags = android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION or android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                        android.content.Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+                    check(intent.flags and flags == flags)
+                    if (android.os.Build.VERSION.SDK_INT >= 29) {
+                        @Suppress("DEPRECATION")
+                        val initial = intent.getParcelableExtra<android.net.Uri>(android.provider.DocumentsContract.EXTRA_INITIAL_URI)
+                        check(initial != null) { "The picker did not receive this drive's initial location." }
+                    }
+                }
+                results.putString("stream", "Saved-access and picker diagnostics completed; no pen writes. Reconnect acceptance requires requireConnected=true with a mounted pen.\n")
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             if (arguments.getString("demoReadOnly") == "true") {
                 val selection = app.selectedProfileId
                 val profileFile = java.io.File(app.filesDir, "pens.json")

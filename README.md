@@ -34,6 +34,8 @@ or a hosted application service.
 
 - **Connected pen:** installed titles, versions, grouped files, free space and
   clear transfer progress.
+- **Connection setup:** a plug-in/access/ready wizard, remembered folder grants
+  and a picker that starts at the attached drive on supported Android versions.
 - **Library:** browse a cached catalog, download selected titles, and retain
   files on the phone for offline installation.
 - **My pens:** local nicknames and independent inventories, clearly labeled

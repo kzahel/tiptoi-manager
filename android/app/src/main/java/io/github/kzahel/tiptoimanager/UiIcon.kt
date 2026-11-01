@@ -8,7 +8,7 @@ import android.graphics.PixelFormat
 import android.graphics.RectF
 import android.graphics.drawable.Drawable
 
-enum class UiIcon { MENU, BACK, PEN, BOOKS, DOWNLOAD, TRANSFER, STORAGE, CHEVRON, REFRESH, INFO, CHECK, MORE }
+enum class UiIcon { MENU, BACK, PEN, BOOKS, DOWNLOAD, TRANSFER, STORAGE, CHEVRON, REFRESH, INFO, CHECK, MORE, USB }
 
 /** Small original line icons, drawn at any density. */
 class IconDrawable(private val icon: UiIcon, tint: Int) : Drawable() {
@@ -45,6 +45,12 @@ class IconDrawable(private val icon: UiIcon, tint: Int) : Drawable() {
             UiIcon.INFO -> { canvas.drawCircle(12f, 12f, 9f, paint); line(12f, 11f, 12f, 17f); line(12f, 7f, 12f, 7.1f) }
             UiIcon.CHECK -> path(4f, 12f, 10f, 18f, 21f, 6f)
             UiIcon.MORE -> { line(12f, 5f, 12f, 5.1f); line(12f, 12f, 12f, 12.1f); line(12f, 19f, 12f, 19.1f) }
+            UiIcon.USB -> {
+                path(8f, 3f, 16f, 3f, 16f, 8f, 8f, 8f, 8f, 3f)
+                line(10f, 5f, 10f, 6f); line(14f, 5f, 14f, 6f)
+                canvas.drawRoundRect(RectF(6f, 8f, 18f, 16f), 2f, 2f, paint)
+                path(12f, 16f, 12f, 19f, 19f, 19f, 19f, 22f)
+            }
         }
         canvas.restore()
     }

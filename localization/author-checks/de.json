@@ -1,5 +1,5 @@
 {
-  "author": "codex/pen-library-release-2026-11-01",
+  "author": "codex/connection-wizard-2026-11-01",
   "locale": "de",
   "resources": {
     "app_title": {
@@ -11,6 +11,131 @@
       "sourceHash": "1a0af910844bc178ccb7a882ece92c713730a8e4e9f6bc35e69ec012622d97d5",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
       "translationHash": "2f5c5cc80499366b5a8032b32559b1e24db3074d677545106737b3dabf505d33"
+    },
+    "connect_allow_access": {
+      "sourceHash": "d0efa75568e1332579719cd9de5c42b0557d46697db12326723b2e4674fbefd3",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "6e71772449cf75da33f0ec8d99134dcaa39abd1804727615cd8f8e37ee46c9c9"
+    },
+    "connect_allow_body": {
+      "sourceHash": "ee78e86ea99c4d857822a19c02c7a52d12e579006a9c06e3e504a6452d17a386",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "79e20c033cd8be2486e643e3f8d53549c02a5770159682410aa01776e081d8d9"
+    },
+    "connect_allow_title": {
+      "sourceHash": "5625547db8f288181fa4f7c39e84737ecab65ebcc63fdb9524155d5da9df940b",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "e07dbaf38ff09f1e3c36d5877db15e57094e593d429335cd277f8654bb246fd2"
+    },
+    "connect_busy": {
+      "sourceHash": "8131023406381cd620289be8687bce3b6ced780d7d30f12a5243b4af86c2cd01",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "0c7cb00d2784c5f39015265a2b361480a1355a86ffb9bc0aeb3ba1df22b36add"
+    },
+    "connect_cable_body": {
+      "sourceHash": "bbc5ffc51b27a4d677562100cdd6d76d2270cb84dc8af3b4c95d462d54bf593e",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "744f83645d8c418b9e1b0ad03653a7b2c6becd1ec7a4faa0ca4321f0be23e192"
+    },
+    "connect_cable_help": {
+      "sourceHash": "a2a3269664f3e57d562e2b9c05ca1eaf87432f470f87b494284955850335c060",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "a2d7bf86b516ce91a3ce790baf9908327a87f5f0305ce2bd830cfa22140d27cb"
+    },
+    "connect_canceled": {
+      "sourceHash": "94f081bce81ca8731f48402dfe25c057d65eddf5a975858e529e6d0630a47d96",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "ea8be384c69b9741830111c49119b7433e3399b091c245d5b22b5fa2c8b7b38b"
+    },
+    "connect_choose_drive": {
+      "sourceHash": "92c2944f36646e00a786f5eed370628dc8e9bebb60c3dbe5ee1c65e89b259b3a",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "9e7fa195d9f2c3fe5a6e771dbd2df3934c169477883cfd7253d1fced0979b17b"
+    },
+    "connect_choose_manually": {
+      "sourceHash": "67a92ad8edecae06e8cc8bf109a11da54431b96a12a1609922c235b6a3778484",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "74d2d6a6fa9301126bf90ab35769fe1d99446d98223547041435e98a6e196a68"
+    },
+    "connect_plug_body": {
+      "sourceHash": "80b7d202fb7b55856b96e47adf90e02cd4cf0c06527f07ddd02c0cd9400e998d",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "80710256cd179ba74e3cb64f91270a5f75f375735f7add84b9a4f37651aa86df"
+    },
+    "connect_plug_title": {
+      "sourceHash": "d618a92a0658edd86c933784079f2af2bfd19677d1f72f3b3ae1b8c2b0018a3c",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "18df77e89156f1a97305547f1ec148e0eb20455072a4f8425fbe41a8a7425db6"
+    },
+    "connect_reading": {
+      "sourceHash": "a41cde978ae62b39c3257b6464bcc81e24cabf8cda5ce022e126dd28bb3436d7",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "feab4e501a5710f637bcc844e0f0687c218b6b7a09c8f95b8018320a40fee6da"
+    },
+    "connect_reading_body": {
+      "sourceHash": "a1b3859cb070c4101a86ef661875fc0b7739b502304b94e8f90e92006861f3b4",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "0e58d889c33ecc625cbf972add4877f0ee13aeabc408d92e44505640e0e7785c"
+    },
+    "connect_ready": {
+      "sourceHash": "c7689f0a848c79928eb10c6bca490e34d23f2e94bb1e19bcfe664f996e183dcf",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "20485f7f1492c3168a3d3e908c604816be0037182754fbb8e6ee522d4d78bf60"
+    },
+    "connect_ready_body": {
+      "sourceHash": "498beac628b1e6a78f3693fdb5a6389cff8f08b5e3f5fcb87126fc6d24182a36",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "4bcd2acab80635ec4eaf5fade1a7ad84a5c1d3abad85fe370b4c85e54ba43fc4"
+    },
+    "connect_remembered": {
+      "sourceHash": "026da6e191816ac0839dd2e6b0de8a2d1ce3f2d2d22a6ef22feb7afb1a7507c7",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "f7d8bc9bcf6570b8228badc3b805ff1d360598e4a65f68fee04b1cc5c5922db5"
+    },
+    "connect_review_access": {
+      "sourceHash": "eb58937bf70b8304010478ba684d6defe72858d0b2088238c318c1cbd33ac682",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "327b41008faf5039bbbf9ddb046ad76dccf842ede65e206fb5d5d890accecf45"
+    },
+    "connect_step": {
+      "sourceHash": "c265b81dc038b73ff44495fe9de9ba41bb3d6e1234e92941de95db5787f32408",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "2add38e1ea2bd7a013ab1c67faab2b7b83abdc5093e7dc72ba367b89659c9cc7"
+    },
+    "connect_swap": {
+      "sourceHash": "9c52a38adf9ae781e070471c194dcf5ce8d72aa9707658fb10deee19a75238cf",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "cec7c2d15b0ea55e60bf3e8b7d4382ab9d2f168227af025cde9051e5ca6da2f9"
+    },
+    "connect_swap_body": {
+      "sourceHash": "71b4b694273a00f8f475d3acc48bebf48523bb0302dfc973d9d99d79e579282a",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "c8655b919b05d0d6ab36a910f3d69523305e93991ad229331678ab012b8bbbe6"
+    },
+    "connect_try_folder": {
+      "sourceHash": "5013ff5b022566b6f947e0c4cbc5b52d7a378abcfc06c06da426340f1f8a0e5b",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "29df85886c240c9d9a939f0b37fbc7ba39f8ac5c6432d2d97142c9d37a5872a1"
+    },
+    "connect_use_this_pen": {
+      "sourceHash": "fe55fda5b1365a63d886cb39fc0f00808229e3877b9765496608bc5937252f07",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "eb3fb79eebea13ffa99a4629d0218d6d444cfa278c2c615c93dff586756cf3dd"
+    },
+    "connect_view_pen": {
+      "sourceHash": "cb37b3801293886f85b35a5904fd1bfb7c39aecc2a507dd9e1adc1babc99b6d6",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "d0365d87e8c0b662e7a5bbb327ebcabdd45e7652637cad852bc50dcbef3e5481"
+    },
+    "connect_waiting": {
+      "sourceHash": "dfd692af262f53a70f6c0dc8a4fd9e7b979782edec44c67c398c160ddacfc1e3",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "c5226f0ab595981c99b39c97cabbd03830d2aea6c87cc116aa98b916e7a4ae64"
+    },
+    "connect_wrong_pen": {
+      "sourceHash": "89020af600c82151c90b3c79ce9967249039820c078329d40a7fe0cde7e9dd86",
+      "terminologyHash": "93b49fb965d6bc11f766dcb96f45629c0ae926723a1c6ab7737d7934a698175f",
+      "translationHash": "ba8d12555606c3450e6f038c41e6ac19fe0998344c73f1cad8d54174e50ec6c7"
     },
     "demo_description": {
       "sourceHash": "04851b3923a1a4e53d114c53bd5a4f74046fd3c846c4850560f41fc425570d5d",
@@ -1166,6 +1291,11 @@
       "sourceHash": "3cf87c2c904b1b3f875250aaf98c67235aee3e1ebe01f243b35f292fbf691b7b",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
       "translationHash": "ab95cc365e4494dcb83d4c5d18f420760ed96ae5c86c1b233093cea7ddb94fee"
+    },
+    "ui_connect_setup": {
+      "sourceHash": "2de4f428f117ded1b6ef88b5183064395498757b8d02645f75ddac4a1c2242a5",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "5aa86d671df38295339d4dc4dd482406ad14519de66d0856aec560819980665c"
     },
     "ui_connect_this_pen": {
       "sourceHash": "7ac3cf385eb199d6a6c61b6dc0042e9eb6c0c086c8999ee515d61a4f6ee24773",

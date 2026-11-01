@@ -443,4 +443,31 @@
     <string name="demo_series">"Beispielbuch"</string>
     <string name="demo_description">"Ein eigenes Beispielbuch zum Erkunden von Pen Library. Es enthält keine Audiodatei."</string>
     <string name="ui_connected_sentence">"%1$s verbunden."</string>
+    <!-- Guided USB connection: plug in, grant a folder, verify the pen. -->
+    <string name="ui_connect_setup">"Verbindung einrichten"</string>
+    <string name="connect_step">"Schritt %1$d von 3"</string>
+    <string name="connect_ready">"Dein Stift ist bereit"</string>
+    <string name="connect_reading">"Stift wird gelesen"</string>
+    <string name="connect_reading_body">"Gespeicherten Zugriff prüfen und Buchliste lesen."</string>
+    <string name="connect_try_folder">"Noch einmal versuchen"</string>
+    <string name="connect_swap">"Anderen Stift anschließen"</string>
+    <string name="connect_swap_body">"Trenne den aktuellen Stift und verbinde den anderen mit einem USB-Datenkabel."</string>
+    <string name="connect_allow_title">"Zugriff auf deinen Stift erlauben"</string>
+    <string name="connect_plug_title">"Stift anschließen"</string>
+    <string name="connect_plug_body">"Verbinde den Stift direkt mit deinem Smartphone. Nutze ein USB-Datenkabel und bei Bedarf einen Adapter."</string>
+    <string name="connect_ready_body">"%1$s ist verbunden. Du kannst jetzt die Bücher verwalten."</string>
+    <string name="connect_wrong_pen">"%1$s ist verbunden. Schließe stattdessen %2$s an, um diesen Stift wieder zu verbinden."</string>
+    <string name="connect_allow_body">"Android öffnet das USB-Laufwerk. Bleib im obersten Ordner und bestätige den Zugriff. Öffne kein Buch und keinen Unterordner."</string>
+    <string name="connect_view_pen">"Meinen Stift ansehen"</string>
+    <string name="connect_use_this_pen">"Diesen Stift verwenden"</string>
+    <string name="connect_allow_access">"Zugriff erlauben"</string>
+    <string name="connect_waiting">"Warten auf USB…"</string>
+    <string name="connect_canceled">"Der Zugriff wurde nicht erlaubt. Du kannst es jederzeit erneut versuchen."</string>
+    <string name="connect_choose_manually">"Ordner manuell auswählen"</string>
+    <string name="connect_cable_help">"Stift wird nicht angezeigt?"</string>
+    <string name="connect_cable_body">"Nutze ein Kabel zur Datenübertragung. Ein reines Ladekabel reicht nicht. Verbinde den Stift direkt, ohne Ladestation. Prüfe beide Stecker und warte einige Sekunden. Probiere bei Bedarf ein anderes Kabel oder einen anderen Adapter. Wenn Android das USB-Laufwerk bereits anzeigt, wähle den Ordner manuell aus."</string>
+    <string name="connect_remembered">"Der Zugriff ist auf diesem Smartphone gespeichert. Beim nächsten Mal versuchen wir, den Stift automatisch wieder zu verbinden – auch nach einem App-Neustart."</string>
+    <string name="connect_choose_drive">"USB-Laufwerk des Stifts auswählen"</string>
+    <string name="connect_busy">"Warte, bis der aktuelle Vorgang abgeschlossen ist, und erlaube dann den Zugriff erneut."</string>
+    <string name="connect_review_access">"Ordnerzugriff prüfen"</string>
 </resources>

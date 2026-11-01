@@ -8,6 +8,9 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.storage.StorageVolume
 import android.provider.DocumentsContract
 import android.text.Editable
 import android.text.TextUtils
@@ -35,7 +38,7 @@ import java.text.DateFormat
 import java.util.Date
 
 private enum class Screen(private val titleId: Int) {
-    PENS(R.string.label_my_pens), PEN(R.string.label_pen_details), COLLECTION(R.string.label_book_selections), PLAN(R.string.label_review_selection), INSTALLED(R.string.label_installed_books), STORAGE(R.string.label_storage),
+    PENS(R.string.label_my_pens), CONNECT(R.string.ui_connect_a_pen), PEN(R.string.label_pen_details), COLLECTION(R.string.label_book_selections), PLAN(R.string.label_review_selection), INSTALLED(R.string.label_installed_books), STORAGE(R.string.label_storage),
     BROWSE(R.string.label_browse_books), DOWNLOADS(R.string.label_downloads), BOOK(R.string.label_book_details),
     PHONE_STORAGE(R.string.label_phone_storage), TRANSFERS(R.string.label_transfers), HELP(R.string.label_help_about);
     val title: String get() = t(titleId)
@@ -64,6 +67,23 @@ class MainActivity : ComponentActivity() {
     private var infoDialog: AlertDialog? = null
     private var penSort = PenSort.TITLE
     private var lastConnectedKey: String? = null
+    private var connectTargetId: String? = null
+    private var connectIgnoredKey: String? = null
+    private var connectReading = false
+    private var connectError: String? = null
+    private var connectCanceled = false
+    private var usbState = UsbConnectionState(false, emptyList())
+    private val connectionHandler = Handler(Looper.getMainLooper())
+    private val connectionPoll = object : Runnable {
+        override fun run() {
+            if (screen == Screen.CONNECT) {
+                val next = UsbConnection.observe(this@MainActivity)
+                if (!next.attached && next.drives.isEmpty()) connectIgnoredKey = null
+                if (next != usbState) { usbState = next; render() }
+            }
+            connectionHandler.postDelayed(this, 1000)
+        }
+    }
 
     override fun attachBaseContext(base: android.content.Context) { super.attachBaseContext(UiText.context(base)) }
 
@@ -74,6 +94,10 @@ class MainActivity : ComponentActivity() {
             lastConnectedKey = state.getString("lastConnectedKey")
             screen = runCatching { Screen.valueOf(state.getString("screen")!!) }.getOrDefault(Screen.PENS)
             selectedKey = state.getString("bookKey"); selectedFile = state.getString("bookFile")
+            connectTargetId = state.getString("connectTargetId")
+            connectIgnoredKey = state.getString("connectIgnoredKey")
+            connectReading = state.getBoolean("connectReading")
+            connectCanceled = state.getBoolean("connectCanceled")
             state.getStringArrayList("backStack")?.forEach { name ->
                 runCatching { Screen.valueOf(name) }.getOrNull()?.let { backStack.add(it) }
             }
@@ -106,6 +130,8 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         app.changed = { if (!isFinishing && !isDestroyed) { connectionNavigation(); render() } }
         app.startConnectionWatch()
+        usbState = UsbConnection.observe(this)
+        connectionHandler.post(connectionPoll)
         app.progressed = { updateProgress() }
         app.metadataChanged = { article ->
             if (screen == Screen.BOOK && selectedBooks().any { it.article == article }) {
@@ -123,6 +149,9 @@ class MainActivity : ComponentActivity() {
 
     private fun connectionNavigation() {
         val key = app.displayConnection?.identity?.key
+        if (screen == Screen.CONNECT && key != null && key != lastConnectedKey && !app.busy) {
+            connectError = null; connectCanceled = false
+        }
         if (key != null && key != lastConnectedKey && screen == Screen.PENS) {
             backStack.clear(); backStack.add(Screen.PENS); screen = Screen.PEN
         }
@@ -130,6 +159,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onPause() {
+        connectionHandler.removeCallbacks(connectionPoll)
         app.stopConnectionWatch()
         app.changed = null; app.progressed = null; app.metadataChanged = null
         super.onPause()
@@ -139,6 +169,10 @@ class MainActivity : ComponentActivity() {
         outState.putString("screen", screen.name)
         outState.putString("lastConnectedKey", lastConnectedKey)
         outState.putString("bookKey", selectedKey); outState.putString("bookFile", selectedFile)
+        outState.putString("connectTargetId", connectTargetId)
+        outState.putString("connectIgnoredKey", connectIgnoredKey)
+        outState.putBoolean("connectReading", connectReading)
+        outState.putBoolean("connectCanceled", connectCanceled)
         outState.putStringArrayList("backStack", ArrayList(backStack.map { it.name }))
         queries.forEach { (key, value) -> outState.putString("query_${key.name}", value) }
         super.onSaveInstanceState(outState)
@@ -201,7 +235,7 @@ class MainActivity : ComponentActivity() {
         else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         root.removeAllViews()
         progressLabel = null; progressBar = null; busyLabel = null
-        val active = if (screen in listOf(Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.PLAN)) Screen.PENS else screen
+        val active = if (screen in listOf(Screen.CONNECT, Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.PLAN)) Screen.PENS else screen
         navItems.forEach { (destination, view) ->
             view.isSelected = destination == active
             view.background = rounded(if (destination == active) soft else Color.WHITE, 14)
@@ -214,7 +248,7 @@ class MainActivity : ComponentActivity() {
         }
         drawerConnection.text = app.connectedName?.let { t(R.string.ui_connected_name, it) } ?: t(R.string.ui_no_pen_connected)
         toolbar()
-        if (app.busy && screen != Screen.TRANSFERS) {
+        if (app.busy && screen != Screen.TRANSFERS && screen != Screen.CONNECT) {
             val strip = row().apply {
                 setPadding(dp(20), dp(10), dp(16), dp(10)); setBackgroundColor(soft)
                 isClickable = true; isFocusable = true
@@ -224,7 +258,7 @@ class MainActivity : ComponentActivity() {
             busyLabel = text(if (app.transfer?.running == true) t(R.string.ui_transfer_in_progress) else app.status, 13, green)
             strip.addView(busyLabel, LinearLayout.LayoutParams(-1, -2).apply { marginStart = dp(12) })
             root.addView(strip)
-        } else if (app.failure && !(screen == Screen.TRANSFERS && app.transfer?.failed == true)) {
+        } else if (app.failure && screen != Screen.CONNECT && !(screen == Screen.TRANSFERS && app.transfer?.failed == true)) {
             val problem = text(t(R.string.ui_action_failed_view_details), 13, 0xFF9B2A22.toInt(), true).apply {
                 setPadding(dp(20), dp(12), dp(20), dp(12)); setBackgroundColor(0xFFFDECE8.toInt())
                 isClickable = true; isFocusable = true
@@ -238,6 +272,7 @@ class MainActivity : ComponentActivity() {
                 scrollBody()
                 when (screen) {
                     Screen.PENS -> pensScreen()
+                    Screen.CONNECT -> connectScreen()
                     Screen.PEN -> penScreen()
                     Screen.COLLECTION -> collectionScreen()
                     Screen.PLAN -> planScreen()
@@ -254,7 +289,7 @@ class MainActivity : ComponentActivity() {
 
     private fun toolbar() {
         val header = row().apply { setPadding(dp(8), dp(4), dp(8), dp(4)); setBackgroundColor(Color.WHITE) }
-        val child = screen in listOf(Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.BOOK, Screen.PLAN)
+        val child = screen in listOf(Screen.CONNECT, Screen.PEN, Screen.INSTALLED, Screen.STORAGE, Screen.BOOK, Screen.PLAN)
         header.addView(iconButton(if (child) UiIcon.BACK else UiIcon.MENU, if (child) t(R.string.ui_back) else t(R.string.ui_open_navigation_menu)) {
             if (child) goBack() else { hideKeyboard(); drawer.openDrawer(GravityCompat.START) }
         })
@@ -293,14 +328,14 @@ class MainActivity : ComponentActivity() {
             })
         }
         gap(body, 16)
-        body.addView(action(if (app.knownProfiles.isEmpty()) t(R.string.ui_choose_usb_folder) else t(R.string.ui_connect_another_pen)) { chooseFolder() })
+        body.addView(action(if (app.knownProfiles.isEmpty()) t(R.string.ui_connect_a_pen) else t(R.string.ui_connect_another_pen)) { startConnection() })
         body.addView(action(t(R.string.ui_demo), false) { app.setDemo(true); navigate(Screen.PENS, false) })
         if (app.tree != null) body.addView(action(t(R.string.ui_scan_connected_pen), false) { app.refreshPen() })
     }
 
     private fun penScreen() {
         val profile = app.viewedProfile
-        if (profile == null) { emptyState(UiIcon.PEN, t(R.string.ui_connect_your_pen)); body.addView(action(t(R.string.ui_choose_usb_folder)) { chooseFolder() }); return }
+        if (profile == null) { emptyState(UiIcon.PEN, t(R.string.ui_connect_your_pen)); body.addView(action(t(R.string.ui_connect_a_pen)) { startConnection() }); return }
         val connected = app.viewedPen != null
         val hero = card(if (connected) green else Color.WHITE)
         val color = if (connected) Color.WHITE else ink
@@ -320,7 +355,7 @@ class MainActivity : ComponentActivity() {
             if (!profile.identity.hasSerial) t(R.string.ui_serial_unavailable_this_profile_uses_an_unverified_metadata_fingerpr) else null
         ).joinToString("\n")) })
         if (!connected) body.addView(action(t(R.string.ui_connect_this_pen)) { connectionHelp(profile) })
-        body.addView(action(t(R.string.ui_choose_usb_folder), false) { chooseFolder() })
+        body.addView(action(t(R.string.ui_connect_setup), false) { startConnection(profile) })
         if (!connected) body.addView(action(t(R.string.ui_forget_profile), false) {
             AlertDialog.Builder(this).setTitle(t(R.string.ui_forget_1_s, profile.name))
                 .setMessage(t(R.string.ui_removes_this_phone_s_name_saved_inventory_and_individual_selection_b))
@@ -353,9 +388,93 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connectionHelp(profile: PenProfile) {
-        AlertDialog.Builder(this).setTitle(t(R.string.ui_connect_1_s, profile.name))
-            .setMessage(t(R.string.ui_plug_this_pen_into_your_phone_its_saved_profile_will_be_recognized_a))
-            .setNegativeButton(t(R.string.ui_done), null).setPositiveButton(t(R.string.ui_choose_usb_folder)) { _, _ -> chooseFolder() }.show()
+        startConnection(profile)
+    }
+
+    private fun startConnection(profile: PenProfile? = null) {
+        if (app.demoMode) { showMessage(t(R.string.ui_demo_banner), t(R.string.ui_demo_readonly)); return }
+        connectTargetId = profile?.id
+        connectIgnoredKey = if (profile == null) app.pen?.identity?.key else null
+        connectReading = false; connectError = null; connectCanceled = false
+        usbState = UsbConnection.observe(this)
+        navigate(Screen.CONNECT)
+    }
+
+    private fun connectScreen() {
+        if (app.pen == null) connectIgnoredKey = null
+        if (connectReading && !app.busy) {
+            connectReading = false
+            connectError = if (app.failure) app.status else null
+        }
+        val target = app.knownProfiles.find { it.id == connectTargetId }
+        val connected = app.pen?.takeIf { it.identity.key != connectIgnoredKey }
+        val wrongPen = connected != null && target != null && connected.identity.key != target.identity.key
+        val ready = connected != null && !wrongPen && connectError == null && !app.busy
+        val access = usbState.attached && usbState.drives.isNotEmpty() && connectIgnoredKey == null
+        val step = if (ready) 3 else if (access || connectReading || connectError != null) 2 else 1
+        body.addView(text(t(R.string.connect_step, step), 13, green, true)); gap(body, 16)
+        val hero = card(if (ready) green else Color.WHITE)
+        val color = if (ready) Color.WHITE else ink
+        hero.addView(icon(if (ready) UiIcon.CHECK else UiIcon.USB, if (ready) Color.WHITE else green, 56))
+        gap(hero, 20)
+        val title = when {
+            ready -> t(R.string.connect_ready)
+            app.busy -> t(R.string.connect_reading)
+            connectError != null -> t(R.string.connect_try_folder)
+            wrongPen || target != null -> t(R.string.ui_connect_1_s, target!!.name)
+            connectIgnoredKey != null -> t(R.string.connect_swap)
+            access -> t(R.string.connect_allow_title)
+            else -> t(R.string.connect_plug_title)
+        }
+        hero.addView(text(title, 26, color, true)); gap(hero, 12)
+        val description = when {
+            ready -> t(R.string.connect_ready_body, app.connectedName ?: t(R.string.ui_selected_pen))
+            app.busy -> t(R.string.connect_reading_body)
+            connectError != null -> connectError!!
+            wrongPen -> t(R.string.connect_wrong_pen, app.connectedName ?: t(R.string.ui_selected_pen), target!!.name)
+            connectIgnoredKey != null -> t(R.string.connect_swap_body)
+            access -> t(R.string.connect_allow_body)
+            else -> t(R.string.connect_plug_body)
+        }
+        hero.addView(text(description, 16, if (ready) Color.WHITE else muted))
+        body.addView(hero); gap(body, 20)
+        when {
+            ready -> body.addView(action(t(R.string.connect_view_pen)) {
+                app.knownProfiles.find { it.identity.key == connected!!.identity.key }?.let { app.selectProfile(it.id) }
+                backStack.removeAll { it == Screen.CONNECT }
+                navigate(Screen.PEN, false)
+            })
+            app.busy -> body.addView(ProgressBar(this).apply { isIndeterminate = true })
+            wrongPen -> body.addView(action(t(R.string.connect_use_this_pen)) { connectTargetId = null; render() })
+            access || connectError != null -> body.addView(action(t(R.string.connect_allow_access)) { chooseDrive() })
+            else -> {
+                body.addView(ProgressBar(this).apply { isIndeterminate = true }, LinearLayout.LayoutParams(dp(28), dp(28)))
+                gap(body, 12); body.addView(text(t(R.string.connect_waiting), 14, muted))
+            }
+        }
+        if (!ready && !app.busy) {
+            if (connectCanceled) { gap(body, 12); body.addView(text(t(R.string.connect_canceled), 14, muted)) }
+            body.addView(action(t(R.string.connect_choose_manually), false) { chooseFolder() })
+            body.addView(action(t(R.string.connect_cable_help), false) {
+                showMessage(t(R.string.connect_cable_help), t(R.string.connect_cable_body))
+            })
+        }
+        if (ready) {
+            gap(body, 8); body.addView(text(t(R.string.connect_remembered), 14, muted))
+            body.addView(action(t(R.string.connect_review_access), false) { chooseDrive() })
+        }
+    }
+
+    private fun chooseDrive() {
+        usbState = UsbConnection.observe(this)
+        val drives = usbState.drives
+        when (drives.size) {
+            0 -> chooseFolder()
+            1 -> chooseFolder(drives.single())
+            else -> AlertDialog.Builder(this).setTitle(t(R.string.connect_choose_drive))
+                .setItems(drives.map { it.getDescription(this) }.toTypedArray()) { _, index -> chooseFolder(drives[index]) }
+                .setNegativeButton(t(R.string.ui_cancel), null).show()
+        }
     }
 
     private fun chooseBookPens(entry: CatalogEntry) {
@@ -688,7 +807,7 @@ class MainActivity : ComponentActivity() {
         })
         body.addView(action(t(R.string.ui_demo), false) { app.setDemo(true); navigate(Screen.PENS, false) })
         body.addView(text(t(R.string.ui_getting_started), 22, ink, true)); gap(body, 20)
-        body.addView(navRow(UiIcon.PEN, t(R.string.ui_1_connect_your_pen), t(R.string.ui_use_a_usb_data_cable_or_adapter)) { navigate(Screen.PEN, false) })
+        body.addView(navRow(UiIcon.PEN, t(R.string.ui_1_connect_your_pen), t(R.string.ui_use_a_usb_data_cable_or_adapter)) { startConnection() })
         body.addView(navRow(UiIcon.BOOKS, t(R.string.ui_2_find_a_book), t(R.string.ui_browse_or_search_the_catalog)) { navigate(Screen.BROWSE, false) })
         body.addView(navRow(UiIcon.DOWNLOAD, t(R.string.ui_3_download_install), t(R.string.ui_keep_the_pen_connected_until_done)) { navigate(Screen.DOWNLOADS, false) })
         gap(body, 28)
@@ -858,25 +977,26 @@ class MainActivity : ComponentActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun chooseFolder() {
+    private fun chooseFolder(drive: StorageVolume? = null) {
         if (app.demoMode) { showMessage(t(R.string.ui_demo_banner), t(R.string.ui_demo_readonly)); return }
-        startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE).apply {
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
-                Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION or Intent.FLAG_GRANT_PREFIX_URI_PERMISSION)
-            app.tree?.let { putExtra(DocumentsContract.EXTRA_INITIAL_URI, it) }
-        }, 41)
+        if (app.busy) return
+        connectCanceled = false; connectError = null
+        startActivityForResult(UsbConnection.folderIntent(drive, if (drive == null) app.tree else null), 41)
     }
 
     @Deprecated("Platform activity result bridge")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 41 && resultCode == RESULT_OK) data?.data?.let { uri ->
+        if (requestCode != 41) return
+        if (resultCode != RESULT_OK || data?.data == null) { connectCanceled = true; render(); return }
+        data.data?.let { uri ->
             try {
                 val flags = data.flags and (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 check(flags == (Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)) { t(R.string.ui_read_and_write_access_are_needed) }
                 contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                screen = Screen.PEN; backStack.clear(); backStack.add(Screen.PENS); app.selectTree(uri)
-            } catch (e: Exception) { showMessage(t(R.string.ui_folder_access), e.message ?: t(R.string.ui_access_was_not_granted)) }
+                connectReading = true; connectError = null; connectIgnoredKey = null
+                if (!app.selectTree(uri)) { connectReading = false; connectError = t(R.string.connect_busy); render() }
+            } catch (e: Exception) { connectError = e.message ?: t(R.string.ui_access_was_not_granted); render() }
         }
     }
 

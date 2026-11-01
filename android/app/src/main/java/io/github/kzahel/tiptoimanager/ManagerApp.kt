@@ -112,7 +112,11 @@ class ManagerApp : Application() {
         }
     }
 
-    fun selectTree(value: Uri) = work("Reading pen") { record(storage.scan(value), true) }
+    fun selectTree(value: Uri): Boolean {
+        if (busy || demoMode) return false
+        work("Reading pen") { record(storage.scan(value), true) }
+        return true
+    }
 
     fun refreshPen() = work("Reading pen") {
         pen = null
