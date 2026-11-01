@@ -8,7 +8,10 @@ reading game. Free, no advertisements or purchases.
 
 `{en-US,de-DE,fr-FR}/listing.json` owns localized descriptions. Each locale has
 a 1024 × 500 feature graphic and four unedited 1080 × 2400 actual app captures.
-Shared `icon.png` is 512 × 512. Generated original illustration and provenance
+Shared `icon.png` is 512 × 512. Screenshots are losslessly exported as RGB
+PNG (the unused opaque alpha channel is removed); captured pixels are unchanged.
+The capture/export scripts require ImageMagick (`magick`), and art export also
+requires `rsvg-convert`. Validate with `python3 scripts/check_store.py`. Generated original illustration and provenance
 are documented in [art](../art/README.md).
 
 Rebuild the release APK and install it on a dedicated disposable emulator.

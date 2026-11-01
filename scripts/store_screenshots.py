@@ -43,7 +43,12 @@ def capture(serial,locale):
             visible=nodes()
             if not any('Demo' in n.get('text','') or 'Démo' in n.get('text','') for n in visible):raise RuntimeError('Demo banner missing')
             (out/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
-            print(out/(name+'.png'))
+            # Play requires RGB screenshots. Strip the unused, fully opaque
+            # alpha channel without altering the captured RGB pixels.
+            path=out/(name+'.png')
+            if subprocess.check_output(['magick','identify','-format','%[opaque]',str(path)]).strip()!=b'True':raise RuntimeError('Capture has transparency')
+            subprocess.run(['magick',str(path),'PNG24:'+str(path)],check=True)
+            print(path)
     finally:adb('shell','rm','-f','/sdcard/pen-library-store-ui.xml')
 
 if __name__=='__main__':

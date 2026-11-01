@@ -34,5 +34,7 @@ jobs:
         run: |
           python scripts/i18n.py check
           python -m unittest discover -s scripts -p 'test_localization*.py'
+      - name: Check Play listing exports
+        run: python scripts/check_store.py
       - name: Check whitespace
         run: git show --format= --check HEAD
