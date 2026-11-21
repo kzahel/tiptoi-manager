@@ -212,3 +212,37 @@ profiles are not evidence of compatibility with a second physical pen model.
   cached metadata/ISBN/covers for product 248 and demo mutation guards passed.
   The current USB folder was unavailable for a fresh hardware rescan. No pen
   writes or deletion tests were attempted during release preparation.
+
+## Moon Base local book import — 2026-11-21
+
+- tttool verified the GME checksum and scripts for one welcome and three taps.
+  The four extracted clips decode as 22,050 Hz mono Vorbis. The A4 PDF preserves
+  eight 1,200 dpi patterns, with two dot weights for each action. The Brother
+  laser print queue reported one completed sheet with scaling disabled.
+- On Android 16, the system picker opened in Downloads. Pen Library installed
+  the selected file onto an emulator's removable FAT volume. Independent
+  SHA-256 checks matched the original phone file and finalized copy and confirmed
+  the prior fixture was preserved. A renamed copy with the same book code and a
+  file with a damaged checksum were both refused. Private staging was empty
+  after the tests.
+- On a physical Pixel 9 with the pen connected directly over USB, the app
+  received access to the pen's top-level folder through Android's picker.
+  Pen Library installed `Moon_Base.gme` from Downloads and reported successful
+  read-back. A separate read-only check reopened the finalized file, confirmed
+  book code 927 and matched its GME checksum and full SHA-256. Optical scanning
+  and playback from the original sheet's Fine column were confirmed by the
+  owner.
+
+## Moon Base duplex story — 2026-11-21
+
+- The four-page story reuses the successful Fine pattern. The Brother printer
+  reported four impressions on two sheets, long-edge duplex at actual size.
+- All 11 GME tracks decoded as 22,050 Hz mono Vorbis. tttool simulation played
+  the four chapter tracks and exercised the alternating rover, antenna and
+  rocket actions. The rocket trace was launch sound, explanation, launch sound.
+- The original GME was removed through Pen Library after creating a verified
+  phone backup. The app installed the story from Downloads over USB on the
+  Pixel 9. A separate check reopened the final GME, matched its full SHA-256 and
+  confirmed it retained book code 927. All 65 other audio files matched the
+  previous inventory by filename, size and product ID. Physical scanning and
+  playback of the new duplex story remain to be checked.

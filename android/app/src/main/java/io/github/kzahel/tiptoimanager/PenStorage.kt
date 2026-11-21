@@ -84,6 +84,12 @@ class PenStorage(private val resolver: ContentResolver) {
         copyVerified(snapshot, entry.filename, cached, source.size, source.sha256, progress)
     }
 
+    fun installLocal(snapshot: PenSnapshot, filename: String, staged: File, source: GmeResult,
+                     progress: (String, Long) -> Unit) {
+        require(source.id in 0..999) { t(R.string.error_unsupported_custom_product_id) }
+        copyVerified(snapshot, filename, staged, source.size, source.sha256, progress, uniqueProductId = source.id)
+    }
+
     fun restore(snapshot: PenSnapshot, backup: RemovalBackup, progress: (String, Long) -> Unit) {
         progress(t(R.string.msg_checking_backup), 0)
         val source = backup.file.inputStream().buffered().use { RawIntegrity.inspect(it, backup.size) }
@@ -162,11 +168,12 @@ class PenStorage(private val resolver: ContentResolver) {
     }
 
     private fun copyVerified(snapshot: PenSnapshot, filename: String, cached: File, size: Long,
-                             sha256: String, progress: (String, Long) -> Unit) {
+                             sha256: String, progress: (String, Long) -> Unit, uniqueProductId: Int? = null) {
         require(Catalog.safeFilename(filename))
         val fresh = scan(snapshot.tree)
         check(fresh.fingerprint == snapshot.fingerprint) { t(R.string.error_the_connected_pen_changed_scan_it_again) }
         check(fresh.files.none { it.name.equals(filename, true) }) { t(R.string.error_this_filename_is_already_on_the_pen_existing_files_are_preserved) }
+        if (uniqueProductId != null) checkUnusedProduct(fresh, uniqueProductId)
         check(fresh.free == null || fresh.free >= size + 1_048_576) { t(R.string.error_the_pen_does_not_have_enough_free_space) }
         val stageName = ".tiptoi-manager-${UUID.randomUUID()}.part"
         var staging: Uri? = null
@@ -191,6 +198,7 @@ class PenStorage(private val resolver: ContentResolver) {
                 RawIntegrity.inspect(it, size) { bytes -> progress(t(R.string.msg_reading_back_from_pen), bytes) }
             } ?: error(t(R.string.error_could_not_verify_the_transferred_file))
             check(checked.sha256 == sha256) { t(R.string.error_read_back_hash_differs_from_the_phone_copy) }
+            if (uniqueProductId != null) checkUnusedProduct(scan(snapshot.tree), uniqueProductId)
             check(fingerprint(documents(snapshot.tree)) == snapshot.fingerprint) { t(R.string.error_the_pen_changed_during_installation) }
             check(documents(snapshot.tree).none { it.name.equals(filename, true) }) { t(R.string.error_the_destination_appeared_during_transfer_preserving_it) }
             val final = Documents.renameDocument(resolver, target, filename)
@@ -200,6 +208,11 @@ class PenStorage(private val resolver: ContentResolver) {
         } finally {
             staging?.let { runCatching { Documents.deleteDocument(resolver, it) } }
         }
+    }
+
+    private fun checkUnusedProduct(snapshot: PenSnapshot, id: Int) {
+        val conflict = snapshot.files.firstOrNull { it.id == id } ?: return
+        error(t(R.string.error_custom_product_in_use, id, conflict.name))
     }
 
     private fun documentName(uri: Uri): String? = resolver.query(uri,

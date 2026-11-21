@@ -44,7 +44,7 @@ fun taskText(code: String): String = when (code) {
     "Downloading catalog" -> t(R.string.task_downloading_catalog)
     "Download" -> t(R.string.task_download)
     "Sync" -> t(R.string.task_sync)
-    "Install" -> t(R.string.task_install)
+    "Install", "Install local" -> t(R.string.task_install)
     "Deleting phone download" -> t(R.string.task_deleting_phone_download)
     "Deleting phone backups" -> t(R.string.task_deleting_phone_backups)
     "Clearing phone audio" -> t(R.string.task_clearing_phone_audio)

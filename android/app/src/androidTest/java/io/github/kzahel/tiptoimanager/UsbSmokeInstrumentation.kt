@@ -120,6 +120,20 @@ class UsbSmokeInstrumentation : Instrumentation() {
             }
             val tree = app.tree ?: error("Grant the pen's folder through the app before running this check.")
             val original = app.storage.scan(tree)
+            arguments.getString("verifyGmeFilename")?.let { filename ->
+                val expectedSha256 = arguments.getString("verifyGmeSha256")
+                require(Catalog.safeFilename(filename) && expectedSha256?.matches(Regex("[a-f0-9]{64}")) == true)
+                val file = original.files.single { it.name == filename }
+                val readBack = targetContext.contentResolver.openInputStream(file.uri)!!.buffered().use {
+                    Gme.inspect(it, file.size)
+                }
+                check(readBack.sha256 == expectedSha256) { "The finalized GME differs from the supplied SHA-256." }
+                results.putBoolean("finalGmeReadBackVerified", true)
+                results.putInt("verifiedProductId", readBack.id)
+                results.putString("stream", "Finalized GME checksum and SHA-256 match; no pen writes.\n")
+                finish(Activity.RESULT_OK, results)
+                return
+            }
             if (arguments.getString("profilesReadOnly") == "true") {
                 check(original.identity.hasSerial) { "The connected pen's serial format was not recognized." }
                 val before = app.profiles.all.single { it.identity.key == original.identity.key }

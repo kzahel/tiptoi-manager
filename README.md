@@ -139,6 +139,11 @@ Use **Manage phone copies** on a book to delete its download or backups.
 delete all phone audio including backups. Catalog details and covers stay
 cached separately. See [phone storage](docs/phone-storage.md).
 
+Use the [custom book runbook](docs/custom-books.md) to build and print
+[Moon Base](examples/moon-base/README.md) or make a read-aloud from your own
+recordings. With a pen connected, use **Downloads → Install a .gme file** to
+choose a standalone audio file and confirm the destination.
+
 The app never replaces existing filenames in this spike. It does not install
 firmware, automatically select companion files, or claim playback-based cleanup.
 Keep the app open during transfers; interruption recovery remains later work. Publisher covers, titles,

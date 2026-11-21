@@ -1,0 +1,27 @@
+product-id: 927
+comment: Moon Base - The Missing Signal
+media-path: audio/%s
+welcome: welcome
+init: $rocket:=0 $rover:=0 $antenna:=0
+scriptcodes:
+  rover: 5101
+  antenna: 5102
+  rocket: 5103
+  chapter_one: 5104
+  chapter_two: 5105
+  chapter_three: 5106
+  chapter_four: 5107
+scripts:
+  rover:
+    - $rover==0? $rover:=1 P(rover_sound)
+    - $rover:=0 P(rover_fact)
+  antenna:
+    - $antenna==0? $antenna:=1 P(antenna_reply)
+    - $antenna:=0 P(antenna_fact)
+  rocket:
+    - $rocket==0? $rocket:=1 P(rocket_sound)
+    - $rocket:=0 P(rocket_fact)
+  chapter_one: P(chapter_one)
+  chapter_two: P(chapter_two)
+  chapter_three: P(chapter_three)
+  chapter_four: P(chapter_four)

@@ -40,6 +40,11 @@ code `0`; ADB's process exit status alone is not the acceptance result. Output
 contains counts, so retain raw results privately. This runner proves real
 storage operations, not every UI interaction, playback or hot-unplug recovery.
 
+To verify a file installed through the Android picker, pass
+`-e verifyGmeFilename FILENAME -e verifyGmeSha256 EXPECTED_SHA256`. The runner
+reads that finalized GME from the pen and checks its checksum and full SHA-256
+without making any pen writes.
+
 For metadata without requiring an attached pen, pass `-e metadataProductId ID`.
 It refreshes the catalog, verifies an unambiguous audio-file match, reads a
 publisher-confirmed ISBN and decodes cached thumbnail/detail artwork. A

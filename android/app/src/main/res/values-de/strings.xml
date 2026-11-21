@@ -470,4 +470,12 @@
     <string name="connect_choose_drive">"USB-Laufwerk des Stifts auswählen"</string>
     <string name="connect_busy">"Warte, bis der aktuelle Vorgang abgeschlossen ist, und erlaube dann den Zugriff erneut."</string>
     <string name="connect_review_access">"Ordnerzugriff prüfen"</string>
+    <string name="ui_install_gme">".gme-Datei installieren"</string>
+    <string name="ui_install_gme_on_1_s">"Auf %1$s installieren?"</string>
+    <string name="ui_local_gme_confirmation">"Die ausgewählte Audiodatei wird auf diesen Stift kopiert. Die Originaldatei bleibt an ihrem Speicherort."</string>
+    <string name="error_choose_a_gme_file">"Wähle eine .gme-Audiodatei mit einem Dateinamen, den der Stift verwenden kann."</string>
+    <string name="error_unsupported_custom_product_id">"Ein eigenständiges Buch braucht eine Produkt-ID von 0 bis 999."</string>
+    <string name="error_custom_product_in_use">"Der Buchcode %1$d wird auf diesem Stift bereits von %2$s verwendet."</string>
+    <string name="error_local_gme_too_large">"Diese .gme-Datei überschreitet das Limit von 2 GB."</string>
+    <string name="msg_checking_local_file">"Ausgewählte Audiodatei wird geprüft"</string>
 </resources>

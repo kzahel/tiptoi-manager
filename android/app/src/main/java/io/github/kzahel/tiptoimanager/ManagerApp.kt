@@ -9,6 +9,7 @@ import android.hardware.usb.UsbManager
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.provider.OpenableColumns
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -302,6 +303,35 @@ class ManagerApp : Application() {
         status = t(R.string.msg_installed_and_read_back_verified_1_s_unplug_and_tap_the_book_to_chec, entry.title)
         if (!cleaned) completionNote = t(R.string.msg_installed_and_verified_phone_cleanup_failed_use_phone_storage)
         else if (audioRetention == AudioRetention.TRANSFER_ONLY) completionNote = t(R.string.msg_installed_and_verified_phone_download_deleted)
+    }
+
+    fun installLocal(uri: Uri, expectedProfileId: String) = work("Install local", filename = "@local",
+        localTitle = t(R.string.ui_install_gme), target = viewedProfile?.name) {
+        val selected = destination(expectedProfileId)
+        val filename = contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use {
+            if (it.moveToFirst()) it.getString(0) else null
+        }
+        require(filename != null && Catalog.safeFilename(filename) && filename.none { it in ":*?\"<>|" || it.code == 127 }) {
+            t(R.string.error_choose_a_gme_file)
+        }
+        main.post { transfer = transfer?.copy(title = filename, filename = filename) }
+        val directory = phoneAudio.temporary.apply { mkdirs() }
+        val stageFile = File.createTempFile("local-", ".part", directory)
+        AudioTransfers.temporary(stageFile) { staged ->
+            val stage = t(R.string.msg_checking_local_file)
+            progress(stage, 0, 0)
+            val source = staged.outputStream().buffered().use { output ->
+                contentResolver.openInputStream(uri)?.buffered()?.use { input ->
+                    Gme.inspect(input, copyTo = output) { bytes ->
+                        require(bytes <= 2_000_000_000L) { t(R.string.error_local_gme_too_large) }
+                    }
+                } ?: error(t(R.string.error_file_cannot_be_opened))
+            }
+            try {
+                storage.installLocal(selected, filename, staged, source) { step, bytes -> progress(step, bytes, source.size) }
+            } finally { rescanAfterWrite(selected.tree) }
+        }
+        status = t(R.string.msg_installed_and_read_back_verified_1_s_unplug_and_tap_the_book_to_chec, filename)
     }
 
     fun downloadAndInstall(entry: CatalogEntry, expectedProfileId: String? = selectedProfileId) = work("Install", entry, target = viewedProfile?.name) {

@@ -484,4 +484,12 @@
     <string name="connect_choose_drive">"Choisir le lecteur USB du stylet"</string>
     <string name="connect_busy">"Attendez la fin de l’opération en cours, puis autorisez à nouveau l’accès."</string>
     <string name="connect_review_access">"Vérifier l’accès au dossier"</string>
+    <string name="ui_install_gme">"Installer un fichier .gme"</string>
+    <string name="ui_install_gme_on_1_s">"Installer sur %1$s ?"</string>
+    <string name="ui_local_gme_confirmation">"Le fichier audio sélectionné sera copié sur ce stylet. Le fichier d’origine reste à son emplacement."</string>
+    <string name="error_choose_a_gme_file">"Choisissez un fichier audio .gme dont le nom est compatible avec le stylet."</string>
+    <string name="error_unsupported_custom_product_id">"Un livre autonome doit avoir un identifiant produit compris entre 0 et 999."</string>
+    <string name="error_custom_product_in_use">"Le code livre %1$d est déjà utilisé sur ce stylet par %2$s."</string>
+    <string name="error_local_gme_too_large">"Ce fichier .gme dépasse la limite de 2 Go."</string>
+    <string name="msg_checking_local_file">"Vérification du fichier audio sélectionné"</string>
 </resources>

@@ -1,6 +1,7 @@
 package io.github.kzahel.tiptoimanager
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -32,6 +33,7 @@ import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.GravityCompat
 import java.util.Locale
 import java.text.DateFormat
@@ -61,6 +63,27 @@ class MainActivity : ComponentActivity() {
     private var screen = Screen.PENS
     private var selectedKey: String? = null
     private var selectedFile: String? = null
+    private var localPickerProfileId: String? = null
+    private val chooseLocalFile = registerForActivityResult(object : ActivityResultContracts.OpenDocument() {
+        override fun createIntent(context: Context, input: Array<String>): Intent = super.createIntent(context, input)
+            .putExtra(DocumentsContract.EXTRA_INITIAL_URI,
+                DocumentsContract.buildDocumentUri("com.android.providers.downloads.documents", "downloads"))
+    }) { uri ->
+        val profileId = localPickerProfileId
+        localPickerProfileId = null
+        if (uri != null && profileId != null) {
+            val profile = app.viewedProfile
+            if (profile?.id != profileId || app.viewedPen == null) {
+                showMessage(t(R.string.ui_install_gme), t(R.string.error_the_selected_pen_changed_review_the_destination_again))
+            } else {
+                AlertDialog.Builder(this).setTitle(t(R.string.ui_install_gme_on_1_s, profile.name))
+                    .setMessage(t(R.string.ui_local_gme_confirmation))
+                    .setNegativeButton(t(R.string.ui_cancel), null).setPositiveButton(t(R.string.ui_install_on_pen)) { _, _ ->
+                        navigate(Screen.TRANSFERS); app.installLocal(uri, profileId)
+                    }.show()
+            }
+        }
+    }
     private var progressLabel: TextView? = null
     private var progressBar: ProgressBar? = null
     private var busyLabel: TextView? = null
@@ -94,6 +117,7 @@ class MainActivity : ComponentActivity() {
             lastConnectedKey = state.getString("lastConnectedKey")
             screen = runCatching { Screen.valueOf(state.getString("screen")!!) }.getOrDefault(Screen.PENS)
             selectedKey = state.getString("bookKey"); selectedFile = state.getString("bookFile")
+            localPickerProfileId = state.getString("localPickerProfileId")
             connectTargetId = state.getString("connectTargetId")
             connectIgnoredKey = state.getString("connectIgnoredKey")
             connectReading = state.getBoolean("connectReading")
@@ -169,6 +193,7 @@ class MainActivity : ComponentActivity() {
         outState.putString("screen", screen.name)
         outState.putString("lastConnectedKey", lastConnectedKey)
         outState.putString("bookKey", selectedKey); outState.putString("bookFile", selectedFile)
+        outState.putString("localPickerProfileId", localPickerProfileId)
         outState.putString("connectTargetId", connectTargetId)
         outState.putString("connectIgnoredKey", connectIgnoredKey)
         outState.putBoolean("connectReading", connectReading)
@@ -606,9 +631,12 @@ class MainActivity : ComponentActivity() {
                     openBook(app.catalog.find { it.filename.equals(file.name, true) }, file.name)
                 }) }
             } else {
-                if (screen == Screen.DOWNLOADS) body.addView(navRow(UiIcon.STORAGE, t(R.string.ui_phone_storage), size(app.audioUsage.total)) {
-                    navigate(Screen.PHONE_STORAGE)
-                })
+                if (screen == Screen.DOWNLOADS) {
+                    if (!app.demoMode) body.addView(action(t(R.string.ui_install_gme), false) { pickLocalGme() }.apply { isEnabled = !app.busy })
+                    body.addView(navRow(UiIcon.STORAGE, t(R.string.ui_phone_storage), size(app.audioUsage.total)) {
+                        navigate(Screen.PHONE_STORAGE)
+                    })
+                }
                 val entries = app.catalog.filter { entry ->
                     val info = app.book(entry.filename, entry.id)
                     val searchable = listOf(entry.title, info?.title, info?.series).filterNotNull().joinToString(" ")
@@ -784,7 +812,9 @@ class MainActivity : ComponentActivity() {
         body.addView(summary); gap(body, 24)
         if (!transfer.running) {
             if (transfer.filename == "@selection") body.addView(action(t(R.string.ui_review_selection)) { navigate(Screen.PLAN) })
-            else body.addView(action(t(R.string.ui_view_book)) { openBook(entry, transfer.filename) })
+            else if (transfer.action != "Install local" || !transfer.failed) {
+                body.addView(action(t(R.string.ui_view_book)) { openBook(entry, transfer.filename) })
+            }
         }
         if (transfer.failed) body.addView(action(t(R.string.ui_connection_help), false) { navigate(Screen.HELP, false) })
         updateProgress()
@@ -974,6 +1004,18 @@ class MainActivity : ComponentActivity() {
         setSort(PenSort.OLDEST)
         queries[Screen.INSTALLED] = ""
         navigate(Screen.INSTALLED)
+    }
+
+    private fun pickLocalGme() {
+        if (app.busy || app.demoMode) return
+        val profile = app.viewedProfile
+        if (profile == null || app.viewedPen == null) {
+            startConnection(profile)
+        } else {
+            localPickerProfileId = profile.id
+            // File managers may report .gme as an unknown MIME type.
+            chooseLocalFile.launch(arrayOf("*/*"))
+        }
     }
 
     @Suppress("DEPRECATION")

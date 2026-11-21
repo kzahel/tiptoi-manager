@@ -2,6 +2,7 @@ package io.github.kzahel.tiptoimanager
 
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -33,6 +34,19 @@ class ContentTest {
         assertEquals(248, Gme.inspect(input, file.size.toLong(), 248).id)
         file[8] = 0
         assertThrows(IllegalArgumentException::class.java) { Gme.productId(file) }
+    }
+    @Test fun stagesTheExactBytesUsedForGmeValidation() {
+        val file = gme(927)
+        val staged = ByteArrayOutputStream()
+        val result = Gme.inspect(file.inputStream(), copyTo = staged)
+        assertArrayEquals(file, staged.toByteArray())
+        assertEquals(sha256(file), result.sha256)
+
+        staged.reset()
+        assertThrows(IllegalArgumentException::class.java) {
+            Gme.inspect(file.inputStream(), copyTo = staged) { bytes -> require(bytes < file.size) }
+        }
+        assertEquals(0, staged.size())
     }
     @Test fun csvPreservesCompanionFilesAndRejectsFirmwareOrUnsafeDestinations() {
         val csv = """

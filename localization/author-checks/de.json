@@ -1,5 +1,5 @@
 {
-  "author": "codex/connection-wizard-2026-11-01",
+  "author": "codex-moon-base-local-import",
   "locale": "de",
   "resources": {
     "app_title": {
@@ -177,6 +177,11 @@
       "terminologyHash": "7177c59f3fd0bfe0f0bba28316902c0d96692dfd8e98635fccdf81298494e77e",
       "translationHash": "5eae1fc7f72f886b1c018252b426f84020d6d1c7139ac55f46443dbb0377e0e1"
     },
+    "error_choose_a_gme_file": {
+      "sourceHash": "167384365ccfcd71e987f4c68d94d85f7c5f80f58cbe5504092218bf463bc082",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "6565b042734beaa8b78bf4d9ba3330c491437fbbc1dc8d9e56ad3f015a9581f6"
+    },
     "error_choose_the_pen_s_top_level_folder_its_tiptoi_log_identity_file_is_mi": {
       "sourceHash": "96d88b9fbe467653dc5f81c9748573e5b06a722a2060920649e09ba9a745b09f",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
@@ -257,6 +262,11 @@
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
       "translationHash": "f059a6ae5a52182079cc63fb6384dcb558abeba3adf37adc1796cf005e011232"
     },
+    "error_custom_product_in_use": {
+      "sourceHash": "6fc837f29de808b2352237620658e486fdf3fb9db3281a6ad477c913def61b53",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "2e71cc5c2338b2ccad6750ecf8117d1945ce6653fe19da4d71f58d7af49abc64"
+    },
     "error_disconnect_this_pen_before_forgetting_its_profile": {
       "sourceHash": "fa6de8d1b46d12711c23bfa20c1cf8b57379692859f0b42d5d8918f5652584b2",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
@@ -311,6 +321,11 @@
       "sourceHash": "9414725258066abe5b1bc80cf227aa73d0e673fc419bd0989433c8953ec7a4f9",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
       "translationHash": "2c8e00bb273065d3c924feb4cdc8fbe40f45d11231bdbd92f5d054d8cb86d44b"
+    },
+    "error_local_gme_too_large": {
+      "sourceHash": "65fa3a7f6f1a1cfedb51618a277d29a0e50bed018cc93ae403e99f672b0ed472",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "68cbb54d2f52186b51689e4a945acad7c6863de9bdae4ae1b736d52935407b92"
     },
     "error_missing_redirect_address": {
       "sourceHash": "bd95a422cc899d9531350f6d53d3877caf6ff9b254196931e00e547874a40524",
@@ -597,6 +612,11 @@
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
       "translationHash": "ac076b77fb27b09e6d3df9568a52756db31edd3896f76a32f2537dbd365b7f75"
     },
+    "error_unsupported_custom_product_id": {
+      "sourceHash": "3027eaddeeab0454df2d5bb2714a84cd62d8d4b7c499ed728985226e827f949f",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "d090227f7c3b269998530319a9c966d51fee13f41f7a5468c6a18eac75443ad9"
+    },
     "error_unsupported_pen_profile_format": {
       "sourceHash": "80ec62a9131f8405dfbc58ed95d9d79d6881667b8b1474614346d266a99a90bc",
       "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
@@ -746,6 +766,11 @@
       "sourceHash": "d54cbedea1bdd12857117ed8e5915641fbf0a457e7330cba04876c1f24944a02",
       "terminologyHash": "6ba9c24c18cb224247520c7162b35f0de4d376d3355c95666e011c30c9028ced",
       "translationHash": "58edbecba28cda9c532d77c30938fa4226b4e144be4a2fdc48d7840aa00cc115"
+    },
+    "msg_checking_local_file": {
+      "sourceHash": "7faf0a67427a9a1d55f3f89df5f6c5c47ac870ae4c98bc0a45c2f67914711562",
+      "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
+      "translationHash": "bd4dfe60bd744b209db52b33d68997e046e87bf19acd59ce4dc963afb1848787"
     },
     "msg_checking_phone_backup": {
       "sourceHash": "3c43fd70db82b4b8da391059942008dbb88a2cc5569c26a5792d686b989b837b",
@@ -1592,6 +1617,16 @@
       "terminologyHash": "cdf42fca5493a027d726e7c5fb9ed391aba23c98cfae8259eb0c6f39c68461e6",
       "translationHash": "fb1aea61762e33fba48c600cab56a2557561e5a062f6d63c52d2d58f08f4376a"
     },
+    "ui_install_gme": {
+      "sourceHash": "11b7b9555038f25b0dabdff15960434b29ee4141fffdad4b57caebe4c30faa82",
+      "terminologyHash": "cdf42fca5493a027d726e7c5fb9ed391aba23c98cfae8259eb0c6f39c68461e6",
+      "translationHash": "597ed41ed5686176cb00fa7703ced0a82c40ae4681054868136fc4e2688568f8"
+    },
+    "ui_install_gme_on_1_s": {
+      "sourceHash": "aea4ac9e3f2e786591e569c84982510232d7645047d25983216c39aa121bc045",
+      "terminologyHash": "cdf42fca5493a027d726e7c5fb9ed391aba23c98cfae8259eb0c6f39c68461e6",
+      "translationHash": "bf3276183c20cdaee84d8932eb4c64175b333710becb91b25460e010f80bbd19"
+    },
     "ui_install_on_1_s": {
       "sourceHash": "5fa885e75107d22da9743a8f307e49271cd53480509c8384c9a1c9022df22068",
       "terminologyHash": "cdf42fca5493a027d726e7c5fb9ed391aba23c98cfae8259eb0c6f39c68461e6",
@@ -1676,6 +1711,11 @@
       "sourceHash": "24efa6069b61f196cfcf0f2e901758dc3361be453ff8b19fc1d644e2cd7b13b9",
       "terminologyHash": "9aabfcc5b52ad4448c7a9e254b6e35451beccd21117a535bd5d775931c354431",
       "translationHash": "7fde6eaba3236efc0fe1767b87709345117431f4413b81246461424821f94c59"
+    },
+    "ui_local_gme_confirmation": {
+      "sourceHash": "92b8140f89629714b7534f5c44a94b8716de666974ed5e2bbd2d84e8e9aadee4",
+      "terminologyHash": "6209a3f045b940145bddf5a7663c50cfed206fbb58bd1e0be512826eaf52c8b5",
+      "translationHash": "479e404596c681cb5672b10bb971c5cac39babf4029fc18783a0bd9110fe38fe"
     },
     "ui_make_space_on_pen": {
       "sourceHash": "bf2d17adb2c95f9ef1b75c2244b61ca490b188341a4adf2f22f8d94209a37a34",

@@ -2,6 +2,7 @@ package io.github.kzahel.tiptoimanager
 
 import java.io.File
 import java.io.InputStream
+import java.io.OutputStream
 import java.net.URI
 import java.security.MessageDigest
 import javax.net.ssl.HttpsURLConnection
@@ -83,6 +84,7 @@ object Gme {
     }
 
     fun inspect(input: InputStream, expectedSize: Long? = null, expectedId: Int? = null,
+                copyTo: OutputStream? = null,
                 progress: (Long) -> Unit = {}): GmeResult {
         val digest = MessageDigest.getInstance("SHA-256")
         val header = ByteArray(24)
@@ -103,6 +105,7 @@ object Gme {
             digest.update(buffer, 0, count)
             require(expectedSize == null || size <= expectedSize) { t(R.string.error_file_is_larger_than_advertised) }
             progress(size)
+            copyTo?.write(buffer, 0, count)
         }
         require(size >= 28) { t(R.string.error_gme_file_is_incomplete) }
         val id = productId(header)

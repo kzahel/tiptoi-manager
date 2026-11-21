@@ -870,4 +870,12 @@
     <string name="connect_choose_drive">"Choose the pen’s USB drive"</string>
     <string name="connect_busy">"Wait for the current task to finish, then allow access again."</string>
     <string name="connect_review_access">"Review folder access"</string>
+    <string name="ui_install_gme">"Install a .gme file"</string>
+    <string name="ui_install_gme_on_1_s">"Install on %1$s?"</string>
+    <string name="ui_local_gme_confirmation">"Copy the selected audio file to this pen. The original file stays where you chose it."</string>
+    <string name="error_choose_a_gme_file">"Choose a .gme audio file with a filename the pen can use."</string>
+    <string name="error_unsupported_custom_product_id">"A standalone book must have a product ID from 0 to 999."</string>
+    <string name="error_custom_product_in_use">"Book code %1$d is already used by %2$s on this pen."</string>
+    <string name="error_local_gme_too_large">"This .gme file exceeds the 2 GB limit."</string>
+    <string name="msg_checking_local_file">"Checking the selected audio file"</string>
 </resources>
