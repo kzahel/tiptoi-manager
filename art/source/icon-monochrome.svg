@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <mask id="ink" x="0" y="0" width="512" height="512" maskUnits="userSpaceOnUse">
+      <g fill="#fff">
+        <path d="M109 289v-37l39-35 40 35v37h-23v-24a16 16 0 0 0-32 0v24z"/>
+        <path d="m102 251 40-35q6-5 13 0l38 35"
+              stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M104 310q43-13 78-10m100 54q40 0 75-9"
+              stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <g transform="translate(287 246) rotate(26) scale(.94)">
+          <path d="M0-163C-30-163-56-141-56-108V31Q-56 69-30 108L-15 145Q0 165 15 145L30 108Q56 69 56 31V-108C56-141 30-163 0-163Z"/>
+          <circle cy="-55" r="20" fill="#000"/>
+        </g>
+        <g transform="translate(147 386)">
+          <circle r="56"/>
+          <path d="M0 35V-31M0 17l24-14v-12M0 3l-24-15v-8"
+                stroke="#000" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M0-42l-11 15h22z" fill="#000"/>
+          <rect x="17" y="-18" width="14" height="14" rx="1" fill="#000"/>
+          <circle cx="-24" cy="-21" r="7.5" fill="#000"/>
+          <circle cy="35" r="8" fill="#000"/>
+        </g>
+      </g>
+    </mask>
+  </defs>
+  <rect width="512" height="512" mask="url(#ink)"/>
+</svg>

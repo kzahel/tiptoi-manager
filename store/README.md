@@ -16,7 +16,8 @@ The screenshots are actual app views placed below localized captions. The demo
 views are visibly labeled, and the transfer image shows the action before
 copying starts. No household data or publisher covers appear. The feature
 graphics reuse the original illustrated artwork documented in [art](../art/README.md).
-The shared icon is 512 × 512.
+The shared 512 × 512 Farm USB icon pairs the orange pen with a farm scene
+and a USB badge.
 
 Check exports with `python3 scripts/check_store.py`. Capture with Android 13+
 on a dedicated disposable emulator with no pen or private data. Use Android

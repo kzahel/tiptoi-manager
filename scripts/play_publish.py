@@ -194,7 +194,7 @@ def sync_listings(play, edit, store):
                 continue
             if current_images:
                 play.call('DELETE', folder)
-            generated = ('aiGeneratedStateAiGeneratedDeveloperAttested' if kind == 'featureGraphic'
+            generated = ('aiGeneratedStateAiGeneratedDeveloperAttested' if kind in ('featureGraphic', 'icon')
                          else 'aiGeneratedStateNotAiGenerated')
             for file in files:
                 play.call('POST', f'{folder}?uploadType=media&aiGeneratedState={generated}',

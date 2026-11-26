@@ -1,9 +1,9 @@
 <en-US>
-Connect your pen with a guided USB setup. The app helps you find the pen’s folder, grant access and reconnect later. You can also install a standalone .gme file from Downloads when a compatible pen is connected. The German catalog, offline downloads and verified transfers are still available.
+A new icon for Pen Library, with an orange pen, a farm scene and a USB symbol.
 </en-US>
 <de-DE>
-Die neue USB-Einrichtung führt dich durch Anschluss und Ordnerfreigabe. Beim nächsten Anschließen versucht die App, den Stift wiederzuerkennen. Unter „Downloads“ kannst du jetzt auch eine eigene .gme-Datei auf einen kompatiblen Stift übertragen.
+Neues App-Symbol für Pen Library mit orangefarbenem Stift, Bauernhof und USB-Zeichen.
 </de-DE>
 <fr-FR>
-La configuration USB vous guide pour brancher le stylet, choisir son dossier et autoriser l’accès. L’application tente de le reconnaître à la prochaine connexion. Vous pouvez aussi installer un fichier .gme depuis « Téléchargements » sur un stylet compatible.
+Nouvelle icône pour Pen Library avec un stylet orange, une ferme et un symbole USB.
 </fr-FR>

@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" fill="#006B5E"/><path d="M94 132 Q175 105 250 152 Q325 105 406 132 L406 365 Q325 338 250 384 Q175 338 94 365Z" fill="#FFF4DA"/><path d="M250 152V384" stroke="#A2CBB7" stroke-width="9"/><path d="M140 190Q185 183 218 201 M140 234Q185 227 218 245 M140 278Q185 271 218 289" fill="none" stroke="#A2CBB7" stroke-width="10" stroke-linecap="round"/><g transform="rotate(24 340 255)"><rect x="317" y="119" width="46" height="216" rx="23" fill="#E8BF65"/><path d="M317 322L340 362L363 322Z" fill="#E8BF65"/><path d="M334 351L340 362L346 351Z" fill="#274B43"/><circle cx="340" cy="182" r="10" fill="#FFF4DA"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="512" height="512" viewBox="0 0 512 512">
+  <image width="512" height="512" xlink:href="farm-usb-scene.png"/>
+  <g id="usb-badge" transform="translate(152 388)">
+    <circle r="56" fill="#174E3F" stroke="#EDE7CF" stroke-width="4"/>
+    <path d="M0 35V-31M0 17l24-14v-12M0 3l-24-15v-8"
+          fill="none" stroke="#FFF3D9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M0-42l-11 15h22z" fill="#FFF3D9"/>
+    <rect x="17" y="-18" width="14" height="14" rx="1" fill="#FFF3D9"/>
+    <circle cx="-24" cy="-21" r="7.5" fill="#FFF3D9"/>
+    <circle cy="35" r="8" fill="#FFF3D9"/>
+  </g>
+</svg>
