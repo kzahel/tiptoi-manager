@@ -1,35 +1,60 @@
 name: Android release candidate
 on:
+  push:
+    tags: ['play-v*']
   workflow_dispatch:
     inputs:
       version_code:
         description: 'Unused, increasing Google Play version code'
         required: true
-        default: '101'
 permissions:
   contents: read
 concurrency:
   group: android-release
   cancel-in-progress: false
 jobs:
-  build:
-    if: github.ref == 'refs/heads/main'
+  prepare:
+    if: github.event_name == 'push' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    outputs:
+      operation: ${{ steps.plan.outputs.operation }}
+      code: ${{ steps.plan.outputs.code }}
+      release: ${{ steps.plan.outputs.release }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Check tag, version and main ancestry
+        id: plan
+        env:
+          MANUAL_CODE: ${{ inputs.version_code }}
+        run: |
+          args=(--ref "$GITHUB_REF" --source "$GITHUB_SHA")
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            args+=(--version-code "$MANUAL_CODE")
+          fi
+          python3 scripts/play_publish.py plan "${args[@]}" >> "$GITHUB_OUTPUT"
+  build:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
         with:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd
       - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
-      - name: Check localization
+      - name: Check translations and store assets
         run: |
           python3 scripts/i18n.py check
-          python3 -m unittest discover -s scripts -p 'test_localization*.py'
+          python3 -m unittest discover -s scripts
+          python3 scripts/check_store.py
       - name: Prepare dedicated upload key and catalog registration
         env:
           KEYSTORE_BASE64: ${{ secrets.PLAY_UPLOAD_KEYSTORE_BASE64 }}
@@ -57,33 +82,50 @@ jobs:
           PY
       - name: Test, lint, build signed production APK and AAB
         env:
-          TIPTOI_VERSION_CODE: ${{ inputs.version_code }}
+          TIPTOI_VERSION_CODE: ${{ needs.prepare.outputs.code }}
         run: |
-          python3 - <<'PY'
-          import os
-          value = os.environ['TIPTOI_VERSION_CODE']
-          assert value.isdecimal() and 1 <= int(value) <= 2100000000, 'Invalid version code'
-          PY
-          android/gradlew -p android :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:bundleRelease --console=plain
+          android/gradlew -p android :app:testDebugUnitTest :app:lintRelease :app:assembleRelease :app:bundleRelease :app:assembleDebug :app:assembleDebugAndroidTest --console=plain
           jarsigner -verify android/app/build/outputs/bundle/release/app-release.aab
-      - name: Prepare immutable candidate receipt
+      - name: Exercise the read-only demo and capture German screens
+        run: |
+          sudo chmod a+rw /dev/kvm
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick fonts-dejavu-core
+          sdkmanager 'emulator' 'system-images;android-35;google_apis;x86_64'
+          echo no | avdmanager create avd --name pen-library-ci --package 'system-images;android-35;google_apis;x86_64'
+          "$ANDROID_HOME/emulator/emulator" @pen-library-ci -port 5580 -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect > "$RUNNER_TEMP/emulator.log" 2>&1 &
+          emulator_pid=$!
+          trap 'adb -s emulator-5580 emu kill || kill "$emulator_pid"; wait "$emulator_pid" || true' EXIT
+          timeout 90 adb -s emulator-5580 wait-for-device
+          # shellcheck disable=SC2016
+          timeout 240 bash -c 'until [[ $(adb -s emulator-5580 shell getprop sys.boot_completed | tr -d "\r") == 1 ]]; do sleep 2; done'
+          adb -s emulator-5580 shell input keyevent 82
+          adb -s emulator-5580 shell wm size 1080x1920
+          adb -s emulator-5580 shell wm density 420
+          adb -s emulator-5580 install -r android/app/build/outputs/apk/debug/app-debug.apk
+          adb -s emulator-5580 install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          adb -s emulator-5580 shell am instrument -w -r -e demoReadOnly true \
+            io.github.kzahel.tiptoimanager.debug.test/io.github.kzahel.tiptoimanager.UsbSmokeInstrumentation | tee "$RUNNER_TEMP/demo-smoke.txt"
+          grep -q 'INSTRUMENTATION_CODE: -1' "$RUNNER_TEMP/demo-smoke.txt"
+          adb -s emulator-5580 install -r android/app/build/outputs/apk/release/app-release.apk
+          python3 scripts/store_screenshots.py --serial emulator-5580 --locale de-DE --output "$RUNNER_TEMP/screens" \
+            --font /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf \
+            --bold-font /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf
+      - name: Prepare candidate receipt and listing archive
         env:
-          SOURCE_SHA: ${{ github.sha }}
-          VERSION_CODE: ${{ inputs.version_code }}
+          MANUAL_CODE: ${{ inputs.version_code }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           mkdir candidate
           cp android/app/build/outputs/bundle/release/app-release.aab candidate/pen-library.aab
           cp android/app/build/outputs/apk/release/app-release.apk candidate/pen-library.apk
-          python3 - <<'PY'
-          import hashlib, json, os, re
-          from pathlib import Path
-          folder = Path('candidate')
-          files = {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.iterdir()}
-          version = re.search(r'versionName = "([^"]+)"', Path('android/app/build.gradle.kts').read_text()).group(1)
-          (folder/'source.json').write_text(json.dumps({'package':'io.github.kzahel.tiptoimanager','commit':os.environ['SOURCE_SHA'],'run':os.environ['RUN_URL'],'versionName':version,'versionCode':int(os.environ['VERSION_CODE']),'sha256':files},indent=2)+'\n')
-          (folder/'SHA256SUMS').write_text(''.join(f'{value}  {name}\n' for name,value in sorted(files.items())))
-          PY
+          args=(--ref "$GITHUB_REF" --source "$GITHUB_SHA" --candidate candidate)
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            args+=(--version-code "$MANUAL_CODE")
+          fi
+          zip -q -r candidate/play-listing.zip store -x 'store/README.md'
+          zip -q -j candidate/emulator-evidence.zip "$RUNNER_TEMP/demo-smoke.txt" "$RUNNER_TEMP"/screens/de-DE/phone/*.png
+          python3 scripts/play_publish.py receipt "${args[@]}"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: pen-library-release
@@ -93,7 +135,7 @@ jobs:
         if: always()
         run: rm -rf "${RUNNER_TEMP}/pen-library-release"
   publish:
-    needs: build
+    needs: [prepare, build]
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -106,6 +148,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          RELEASE: ${{ needs.prepare.outputs.release }}
         run: |
           python3 - <<'PY'
           import json
@@ -116,4 +159,43 @@ jobs:
           VERSION=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["versionName"])')
           SOURCE=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["commit"])')
           CODE=$(python3 -c 'import json;print(json.load(open("candidate/source.json"))["versionCode"])')
-          gh release create "v${VERSION}-rc${CODE}" candidate/* --target "$SOURCE" --title "Pen Library ${VERSION} (candidate ${CODE})" --prerelease --notes-file notes.md
+          gh release create "$RELEASE" candidate/* --target "$SOURCE" --title "Pen Library ${VERSION} (candidate ${CODE})" --prerelease --notes-file notes.md
+  internal:
+    if: needs.prepare.outputs.operation == 'internal'
+    needs: [prepare, publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    concurrency:
+      group: android-play
+      cancel-in-progress: false
+    environment: play-publishing
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Download the exact GitHub candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE: ${{ needs.prepare.outputs.release }}
+        run: gh release download "$RELEASE" --pattern source.json --pattern pen-library.aab --dir candidate
+      - name: Verify the candidate receipt and checked-in listing
+        run: python3 scripts/play_publish.py verify --ref "$GITHUB_REF" --source "$GITHUB_SHA" --candidate candidate
+      - name: Authenticate to Play without a key file
+        id: google
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093
+        with:
+          workload_identity_provider: ${{ vars.PLAY_WIF_PROVIDER }}
+          service_account: ${{ vars.PLAY_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/androidpublisher
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Publish the candidate to internal testing
+        env:
+          PLAY_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: |
+          python3 scripts/play_publish.py publish --ref "$GITHUB_REF" --source "$GITHUB_SHA" --candidate candidate | tee -a "$GITHUB_STEP_SUMMARY"

@@ -31,9 +31,9 @@ jobs:
       - name: Compile Python tooling
         run: python -m compileall -q scripts
       - name: Check Android translations
-        run: |
-          python scripts/i18n.py check
-          python -m unittest discover -s scripts -p 'test_localization*.py'
+        run: python scripts/i18n.py check
+      - name: Test Python tooling
+        run: python -m unittest discover -s scripts
       - name: Check Play listing exports
         run: python scripts/check_store.py
       - name: Check whitespace

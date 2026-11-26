@@ -5,73 +5,67 @@ Brand: Pen Library; store title: Pen Library for tiptoi. Package:
 The release is a free, independent USB utility for parents/adults, with no ads,
 accounts, purchases or backend. Do not claim Ravensburger endorsement.
 
-## Submission status — 1 November 2026
+## First public release
 
-Production **0.1.0 (102)** was submitted through Play Console. The Console
-confirmed **“13 changes sent for review”** and **“Changes in review”**. This is
-not yet an approved or publicly downloadable Play listing. Managed publishing
-is off: approval is configured to publish the full production rollout in all
-178 available countries/regions automatically. Google’s automatic checks and
-human review can still identify issues.
+Production 0.1.0 (102) was submitted on 1 November 2026. The package and
+localized listing are publicly available on [Google Play](https://play.google.com/store/apps/details?id=io.github.kzahel.tiptoimanager).
+The original [CI candidate and source receipt](https://github.com/kzahel/tiptoi-manager/releases/tag/v0.1.0-rc102)
+record the submitted bundle and its checksum. Play App Signing uses a dedicated
+Google-managed app-signing key.
 
-- [CI candidate and source receipt](https://github.com/kzahel/tiptoi-manager/releases/tag/v0.1.0-rc102)
-- [Successful release workflow](https://github.com/kzahel/tiptoi-manager/actions/runs/41324251905)
-- App source: `a274c9367f78e68039fa3a8ac7179ba34b809070`
-- Uploaded AAB SHA-256: `5a28c66a9bd117087618e9a08b1ea5b0b5866bd7bc07dcfacf1c43116a5ecee4`
-- English, German and French listings, release notes, original icon/feature
-  art, and four actual demo screenshots per language submitted together.
-- [Privacy policy](https://kzahel.github.io/tiptoi-manager/privacy/) and support
-  website are live. No ads, advertising ID, purchases or account requirement.
-- Play App Signing is enabled; the optional installer check is disabled.
-  Automatic app-text translation is disabled because the app bundles its three
-  supported languages.
+## Release from Git
 
-Play reported a missing deobfuscation-file warning; this build explicitly has
-`isMinifyEnabled = false`, so it has no obfuscation mapping. A pre-review check
-also reported the privacy URL as missing. A fresh HTTPS GET returned the complete
-policy with HTTP 200; the Console’s **Proceed anyway** path was used for that
-incorrect finding. The advertising-ID declaration was then completed as **No**.
-Reviewer access instructions describe the read-only demo and the USB hardware
-needed for actual transfers. Google’s review remains the publication gate; do
-not promote the candidate’s GitHub prerelease as evidence of Play approval.
+1. Commit the intended app version, three localized notes, and reviewed listing
+   assets to `main`. Check translations, unit tests, lint, and any physical
+   acceptance evidence in [acceptance](acceptance.md).
+2. Tag that main commit `play-vMAJOR.MINOR.PATCH-CODE`, for example
+   `play-v0.2.0-103`, and push the tag. The version name must match
+   `android/app/build.gradle.kts`. Use an increasing Play version code.
+   CI builds and verifies a signed AAB, runs the read-only demo on an emulator,
+   captures German screens, and publishes a versioned GitHub candidate with
+   checksums, source receipt and the listing archive. The same AAB goes to
+   the Play internal track.
+3. Check the internal track and the Android build. To submit to all production
+   users, add and push `play-promote-vMAJOR.MINOR.PATCH-CODE` at the exact
+   same commit. The publisher verifies the Play bundle's hash against the
+   candidate and checks that the version is on internal, then submits
+   production and changed listing assets in one edit. Review and delivery are
+   separate from a successful submission.
+4. For a listing-only revision, commit the copy and assets, then push a unique
+   `play-listing-*` tag at that main commit, for example
+   `play-listing-2026-11-26`. This submits localized text, artwork and
+   screenshots without building a new app. The icon is shared through the
+   default English locale. Other listing fields and locales are preserved.
 
-## Candidate flow
+Wait for each Play submission before pushing the next publishing tag. A
+manual run of **Google Play publication** on main checks access, tracks and
+listing locales without saving an edit. A manual **Android release candidate**
+run makes GitHub artifacts only. Use different version codes for separate
+candidates. If only an upload job fails after the GitHub candidate exists, rerun
+the failed jobs to reuse the recorded bundle. If a commit response is lost,
+check the Console and the access run before deciding whether to retry. Edits
+fail when changes are already under review, preserving the pending review.
 
-1. Run `python3 scripts/i18n.py check`, localization-tool regression tests,
-   Android unit tests and lint. Inspect actual English/German/French UI and
-   preserve physical acceptance findings in `docs/acceptance.md`.
-2. Push reviewed source to main. Dispatch **Android release candidate** on main
-   with an unused increasing version code (first candidate: 101). Signing uses
-   the repository's dedicated upload key; release secrets never enter PR jobs.
-3. CI builds APK/AAB, verifies the bundle signature and publishes an immutable
-   GitHub prerelease with SHA-256 sums, source commit, version and workflow URL.
-   A tag or artifact alone is not Play approval.
-4. For the first release, upload that exact CI AAB through Play Console. Use
-   Play App Signing with a dedicated Google-generated app-signing key, distinct
-   from the backed-up upload key. Never use another project's signing identity.
-   Play distributes APKs signed with Google's separate app-signing key. The
-   direct-download CI APK uses the upload identity; it is a separate install
-   channel for the production package. Switching signing identities can require
-   uninstalling, which erases local backups. Existing `.debug` previews have a
-   separate package and remain untouched. Prefer Play for normal production
-   updates once available.
-5. Complete store listings for en-US/de-DE/fr-FR, support/privacy links, content
-   declarations, rating, countries and release notes. Inspect the final overview
-   and submit the authorized production release for review. Record actual
-   submission/review status; do not describe an unreviewed listing as public.
+The direct-download release APK is signed with the upload key. Play
+installs use the Play app-signing key. Switching install channels can require
+uninstalling, which erases local app data. The `.debug` package is separate.
 
-The initial Console bootstrap is deliberate. The GitHub workflow does not claim
-an unconfigured Publisher API account or automatic production promotion. Future
-API publication should use dedicated app-scoped short-lived GitHub OIDC/WIF
-credentials, main/environment bindings, exact-source CI receipts, transactional
-edit validation, and fail-closed handling of ambiguous commits. Never borrow
-another app's service account or widen its Play grants.
+## CI access
 
-`PLAY_UPLOAD_KEYSTORE_BASE64` and `PLAY_UPLOAD_STORE_PASSWORD` are production
-upload credentials. `CATALOG_CLIENT_ID` and `CATALOG_CLIENT_SECRET` configure the
-publisher's application catalog registration, not personal user authentication.
-Do not print any of these values. Local key backups and account/app identifiers
-belong in private publisher inventory, not this public runbook.
+`play-publishing` uses a dedicated app-scoped service account with short-lived
+GitHub OIDC credentials. Set the GitHub environment variables
+`PLAY_WIF_PROVIDER` and `PLAY_SERVICE_ACCOUNT` after provisioning. The provider
+allows this repository's numeric GitHub IDs, the publishing environment
+subject, and the expected workflow/ref pairs. In Play Console grant
+Pen Library app access for app information, testing and production releases,
+and store presence. Leave account-wide grants empty. See
+[Play API setup](https://developers.google.com/android-publisher/getting_started)
+and [GitHub federation](https://github.com/google-github-actions/auth#workload-identity-federation).
+
+`PLAY_UPLOAD_KEYSTORE_BASE64` and `PLAY_UPLOAD_STORE_PASSWORD` are signing
+credentials. `CATALOG_CLIENT_ID` and `CATALOG_CLIENT_SECRET` configure the
+publisher's application catalog registration. Do not log their values.
+Keep recovery material and account identifiers in private publisher inventory.
 
 ## Review disclosures
 

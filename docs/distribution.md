@@ -1,8 +1,7 @@
 # Android CI and distribution
 
 The repository publishes MIT source, experimental preview APKs and signed
-production candidates. The first Play production release is submitted and
-awaiting Google review; see [submission status](play-publication.md#submission-status--1-november-2026).
+production candidates. The app is available on [Google Play](https://play.google.com/store/apps/details?id=io.github.kzahel.tiptoimanager).
 The Android preview workflow runs unit tests, lint and an APK build for app
 changes. It uploads the APK, SHA-256 checksum and source receipt
 as a 30-day Actions artifact. Trusted `main` builds additionally publish an
@@ -42,14 +41,16 @@ GitHub secrets provide CI delivery, not a downloadable key backup.
 
 ## Production release candidates
 
-The separately dispatched Android release-candidate workflow builds a signed
-APK and AAB with a dedicated upload key and an explicit increasing version code.
-It publishes an immutable GitHub prerelease with checksums and a source receipt.
-Play App Signing uses a separate Google-managed signing key. The first candidate
-was uploaded manually through Play Console; CI does not yet automatically
-publish to Play. See [the release flow](play-publication.md#candidate-flow).
-Physical USB/playback acceptance remains separate from CI. An emulator cannot
-establish cable, pen or provider support.
+The release workflow builds signed APK and AAB files. A `play-v*` tag runs
+unit tests, lint, the demo smoke and a German screenshot capture, then publishes
+a GitHub release candidate and uploads that exact bundle to Play internal
+testing. A separate `play-promote-v*` tag submits the verified internal bundle
+and checked-in listing to production. A `play-listing-*` tag submits only
+listing changes. See the [publication runbook](play-publication.md) for exact
+tags and troubleshooting.
+
+Play App Signing uses a Google-managed key. Physical pen and playback
+acceptance are separate from Android CI and Play track checks.
 
 Owned workflow references remain pinned in `repos.yaml`:
 

@@ -26,7 +26,7 @@ android {
         minSdk = 26
         targetSdk = 36
         versionCode = providers.environmentVariable("TIPTOI_VERSION_CODE").orElse("1").get().toInt()
-        versionName = "0.1.0"
+        versionName = "0.2.0"
         testInstrumentationRunner = "io.github.kzahel.tiptoimanager.UsbSmokeInstrumentation"
         buildConfigField("String", "CATALOG_CLIENT_ID", quoted(catalogClient.getProperty("client.id", "")))
         buildConfigField("String", "CATALOG_CLIENT_SECRET", quoted(catalogClient.getProperty("client.secret", "")))

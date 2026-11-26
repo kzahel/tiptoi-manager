@@ -1,39 +1,43 @@
 # Google Play listing
 
-Title: **Pen Library for tiptoi**. Independent developer branding comes first;
-compatibility is explicit. No Ravensburger logo, official-app claim or bundled
-publisher artwork/audio. Category: Tools. Intended audience: adults managing
-family reading pens; this app is a file-management utility, not a children's
-reading game. Free, no advertisements or purchases.
+**Pen Library for tiptoi** is a free, independent Android utility for adults
+managing family reading pens. The listing is available in English, German and
+French. Catalog and book audio are in German.
 
-`{en-US,de-DE,fr-FR}/listing.json` owns localized descriptions. Each locale has
-a 1024 × 500 feature graphic and four unedited 1080 × 1920 actual app captures.
-Shared `icon.png` is 512 × 512. Screenshots are losslessly exported as RGB
-PNG (the unused opaque alpha channel is removed); captured pixels are unchanged.
-The capture/export scripts require ImageMagick (`magick`), and art export also
-requires `rsvg-convert`. Validate with `python3 scripts/check_store.py`. Generated original illustration and provenance
-are documented in [art](../art/README.md).
+Each locale contains its Play text, a 1024 × 500 feature graphic, and four
+1080 × 1920 phone images in display order:
 
-Rebuild the release APK and install it on a dedicated disposable emulator.
-Never point this capture tool at a household phone or clear its storage:
+1. The app's guided USB connection screen.
+2. Browsing the catalog with public demo titles.
+3. The install action with the optional transfer-only setting.
+4. Home and travel pen profiles from the public demo.
 
-```
+The screenshots are actual app views placed below localized captions. The demo
+views are visibly labeled, and the transfer image shows the action before
+copying starts. No household data or publisher covers appear. The feature
+graphics reuse the original illustrated artwork documented in [art](../art/README.md).
+The shared icon is 512 × 512.
+
+Check exports with `python3 scripts/check_store.py`. Capture with Android 13+
+on a dedicated disposable emulator with no pen or private data. Use Android
+platform-tools and ImageMagick. The tool changes the emulator app locale and
+temporarily selects Transfer only to show its install action.
+
+```sh
+adb -s emulator-SERIAL shell wm size 1080x1920
+adb -s emulator-SERIAL shell wm density 420
 adb -s emulator-SERIAL install -r android/app/build/outputs/apk/release/app-release.apk
-python3 scripts/store_screenshots.py --serial emulator-SERIAL --locale en-US
 python3 scripts/store_screenshots.py --serial emulator-SERIAL --locale de-DE
+python3 scripts/store_screenshots.py --serial emulator-SERIAL --locale en-US
 python3 scripts/store_screenshots.py --serial emulator-SERIAL --locale fr-FR
 ```
 
-All sample content is visibly labeled. The demo is available to every user
-from My pens and Help. File changes, downloads and cache cleanup are blocked
-in demo mode. It does not claim to test hardware or playback.
+Optional `--font` and `--bold-font` override the DejaVu Sans caption fonts.
+Use `--output` to inspect new exports outside the tracked listing. CI attaches
+the checked-in listing and fresh German QA screenshots to the candidate.
 
-Review access instructions: No login. On My pens choose Explore demo to inspect
-sample pens, library, book details and shared selections. Exit demo to manage
-real hardware. For real transfer testing, connect a compatible tiptoi pen as
-USB mass storage using a data cable and choose its top-level folder in Android.
-Physical acceptance to date covers one fourth-generation pen. Keep the app in
-the foreground while copying; unplug to test audio playback on a physical book.
+After reviewing and committing an update, push the tags documented in the
+[Play publication runbook](../docs/play-publication.md). CI uploads the
+checked-in metadata, feature graphics and phone screenshots directly to Play.
 
-Privacy: https://kzahel.github.io/tiptoi-manager/privacy/
-Support: https://github.com/kzahel/tiptoi-manager/issues
+[Support](https://kzahel.github.io/tiptoi-manager/de/) · [Privacy](https://kzahel.github.io/tiptoi-manager/privacy/)
