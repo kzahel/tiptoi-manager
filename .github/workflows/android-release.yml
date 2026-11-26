@@ -9,6 +9,10 @@ on:
         required: true
 permissions:
   contents: read
+
+defaults:
+  run:
+    shell: bash
 concurrency:
   group: android-release
   cancel-in-progress: false
