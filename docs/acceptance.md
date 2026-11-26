@@ -246,3 +246,21 @@ profiles are not evidence of compatibility with a second physical pen model.
   confirmed it retained book code 927. All 65 other audio files matched the
   previous inventory by filename, size and product ID. Physical scanning and
   playback of the new duplex story remain to be checked.
+
+
+## 0.2.0 release checks — 26 November 2026
+
+- Android unit tests and lint passed. The tagged release job passed the
+  read-only demo instrumentation on a fresh Android 15 emulator, and captured
+  the German setup, catalog, transfer action and profiles. The English, German
+  and French store exports were also captured locally and visually reviewed.
+- The tagged candidate (104) was checksum-verified, installed and launched on
+  the disposable emulator. The same app code exercised the Android folder
+  picker and installed an original standalone GME into a synthetic pen folder.
+  The app showed verified completion, and a separate SHA-256 check matched
+  the destination file to the source.
+- The exact CI bundle reached Play internal testing and was submitted for
+  production with the localized screenshots and descriptions. See
+  [publication evidence](play-publication.md#usb-setup-and-listing-update--26-november-2026).
+- These checks used an emulator, a synthetic folder and Play's API. Physical
+  USB and playback were not retested for this release.

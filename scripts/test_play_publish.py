@@ -1,11 +1,15 @@
 """Regression checks for Play edit ordering, retries and candidate promotion."""
 
+from contextlib import redirect_stderr
+from email.message import Message
 import hashlib
+from io import BytesIO, StringIO
 import json
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import Mock, patch
+from urllib.error import HTTPError
 
 import play_publish as publisher
 
@@ -70,13 +74,30 @@ class PlayPublishingTest(unittest.TestCase):
     def test_uncertain_commit_is_neither_retried_nor_deleted(self):
         play = Mock()
         play.call.side_effect = [{'id': 'edit'}, {}, {}, {}, TimeoutError('response lost')]
-        with patch.object(publisher, 'sync_listings', return_value=['de-DE/text']):
+        with (patch.object(publisher, 'sync_listings', return_value=['de-DE/text']),
+              redirect_stderr(StringIO())):
             with self.assertRaises(TimeoutError):
                 publisher.publish(play, {'operation': 'listings'}, 'source', None, None, None)
         routes = [(args.args[0], args.args[1]) for args in play.call.call_args_list]
         self.assertEqual(sum(':commit' in route for _, route in routes), 1)
         self.assertIn('ERROR_IF_IN_REVIEW', routes[-1][1])
         self.assertNotIn(('DELETE', '/edit'), routes)
+
+    def test_play_retries_transient_reads_only(self):
+        def unavailable():
+            return HTTPError(publisher.API, 503, 'Unavailable', Message(), BytesIO(b''))
+
+        play = publisher.Play('test-token')
+        with (patch.object(publisher, 'urlopen', side_effect=[unavailable(), BytesIO(b'{"images": []}')]) as request,
+              patch.object(publisher.time, 'sleep') as sleep, redirect_stderr(StringIO())):
+            self.assertEqual(play.call('GET', '/edit/listings/en-US/featureGraphic'), {'images': []})
+            self.assertEqual(request.call_count, 2)
+            sleep.assert_called_once_with(2)
+
+        with patch.object(publisher, 'urlopen', side_effect=unavailable()) as request:
+            with self.assertRaisesRegex(RuntimeError, 'HTTP 503'):
+                play.call('POST', '/edit:commit', {})
+            request.assert_called_once()
 
     def test_read_only_check_discards_its_edit(self):
         play = Mock()

@@ -13,13 +13,25 @@ The original [CI candidate and source receipt](https://github.com/kzahel/tiptoi-
 record the submitted bundle and its checksum. Play App Signing uses a dedicated
 Google-managed app-signing key.
 
+## USB setup and listing update — 26 November 2026
+
+Play accepted 0.2.0 (104) to internal testing and accepted the production
+submission of the same bundle. The production edit included the text, feature
+graphics and four ordered phone screenshots for each of English, German and
+French. Google Play review and public delivery follow the API submission.
+
+- [Signed candidate, exact listing and emulator evidence](https://github.com/kzahel/tiptoi-manager/releases/tag/v0.2.0-rc104)
+- [Internal upload](https://github.com/kzahel/tiptoi-manager/actions/runs/45869151952)
+- [Production and listing submission](https://github.com/kzahel/tiptoi-manager/actions/runs/45870140439)
+- [German setup guide](https://kzahel.github.io/tiptoi-manager/de/)
+
 ## Release from Git
 
 1. Commit the intended app version, three localized notes, and reviewed listing
    assets to `main`. Check translations, unit tests, lint, and any physical
    acceptance evidence in [acceptance](acceptance.md).
 2. Tag that main commit `play-vMAJOR.MINOR.PATCH-CODE`, for example
-   `play-v0.2.0-103`, and push the tag. The version name must match
+   `play-v0.2.0-104`, and push the tag. The version name must match
    `android/app/build.gradle.kts`. Use an increasing Play version code.
    CI builds and verifies a signed AAB, runs the read-only demo on an emulator,
    captures German screens, and publishes a versioned GitHub candidate with
@@ -43,8 +55,8 @@ listing locales without saving an edit. A manual **Android release candidate**
 run makes GitHub artifacts only. Use different version codes for separate
 candidates. If only an upload job fails after the GitHub candidate exists, rerun
 the failed jobs to reuse the recorded bundle. If a commit response is lost,
-check the Console and the access run before deciding whether to retry. Edits
-fail when changes are already under review, preserving the pending review.
+check the Console and the access run before deciding whether to retry. Transient Play reads are retried. Edits fail when changes are already under
+review, preserving the pending review.
 
 The direct-download release APK is signed with the upload key. Play
 installs use the Play app-signing key. Switching install channels can require

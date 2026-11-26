@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import time
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
@@ -144,19 +145,29 @@ class Play:
             'Authorization': f'Bearer {self.token}',
             'Content-Type': media or 'application/json',
         })
-        try:
-            with urlopen(request, timeout=180 if media else 30) as response:
-                content = response.read()
-                return json.loads(content) if content else {}
-        except HTTPError as error:
-            detail = ''
-            if error.headers.get_content_type() == 'application/json':
-                try:
-                    detail = json.loads(error.read()).get('error', {}).get('message', '')
-                except (ValueError, AttributeError):
-                    pass
-            detail = detail.replace(self.token, '[redacted]').strip()
-            raise RuntimeError(f'Play API {method} {path}: HTTP {error.code} {detail[:350]}') from None
+        retry_delays = (2, 4, None) if method == 'GET' else (None,)
+        for delay in retry_delays:
+            try:
+                with urlopen(request, timeout=180 if media else 30) as response:
+                    content = response.read()
+                    return json.loads(content) if content else {}
+            except HTTPError as error:
+                with error:
+                    if delay is not None and error.code in (429, 500, 502, 503, 504):
+                        print(f'Play API GET {path}: HTTP {error.code}, retrying in {delay}s',
+                              file=sys.stderr)
+                    else:
+                        detail = ''
+                        if error.headers.get_content_type() == 'application/json':
+                            try:
+                                detail = json.loads(error.read()).get('error', {}).get('message', '')
+                            except (ValueError, AttributeError):
+                                pass
+                        detail = detail.replace(self.token, '[redacted]').strip()
+                        raise RuntimeError(
+                            f'Play API {method} {path}: HTTP {error.code} {detail[:350]}',
+                        ) from None
+                time.sleep(delay)
 
 
 def image_hashes(images):
