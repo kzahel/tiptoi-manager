@@ -25,6 +25,18 @@ French. Google Play review and public delivery follow the API submission.
 - [Production and listing submission](https://github.com/kzahel/tiptoi-manager/actions/runs/45870140439)
 - [German setup guide](https://kzahel.github.io/tiptoi-manager/de/)
 
+## Farm USB icon update — 26 November 2026
+
+Google Play accepted 0.2.1 (106) on the internal track and accepted the
+production submission of the same bundle with the shared Farm USB store icon.
+The Play upload verified the icon digest. The signed candidate installed and
+launched on the Android 15 emulator. The Farm USB design was also observed in
+the emulator launcher in color and with themed icons enabled.
+
+- [Signed candidate and asset receipt](https://github.com/kzahel/tiptoi-manager/releases/tag/v0.2.1-rc106)
+- [Internal upload and release checks](https://github.com/kzahel/tiptoi-manager/actions/runs/45880598065)
+- [Production and icon submission](https://github.com/kzahel/tiptoi-manager/actions/runs/45881855639)
+
 ## Release from Git
 
 1. Commit the intended app version, three localized notes, and reviewed listing
