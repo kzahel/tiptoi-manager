@@ -82,14 +82,24 @@ def capture(serial, locale, output, font, bold_font):
         return subprocess.run(['adb', '-s', serial, *args], check=True, capture_output=True).stdout
 
     def find(label):
-        for _ in range(4):
-            adb('shell', 'uiautomator', 'dump', remote_dump)
-            nodes = ET.fromstring(adb('exec-out', 'cat', remote_dump)).iter('node')
+        last_error = None
+        for _ in range(6):
+            try:
+                # A dump while the window is starting can return no tree.
+                # Clear the prior file so a failed dump cannot supply stale coordinates.
+                adb('shell', 'rm', '-f', remote_dump)
+                adb('shell', 'uiautomator', 'dump', remote_dump)
+                nodes = ET.fromstring(adb('exec-out', 'cat', remote_dump)).iter('node')
+            except (subprocess.CalledProcessError, ET.ParseError) as error:
+                last_error = error
+                time.sleep(0.5)
+                continue
+            last_error = None
             for node in nodes:
                 for value in (node.get('text', ''), node.get('content-desc', '')):
                     if value == label or value.startswith(label + '\n'):
                         return node
-        raise RuntimeError(f'{locale}: control missing: {label}')
+        raise RuntimeError(f'{locale}: control missing: {label}') from last_error
 
     def tap(label):
         bounds = list(map(int, re.findall(r'\d+', find(label).get('bounds'))))
@@ -120,7 +130,7 @@ def capture(serial, locale, output, font, bold_font):
         try:
             adb('shell', 'am', 'force-stop', PACKAGE)
             adb('shell', 'cmd', 'locale', 'set-app-locales', PACKAGE, '--user', '0', '--locales', locale)
-            adb('shell', 'am', 'start', '-n', PACKAGE + '/.MainActivity')
+            adb('shell', 'am', 'start', '-W', '-n', PACKAGE + '/.MainActivity')
             tap(connect)
             save(0, plug)
             tap(back)
